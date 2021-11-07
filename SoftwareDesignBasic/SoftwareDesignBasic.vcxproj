@@ -140,7 +140,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.c" />
-    <ClCompile Include="main_character_move.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="block_function.h" />
