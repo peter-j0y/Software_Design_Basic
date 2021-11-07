@@ -29,5 +29,8 @@
     <ClInclude Include="main_character.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="zombie_boss.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
