@@ -8,8 +8,8 @@
 int main()
 {
     RemoveCursor();
-    COORD curPos = { 65, 20 };
-    SetCurrentCursorPos(curPos.X, curPos.Y);
+    COORD current_pos = { 65, 20 };
+    SetCurrentCursorPos(current_pos.X, current_pos.Y);
     ShowBlock(main_character);
     while (1)
     {
