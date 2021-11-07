@@ -140,6 +140,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.c" />
+    <ClCompile Include="main_hw.c" />
+    <ClCompile Include="main_ms.c" />
+    <ClCompile Include="main_sj.c" />
+    <ClCompile Include="main_sm.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="block_function.h" />
