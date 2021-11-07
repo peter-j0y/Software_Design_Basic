@@ -140,6 +140,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.c" />
+    <ClCompile Include="main_character_move.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="block_function.h" />
+    <ClInclude Include="cursor_function.h" />
+    <ClInclude Include="main_character.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
