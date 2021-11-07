@@ -1,3 +1,5 @@
+#pragma once
+#include "stdlib.h"
 typedef struct Boss_Zombie_Info {
     int x;
     int y;
@@ -13,7 +15,7 @@ typedef struct EnergyWave_Info {
 Boss_Zombie_Info* boss_zombie_list_head = NULL;
 EnergyWave_Info* energy_wave_list_head = NULL;
 
-Boss_Zombie_Info* MakeBossZombie();         //보스좀비 생성
+void MakeBossZombie();                      //보스좀비 생성
 void ShowBossZombie();                      //보스좀비들 화면에 출력
 void MoveBossZombie();                      //보스좀비 이동
 void DeleteBossZombie();                    //보스좀비들 화면에서 삭제
@@ -72,38 +74,45 @@ void MakeEnergyWave(int x, int y) {
 void MoveBossZombie() {
     Boss_Zombie_Info* boss_zombie = boss_zombie_list_head;
     while (boss_zombie != NULL) {
-        /*if (player_x == boss_zombie->x || player_y == boss_zombie->y) {
+        if (GBOARD_ORIGIN_X + GBOARD_WIDTH / 2 -1 == boss_zombie->x || GBOARD_ORIGIN_Y + GBOARD_HEIGHT / 2 == boss_zombie->y) {
             MakeEnergyWave(boss_zombie->x, boss_zombie->y);
         }
         else {
-            if (random() % 2){
-                if (player_x - boss_zombie->x < 0) {
-                    boss_zombie->x--;
+            if (rand() % 2) {
+                if (GBOARD_ORIGIN_X + GBOARD_WIDTH / 2 - boss_zombie->x < 0) {
+                    boss_zombie->x -= 2;
                 }
-                else if (player_x - boss_zombie->x > 0) {
-                    boss_zombie->x++;
+                else {
+                    boss_zombie->x += 2;
                 }
             }
             else {
-                if (player_y - boss_zombie->y < 0) {
+                if (GBOARD_ORIGIN_Y + GBOARD_HEIGHT / 2 - boss_zombie->y < 0) {
                     boss_zombie->y--;
                 }
-                else if (player_y - boss_zombie->y > 0) {
+                else {
                     boss_zombie->y++;
                 }
             }
         }
-        */
         boss_zombie = boss_zombie->next;
     }
 }
 
-Boss_Zombie_Info* MakeBossZombie() {
+void MakeBossZombie() {
     Boss_Zombie_Info* boss_zombie = (Boss_Zombie_Info*)malloc(sizeof(Boss_Zombie_Info));
     boss_zombie->x = GBOARD_ORIGIN_X + GBOARD_WIDTH / 2;                                //좀비 리스폰 위치 추후 변경가능
     boss_zombie->y = GBOARD_ORIGIN_Y;
     boss_zombie->next = NULL;
-    return boss_zombie;
+    if (boss_zombie_list_head == NULL) {
+        boss_zombie_list_head = boss_zombie;
+        return;
+    }
+    Boss_Zombie_Info* last_boss_zombie = boss_zombie_list_head;
+    while (last_boss_zombie->next != NULL) {
+        last_boss_zombie = last_boss_zombie->next;
+    }
+    last_boss_zombie->next = boss_zombie;
 }
 
 void Remove_Boss_Zombie(Boss_Zombie_Info* dead_boss_zombie) {

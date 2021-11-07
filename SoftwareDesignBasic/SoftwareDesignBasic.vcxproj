@@ -149,7 +149,7 @@
     <ClInclude Include="block_function.h" />
     <ClInclude Include="cursor_function.h" />
     <ClInclude Include="main_character.h" />
-    <ClInclude Include="zombie_boss.h" />
+    <ClInclude Include="boss_zombie.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
