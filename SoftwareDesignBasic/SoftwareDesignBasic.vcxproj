@@ -150,6 +150,7 @@
     <ClInclude Include="cursor_function.h" />
     <ClInclude Include="main_character.h" />
     <ClInclude Include="boss_zombie.h" />
+    <ClInclude Include="normal_zombie.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
