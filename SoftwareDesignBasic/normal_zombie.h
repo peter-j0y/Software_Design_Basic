@@ -1,5 +1,8 @@
 #pragma once
+#include <stdio.h>
 #include <stdlib.h>
+#include "setting_map.h"
+#include "cursor_function.h"
 
 typedef struct Normal_Zombie_Info {
 	int x;

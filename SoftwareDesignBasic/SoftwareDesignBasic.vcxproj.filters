@@ -47,5 +47,8 @@
     <ClInclude Include="normal_zombie.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="setting_map.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

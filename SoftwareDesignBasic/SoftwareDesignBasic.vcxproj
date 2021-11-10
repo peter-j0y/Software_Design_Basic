@@ -151,6 +151,7 @@
     <ClInclude Include="main_character.h" />
     <ClInclude Include="boss_zombie.h" />
     <ClInclude Include="normal_zombie.h" />
+    <ClInclude Include="setting_map.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

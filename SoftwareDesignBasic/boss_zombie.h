@@ -1,5 +1,8 @@
 #pragma once
-#include "stdlib.h"
+
+#include <stdio.h>
+#include "setting_map.h"
+
 typedef struct Boss_Zombie_Info {
     int x;
     int y;
