@@ -25,7 +25,7 @@
 extern int score = 0, life = 3, stage = 3, weapon = 3;  //점수, 생명력, 스테이지, 무기의 변수
 extern const char* weapon_name[5] = { "권총", "기관단총", "샷건", "저격총", "바주카" }; //무기 종류
 
-extern int game_board[GBOARD_HEIGHT + 2][GBOARD_WIDTH + 2];
+int game_board[GBOARD_HEIGHT + 2][GBOARD_WIDTH + 2];
 
 void DrawGameBoard() {
     int x, y;
@@ -58,31 +58,13 @@ void DrawGameBoard() {
 
     for (int i = 0; i <= GBOARD_HEIGHT; i++) {
         game_board[i][0] = 1;
-        game_board[i][GBOARD_WIDTH + 2];
+        game_board[i][GBOARD_WIDTH + 2] = 1;
     }
 
     for (int i = 0; i < GBOARD_WIDTH + 2; i++) {
         game_board[0][i] = 1;
-        game_board[GBOARD_HEIGHT + 1][i];
+        game_board[GBOARD_HEIGHT + 1][i] = 1;
     }
-}
-
-void SettingMap() {
-    SetCurrentCursorPos(SCORE_X - 8, SCORE_Y);
-    puts("SCORE : ");
-    SetCurrentCursorPos(STAGE_X - 8, STAGE_Y);
-    puts("STAGE : ");
-    SetCurrentCursorPos(LIFE_X - 7, LIFE_Y);
-    puts("LIFE : ");
-    SetCurrentCursorPos(USE_WEAPON_X - 17, USE_WEAPON_Y);
-    puts("사용 중인 무기 : ");
-    SetCurrentCursorPos(USABLE_WEAPON_X - 17, USABLE_WEAPON_Y);
-    puts("교체 가능 무기 : ");
-
-    ScoreSetting();
-    LifeSetting();
-    WeaponSetting();
-    StageSetting();
 }
 
 void ScoreSetting() {
@@ -114,4 +96,22 @@ void StageSetting() {
     for (int i = 0; i < stage; i++) {
         printf("★ ");
     }
+}
+
+void SettingMap() {
+    SetCurrentCursorPos(SCORE_X - 8, SCORE_Y);
+    puts("SCORE : ");
+    SetCurrentCursorPos(STAGE_X - 8, STAGE_Y);
+    puts("STAGE : ");
+    SetCurrentCursorPos(LIFE_X - 7, LIFE_Y);
+    puts("LIFE : ");
+    SetCurrentCursorPos(USE_WEAPON_X - 17, USE_WEAPON_Y);
+    puts("사용 중인 무기 : ");
+    SetCurrentCursorPos(USABLE_WEAPON_X - 17, USABLE_WEAPON_Y);
+    puts("교체 가능 무기 : ");
+
+    ScoreSetting();
+    LifeSetting();
+    WeaponSetting();
+    StageSetting();
 }

@@ -13,7 +13,7 @@ void DeleteBlock(char main_character[4][4])               // √‚∑¬µ» ∫Ì∑œ¿ª ªË¡¶«
         for (x = 0; x < 4; x++)
         {
             SetCurrentCursorPos(current_position.X + (x * 2), current_position.Y + y);
-            if (main_character[y][x] == 1)
+            if (main_character[y][x] == 2)              // ∏ﬁ¿Œ ƒ≥∏Ø≈Õø° ¿˚øÎ
                 printf("  ");
         }
     }
@@ -29,7 +29,7 @@ void ShowBlock(char main_character[4][4])                // ∫Ì∑œ¿ª √‚∑¬«œ¥¬ «‘ºˆ
         for (x = 0; x < 4; x++)
         {
             SetCurrentCursorPos(current_position.X + (x * 2), current_position.Y + y);
-            if (main_character[y][x] == 1)               
+            if (main_character[y][x] == 2)                          // ∏ﬁ¿Œ ƒ≥∏Ø≈Õø° ¿˚øÎ    
                 printf("°·");
         }
     }

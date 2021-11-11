@@ -8,6 +8,7 @@
 //int main()
 //{
 //    RemoveCursor();
+//    DrawGameBoard();
 //    COORD current_pos = main_character_position;
 //    SetCurrentCursorPos(current_pos.X, current_pos.Y);
 //    ShowBlock(main_character);
