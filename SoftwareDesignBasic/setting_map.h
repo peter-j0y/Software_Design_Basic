@@ -21,6 +21,13 @@
 #define USABLE_WEAPON_X 57
 #define USABLE_WEAPON_Y 37
 
+#define MAP_BOUNDARY 1
+#define PLAYER 2
+#define ZOMBIE 3
+#define GUN 4
+#define ITEM 5
+#define ENERGY_WAVE 6
+
 
 extern int score = 0, life = 3, stage = 3, weapon = 3;  //점수, 생명력, 스테이지, 무기의 변수
 extern const char* weapon_name[5] = { "권총", "기관단총", "샷건", "저격총", "바주카" }; //무기 종류
@@ -56,7 +63,18 @@ void DrawGameBoard() {
         printf("─");
     }
 
-    for (int i = 0; i <= GBOARD_HEIGHT; i++) {
+    for (int y = 0; y < GBOARD_HEIGHT + 2; y++)
+    {
+        for (int x = 0; x < GBOARD_WIDTH + 2; x++)
+        {
+            if (x == 0 || y == 0 || x == GBOARD_WIDTH + 1 || y == GBOARD_HEIGHT + 1)
+                game_board[y][x] = 1;
+            else
+                game_board[y][x] = 0;
+        }
+    }
+
+    /*for (int i = 0; i <= GBOARD_HEIGHT; i++) {
         game_board[i][0] = 1;
         game_board[i][GBOARD_WIDTH + 2] = 1;
     }
@@ -64,7 +82,8 @@ void DrawGameBoard() {
     for (int i = 0; i < GBOARD_WIDTH + 2; i++) {
         game_board[0][i] = 1;
         game_board[GBOARD_HEIGHT + 1][i] = 1;
-    }
+    }*/
+
 }
 
 void ScoreSetting() {
@@ -73,6 +92,10 @@ void ScoreSetting() {
 }
 
 void LifeSetting() {
+    SetCurrentCursorPos(LIFE_X, LIFE_Y);
+    for (int i = 0; i < 3; i++) {
+        printf("   ");
+    }
     SetCurrentCursorPos(LIFE_X, LIFE_Y);
     for (int i = 0; i < life; i++) {
         printf("♥ ");

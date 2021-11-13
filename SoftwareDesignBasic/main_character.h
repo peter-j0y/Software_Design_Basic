@@ -1,6 +1,7 @@
 #pragma once
 #include <Windows.h>
 #include <conio.h>
+#include <stdio.h>
 #include "cursor_function.h"
 #include "block_function.h"
 #include "setting_map.h"
@@ -14,6 +15,52 @@
 
 COORD main_character_position = { INITIAL_MAIN_CHARACTER_POS_X ,INITIAL_MAIN_CHARACTER_POS_Y };
 
+int MainCharacterDetectCollision(int position_x, int position_y);
+
+void DeleteBlock(char main_character[4][4])               // 출력된 블록을 삭제하는 함수
+{
+    int y, x;
+    COORD current_position = main_character_position;
+    int board_array_x = (current_position.X - GBOARD_ORIGIN_X) / 2;
+    int board_array_y = current_position.Y - GBOARD_ORIGIN_Y;
+
+    for (y = 0; y < 4; y++)
+    {
+        for (x = 0; x < 4; x++)
+        {
+            SetCurrentCursorPos(current_position.X + (x * 2), current_position.Y + y);
+            if (main_character[y][x] == 2)              // 메인 캐릭터에 적용
+            {
+                printf("  ");
+                game_board[board_array_y + y][board_array_x + x] = 0;
+            }
+        }
+    }
+    SetCurrentCursorPos(current_position.X, current_position.Y);
+}
+
+void ShowBlock(char main_character[4][4])                // 블록을 출력하는 함수
+{
+    int y, x;
+    COORD current_position = main_character_position;
+    int board_array_x = (current_position.X - GBOARD_ORIGIN_X) / 2;
+    int board_array_y = current_position.Y - GBOARD_ORIGIN_Y;
+
+    for (y = 0; y < 4; y++)
+    {
+        for (x = 0; x < 4; x++)
+        {
+            SetCurrentCursorPos(current_position.X + (x * 2), current_position.Y + y);
+            if (main_character[y][x] == 2)                          // 메인 캐릭터에 적용    
+            {
+                printf("■");
+                game_board[board_array_y + y][board_array_x + x] = PLAYER;
+            }
+        }
+    }
+    SetCurrentCursorPos(current_position.X, current_position.Y);
+}
+
 char main_character[4][4] =                     // 메인 캐릭터 표시
 {
     {0, 0, 0, 0},
@@ -24,7 +71,7 @@ char main_character[4][4] =                     // 메인 캐릭터 표시
 
 void ShiftUp()                                  // 상하좌우 움직임
 {
-    if (!MainCharacterDetectCollision(main_character_position.X + 2, main_character_position.Y-1))
+    if (!MainCharacterDetectCollision(main_character_position.X, main_character_position.Y - 1))
         return;
     DeleteBlock(main_character);
     SetCurrentCursorPos(main_character_position.X, main_character_position.Y -= 1);
@@ -33,7 +80,7 @@ void ShiftUp()                                  // 상하좌우 움직임
 
 void ShiftDown()
 {
-    if (!MainCharacterDetectCollision(main_character_position.X, main_character_position.Y+1))
+    if (!MainCharacterDetectCollision(main_character_position.X, main_character_position.Y + 1))
         return;
     DeleteBlock(main_character);
     SetCurrentCursorPos(main_character_position.X, main_character_position.Y += 1);
@@ -58,7 +105,7 @@ void ShiftLeft()
     ShowBlock(main_character);
 }
 
-void ProcessKeyInput()              // 방향키를 입력받아 움직이는 함수 적용
+void ProcessKeyInput(int time)              // 방향키를 입력받아 움직이는 함수 적용 (time 기본값 30)
 {
     int key_input;
     for (int i = 0; i < 20; i++)
@@ -82,7 +129,19 @@ void ProcessKeyInput()              // 방향키를 입력받아 움직이는 함수 적용
                 break;
             }
         }
-        Sleep(30);
+        Sleep(time);
+    }
+}
+
+void LifeDecrease()
+{
+    life--;
+    LifeSetting();
+    for (int i = 0; i < 3; i++)
+    {
+        DeleteBlock(main_character);
+        Sleep(30);                                                                         
+        ShowBlock(main_character);
     }
 }
 
@@ -94,17 +153,15 @@ int MainCharacterDetectCollision(int position_x, int position_y)
     {
         for (int y = 0; y < 4; y++)
         {
-            if (main_character[y][x] == 2 && game_board[board_array_y + y][board_array_x + x] == 1)     // 메인 캐릭터와 맵이 충돌할 때
+            if (main_character[y][x] == PLAYER && game_board[board_array_y + y][board_array_x + x] == MAP_BOUNDARY)     // 메인 캐릭터와 맵이 충돌할 때
                 return 0;
-            if (main_character[y][x] == 2 && game_board[board_array_y + y][board_array_x + x] == 3)     // 메인 캐릭터와 좀비가 부딪혔을 때
+            if (main_character[y][x] == PLAYER && game_board[board_array_y + y][board_array_x + x] == ZOMBIE)     // 메인 캐릭터와 좀비가 부딪혔을 때
+                LifeDecrease();
+            if (main_character[y][x] == PLAYER && game_board[board_array_y + y][board_array_x + x] == ENERGY_WAVE)  //메인 캐릭터와 좀비에너지파가 부딪혔을때
+                LifeDecrease();
+            if (main_character[y][x] == PLAYER && game_board[board_array_y + y][board_array_x + x] == ITEM)         //메인 캐릭터와 아이템 충돌
             {
-                life--;
-                for (int i = 0; i < 3; i++)
-                {
-                    DeleteBlock(main_character);
-                    Sleep(30);
-                    ShowBlock(main_character);
-                }
+                ;
             }
         }
     }

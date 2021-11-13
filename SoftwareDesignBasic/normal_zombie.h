@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include "setting_map.h"
 #include "cursor_function.h"
+#include "main_character.h"
 
 typedef struct Normal_Zombie_Info {
 	int x;
@@ -19,12 +20,24 @@ void ShowNormalZombie();												// 일반좀비들 화면에 출력
 void DeleteNormalZombie();												// 일반좀비들 이동을 위해 화면에서 삭제
 void MoveNormalZombie(int player_x, int player_y);                      // 일반좀비 이동
 void Remove_Normal_Zombie(Normal_Zombie_Info* dead_normal_zombie);		// 일반좀비 개체삭제(체력이 0이 되면 삭제)
+void SetGameBoardZombie(int x, int y);									// 일반좀비위치 게임보드 좌표에 세팅
+int NormalZombieDetectCollision(int x, int y);							// 일반좀비 충돌감지
 
+void SetGameBoardZombie(int x, int y)
+{
+	int board_array_x = (x - GBOARD_ORIGIN_X) / 2;
+	int board_array_y = y - GBOARD_ORIGIN_Y;
+	if (game_board[board_array_y][board_array_x] == ZOMBIE)
+		game_board[board_array_y][board_array_x] = 0;
+	else
+		game_board[board_array_y][board_array_x] = ZOMBIE;
+}
 
 void ShowNormalZombie() {
 	Normal_Zombie_Info* normal_zombie = normal_zombie_list_head;
 	while (normal_zombie != NULL) {
 		SetCurrentCursorPos(normal_zombie->x, normal_zombie->y);
+		SetGameBoardZombie(normal_zombie->x, normal_zombie->y);
 		printf("+");
 		normal_zombie = normal_zombie->next;
 	}
@@ -34,6 +47,7 @@ void DeleteNormalZombie() {
 	Normal_Zombie_Info* normal_zombie = normal_zombie_list_head;
 	while (normal_zombie != NULL) {
 		SetCurrentCursorPos(normal_zombie->x, normal_zombie->y);
+		SetGameBoardZombie(normal_zombie->x, normal_zombie->y);
 		printf(" ");
 		normal_zombie = normal_zombie->next;
 	}
@@ -46,27 +60,31 @@ void MoveNormalZombie(int num) {
 	while (normal_zombie != NULL) {
 		dir = rand() % 2;
 
-		if (GBOARD_ORIGIN_X + GBOARD_WIDTH / 2 - normal_zombie->x == 0) {
+		if (main_character_position.X - normal_zombie->x == 0) {
 			dir == 1;
 		}
-		else if (GBOARD_ORIGIN_Y + GBOARD_HEIGHT / 2 - normal_zombie->y == 0) {
+		else if (main_character_position.Y - normal_zombie->y == 0) {
 			dir == 0;
 		}
 
 		if (dir == 0) {
-			if (GBOARD_ORIGIN_X + GBOARD_WIDTH / 2 - normal_zombie->x < 0) {
-				normal_zombie->x -= 2;
+			if (main_character_position.X - normal_zombie->x < 0) {
+				if (!NormalZombieDetectCollision(normal_zombie->x, normal_zombie->y))
+					normal_zombie->x -= 2;
 			}
 			else {
-				normal_zombie->x += 2;
+				if (!NormalZombieDetectCollision(normal_zombie->x, normal_zombie->y))
+					normal_zombie->x += 2;
 			}
 		}
 		else if (dir == 1) {
-			if (GBOARD_ORIGIN_Y + GBOARD_HEIGHT / 2 - normal_zombie->y < 0) {
-				normal_zombie->y--;
+			if (main_character_position.Y - normal_zombie->y < 0) {
+				if (!NormalZombieDetectCollision(normal_zombie->x, normal_zombie->y))
+					normal_zombie->y--;
 			}
 			else {
-				normal_zombie->y++;
+				if (!NormalZombieDetectCollision(normal_zombie->x, normal_zombie->y))
+					normal_zombie->y++;
 			}
 		}
 
@@ -111,4 +129,25 @@ void Remove_Normal_Zombie(Normal_Zombie_Info* dead_normal_zombie) {
 	}
 	prev->next = dead_normal_zombie->next;
 	free(dead_normal_zombie);
+}
+
+int NormalZombieDetectCollision(int x, int y)
+{
+	int board_array_x = (x - GBOARD_ORIGIN_X) / 2;
+	int board_array_y = y - GBOARD_ORIGIN_Y;
+
+	if (game_board[board_array_y][board_array_x] == MAP_BOUNDARY)
+	{
+		return 1;
+	}
+	else if (game_board[board_array_y][board_array_x] == PLAYER)
+	{
+		LifeDecrease();
+		return 1;
+	}
+	else if (game_board[board_array_y][board_array_x] == GUN)
+	{
+		;
+	}
+	return 0;
 }
