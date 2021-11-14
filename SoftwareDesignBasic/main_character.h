@@ -137,13 +137,15 @@ void LifeDecrease()
 {
     life--;
     LifeSetting();
-    for (int i = 0; i < 10; i++)
+    //ShowBossZombie();
+    for (int i = 0; i < 3; i++)
     {
         DeleteBlock(main_character);
-        Sleep(50);                                                                         
+        ProcessKeyInput(1);
         ShowBlock(main_character);
-        Sleep(50);
+        ProcessKeyInput(1);
     }
+    //DeleteBossZombie();
 }
 
 int MainCharacterDetectCollision(int position_x, int position_y)
