@@ -17,16 +17,16 @@ COORD main_character_position = { INITIAL_MAIN_CHARACTER_POS_X ,INITIAL_MAIN_CHA
 
 int MainCharacterDetectCollision(int position_x, int position_y);
 
-void DeleteBlock(char main_character[4][4])               // Ãâ·ÂµÈ ºí·ÏÀ» »èÁ¦ÇÏ´Â ÇÔ¼ö
+void DeleteBlock(char main_character[2][2])               // Ãâ·ÂµÈ ºí·ÏÀ» »èÁ¦ÇÏ´Â ÇÔ¼ö
 {
     int y, x;
     COORD current_position = main_character_position;
     int board_array_x = (current_position.X - GBOARD_ORIGIN_X) / 2;
     int board_array_y = current_position.Y - GBOARD_ORIGIN_Y;
 
-    for (y = 0; y < 4; y++)
+    for (y = 0; y < 2; y++)
     {
-        for (x = 0; x < 4; x++)
+        for (x = 0; x < 2; x++)
         {
             SetCurrentCursorPos(current_position.X + (x * 2), current_position.Y + y);
             if (main_character[y][x] == 2)              // ¸ÞÀÎ Ä³¸¯ÅÍ¿¡ Àû¿ë
@@ -39,16 +39,16 @@ void DeleteBlock(char main_character[4][4])               // Ãâ·ÂµÈ ºí·ÏÀ» »èÁ¦Ç
     SetCurrentCursorPos(current_position.X, current_position.Y);
 }
 
-void ShowBlock(char main_character[4][4])                // ºí·ÏÀ» Ãâ·ÂÇÏ´Â ÇÔ¼ö
+void ShowBlock(char main_character[2][2])                // ºí·ÏÀ» Ãâ·ÂÇÏ´Â ÇÔ¼ö
 {
     int y, x;
     COORD current_position = main_character_position;
     int board_array_x = (current_position.X - GBOARD_ORIGIN_X) / 2;
     int board_array_y = current_position.Y - GBOARD_ORIGIN_Y;
 
-    for (y = 0; y < 4; y++)
+    for (y = 0; y < 2; y++)
     {
-        for (x = 0; x < 4; x++)
+        for (x = 0; x < 2; x++)
         {
             SetCurrentCursorPos(current_position.X + (x * 2), current_position.Y + y);
             if (main_character[y][x] == 2)                          // ¸ÞÀÎ Ä³¸¯ÅÍ¿¡ Àû¿ë    
@@ -61,12 +61,12 @@ void ShowBlock(char main_character[4][4])                // ºí·ÏÀ» Ãâ·ÂÇÏ´Â ÇÔ¼ö
     SetCurrentCursorPos(current_position.X, current_position.Y);
 }
 
-char main_character[4][4] =                     // ¸ÞÀÎ Ä³¸¯ÅÍ Ç¥½Ã
+char main_character[2][2] =                     // ¸ÞÀÎ Ä³¸¯ÅÍ Ç¥½Ã
 {
-    {0, 0, 0, 0},
-    {0, 2, 2, 0},
-    {0, 2, 2, 0},
-    {0, 0, 0, 0}
+  
+    {2, 2},
+    {2, 2}
+   
 };
 
 void ShiftUp()                                  // »óÇÏÁÂ¿ì ¿òÁ÷ÀÓ
@@ -140,18 +140,19 @@ void LifeDecrease()
     for (int i = 0; i < 10; i++)
     {
         DeleteBlock(main_character);
-        Sleep(10);                                                                         
+        Sleep(50);                                                                         
         ShowBlock(main_character);
+        Sleep(50);
     }
 }
 
 int MainCharacterDetectCollision(int position_x, int position_y)
 {
-    int board_array_x = (position_x - GBOARD_ORIGIN_X) / 2;
-    int board_array_y = position_y - GBOARD_ORIGIN_Y;
-    for (int x = 0; x < 4; x++)
+    int board_array_x = ((position_x - GBOARD_ORIGIN_X) / 2);
+    int board_array_y = (position_y - GBOARD_ORIGIN_Y );
+    for (int x = 0; x < 2; x++)
     {
-        for (int y = 0; y < 4; y++)
+        for (int y = 0; y < 2; y++)
         {
             if (main_character[y][x] == PLAYER && game_board[board_array_y + y][board_array_x + x] == MAP_BOUNDARY)     // ¸ÞÀÎ Ä³¸¯ÅÍ¿Í ¸ÊÀÌ Ãæµ¹ÇÒ ¶§
                 return 0;

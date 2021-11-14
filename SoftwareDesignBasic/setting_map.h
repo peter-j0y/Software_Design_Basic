@@ -67,7 +67,7 @@ void DrawGameBoard() {
     {
         for (int x = 0; x < GBOARD_WIDTH + 2; x++)
         {
-            if (x == 0 || y == 0 || x == GBOARD_WIDTH + 1 || y == GBOARD_HEIGHT + 1)
+            if (x == 0 || y == 0 || x == GBOARD_WIDTH || y == GBOARD_HEIGHT)
                 game_board[y][x] = 1;
             else
                 game_board[y][x] = 0;
