@@ -19,7 +19,7 @@ void MakeNormalZombie();												// 일반 좀비 리스폰 위치에 랜덤으로 생성
 void ShowNormalZombie();												// 일반좀비들 화면에 출력
 void DeleteNormalZombie();												// 일반좀비들 이동을 위해 화면에서 삭제
 void MoveNormalZombie(int player_x, int player_y);                      // 일반좀비 이동
-void Remove_Normal_Zombie(Normal_Zombie_Info* dead_normal_zombie);		// 일반좀비 개체삭제(체력이 0이 되면 삭제)
+void RemoveNormalZombie(Normal_Zombie_Info* dead_normal_zombie);		// 일반좀비 개체삭제(체력이 0이 되면 삭제)
 void SetGameBoardZombie(int x, int y);									// 일반좀비위치 게임보드 좌표에 세팅
 int NormalZombieDetectCollision(int x, int y);							// 일반좀비 충돌감지
 
@@ -117,7 +117,7 @@ void MakeNormalZombie() {
 
 }
 
-void Remove_Normal_Zombie(Normal_Zombie_Info* dead_normal_zombie) {
+void RemoveNormalZombie(Normal_Zombie_Info* dead_normal_zombie) {
 	Normal_Zombie_Info* normal_zombie = normal_zombie_list_head;
 	Normal_Zombie_Info* prev = NULL;
 	while (normal_zombie != dead_normal_zombie) {

@@ -137,10 +137,10 @@ void LifeDecrease()
 {
     life--;
     LifeSetting();
-    for (int i = 0; i < 3; i++)
+    for (int i = 0; i < 10; i++)
     {
         DeleteBlock(main_character);
-        Sleep(30);                                                                         
+        Sleep(10);                                                                         
         ShowBlock(main_character);
     }
 }
