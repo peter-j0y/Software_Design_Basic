@@ -3,7 +3,6 @@
 #include <windows.h>
 #include "cursor_function.h"
 
-
 #define GBOARD_ORIGIN_X 10  //게임보드가 존재하기 전 x축 공백
 #define GBOARD_ORIGIN_Y 3   //게임보드가 존재하기 전 y축 공백
 
@@ -56,10 +55,10 @@ void DrawGameBoard() {
             printf("│");
     }
 
-    for (x = 1; x <= GBOARD_WIDTH; x++) {
-        SetCurrentCursorPos(GBOARD_ORIGIN_X + x * 2, GBOARD_ORIGIN_Y);
+    for (x = 1; x <= GBOARD_WIDTH*2; x++) {
+        SetCurrentCursorPos(GBOARD_ORIGIN_X + x, GBOARD_ORIGIN_Y);
         printf("─");
-        SetCurrentCursorPos(GBOARD_ORIGIN_X + x * 2, GBOARD_ORIGIN_Y + GBOARD_HEIGHT);
+        SetCurrentCursorPos(GBOARD_ORIGIN_X + x, GBOARD_ORIGIN_Y + GBOARD_HEIGHT);
         printf("─");
     }
 
@@ -94,7 +93,7 @@ void ScoreSetting() {
 void LifeSetting() {
     SetCurrentCursorPos(LIFE_X, LIFE_Y);
     for (int i = 0; i < 3; i++) {
-        printf("   ");
+        printf("    ");
     }
     SetCurrentCursorPos(LIFE_X, LIFE_Y);
     for (int i = 0; i < life; i++) {
