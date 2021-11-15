@@ -1,5 +1,6 @@
-#pragma once
-#include <windows.h>
+
+#include "zombie_world.h"
+
 void RemoveCursor(void)             // 깜박이는 커서를 제거하기 위한 함수
 {
     CONSOLE_CURSOR_INFO current_info;

@@ -1,40 +1,7 @@
-#pragma once
-
-#include <stdio.h>
-#include "setting_map.h"
-#include "main_character.h"
-
-typedef struct Boss_Zombie_Info {
-    COORD pos;
-    int cool_time;
-    struct Boss_Zombie_Info* next;
-}Boss_Zombie_Info;
-
-typedef struct EnergyWave_Info {
-    COORD pos;
-    int direction_x;
-    int direction_y;
-    struct EnergyWave_Info* next;
-}EnergyWave_Info;
+#include "zombie_world.h"
 
 Boss_Zombie_Info* boss_zombie_list_head = NULL;
 EnergyWave_Info* energy_wave_list_head = NULL;
-
-void MakeBossZombie();                      //보스좀비 생성
-void ShowBossZombie();                      //보스좀비들 화면에 출력
-void MoveBossZombie();                      //보스좀비 이동
-void DeleteBossZombie();                    //보스좀비들 화면에서 삭제
-void RemoveBossZombie(Boss_Zombie_Info* dead_boss_zombie); //보스좀비 개체삭제
-void MakeEnergyWave(int x, int y);          //에너지파 생성
-void ShowEnergyWave();                      //보스좀비의 에너지파 화면 출력
-void DeleteEnergyWave();                    //보스좀비의 에너지파 화면에서 삭제
-EnergyWave_Info* RemoveEnergyWave(EnergyWave_Info* remove_energy_wave);         //에너지파 제거 
-int BossZombieDetectCollision(int x, int y);                                    //보스좀비충돌 감지
-int EnergyWaveDetectCollision(int x, int y);                                    //에너지파 충돌 감지
-void SetGameBoardEnergyWave(int x, int y);                                      //에너지파의 위치 게임보드에 설정
-void PrintBossZombie(int x, int y);                                             //3x3모양의 보스좀비 출력
-void DeletePrintedBossZombie(int x, int y);                                     //3x3모양의 보스좀비 삭제    
-
 
 void SetGameBoardEnergyWave(COORD pos)
 {
@@ -150,20 +117,20 @@ void MoveBossZombie() {
     Boss_Zombie_Info* boss_zombie = boss_zombie_list_head;
     while (boss_zombie != NULL) {
         if ((main_character_position.X == boss_zombie->pos.X + 2 || main_character_position.Y == boss_zombie->pos.Y + 1)
-          ||(main_character_position.X + 2 == boss_zombie->pos.X + 2 || main_character_position.Y + 1 == boss_zombie->pos.Y + 1)) {
+            || (main_character_position.X + 2 == boss_zombie->pos.X + 2 || main_character_position.Y + 1 == boss_zombie->pos.Y + 1)) {
             if (boss_zombie->cool_time % 3 != 0)
             {
                 boss_zombie->cool_time++;
             }
-            else 
+            else
             {
                 int direction_x = 0;
                 int direction_y = 0;
                 boss_zombie->cool_time++;
                 if (main_character_position.X == boss_zombie->pos.X + 2 || main_character_position.X + 2 == boss_zombie->pos.X + 2)
-                    direction_y = main_character_position.Y - (boss_zombie->pos.Y + 1)< 0 ? -1 : 1;
+                    direction_y = main_character_position.Y - (boss_zombie->pos.Y + 1) < 0 ? -1 : 1;
                 else
-                    direction_x = main_character_position.X - (boss_zombie->pos.X + 2)< 0 ? -1 : 1;
+                    direction_x = main_character_position.X - (boss_zombie->pos.X + 2) < 0 ? -1 : 1;
                 MakeEnergyWave(boss_zombie->pos, direction_x, direction_y);
             }
         }
@@ -171,7 +138,7 @@ void MoveBossZombie() {
             boss_zombie->cool_time = 0;
             if (rand() % 2) {
                 if (main_character_position.X - boss_zombie->pos.X < 0) {
-                    if(!BossZombieDetectCollision(boss_zombie->pos.X - 2, boss_zombie->pos.Y))
+                    if (!BossZombieDetectCollision(boss_zombie->pos.X - 2, boss_zombie->pos.Y))
                         boss_zombie->pos.X -= 2;
                 }
                 else {
@@ -258,7 +225,7 @@ int BossZombieDetectCollision(int x, int y)
             }
             else if (game_board[board_array_y + y][board_array_x + x] == PLAYER || game_board[board_array_y + y][board_array_x + x] == PLAYER_RIGHT)
             {
-                LifeDecrease();
+                LifeDecrease(ZOMBIE);
                 return 1;
             }
             else if (game_board[board_array_y + y][board_array_x + x] == ZOMBIE)
@@ -283,9 +250,9 @@ int EnergyWaveDetectCollision(int x, int y)
     {
         return 1;
     }
-    else if (game_board[board_array_y][board_array_x] == PLAYER|| game_board[board_array_y][board_array_x] == PLAYER_RIGHT)
+    else if (game_board[board_array_y][board_array_x] == PLAYER || game_board[board_array_y][board_array_x] == PLAYER_RIGHT)
     {
-        LifeDecrease();
+        LifeDecrease(ZOMBIE);
         return 1;
     }
     else if (game_board[board_array_y][board_array_x] == ZOMBIE)

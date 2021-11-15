@@ -139,19 +139,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="boss_zombie.c" />
+    <ClCompile Include="cursor_function.c" />
     <ClCompile Include="main.c" />
+    <ClCompile Include="main_character.c" />
     <ClCompile Include="main_hw.c" />
     <ClCompile Include="main_ms.c" />
     <ClCompile Include="main_sj.c" />
     <ClCompile Include="main_sm.c" />
+    <ClCompile Include="normal_zombie.c" />
+    <ClCompile Include="setting_map.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="block_function.h" />
-    <ClInclude Include="cursor_function.h" />
-    <ClInclude Include="main_character.h" />
-    <ClInclude Include="boss_zombie.h" />
-    <ClInclude Include="normal_zombie.h" />
-    <ClInclude Include="setting_map.h" />
+    <ClInclude Include="zombie_world.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

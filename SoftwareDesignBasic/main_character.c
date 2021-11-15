@@ -1,23 +1,28 @@
-#pragma once
-#include <Windows.h>
-#include <conio.h>
-#include <stdio.h>
-#include "cursor_function.h"
-#include "block_function.h"
-#include "setting_map.h"
-
-#define UP 72
-#define DOWN 80
-#define LEFT 75
-#define RIGHT 77
-#define INITIAL_MAIN_CHARACTER_POS_X 65
-#define INITIAL_MAIN_CHARACTER_POS_Y 20
+#include "zombie_world.h"
 
 COORD main_character_position = { INITIAL_MAIN_CHARACTER_POS_X ,INITIAL_MAIN_CHARACTER_POS_Y };
-extern int main_character_id = 0;
-extern int invincibility_flag = 0;
+int main_character_id = 0;
+int invincibility_flag = 0;
 
-int MainCharacterDetectCollision(int position_x, int position_y);
+char main_character[][2][2] =                     // ¸ÞÀÎ Ä³¸¯ÅÍ Ç¥½Ã
+{
+    {
+        {2, 7},
+        {2, 2}
+    },
+    {
+        {7, 2},
+        {2, 2}
+    },
+    {
+        {2, 2},
+        {7, 2}
+    },
+    {
+        {2, 2},
+        {2, 7}
+    }
+};
 
 void DeleteBlock(char main_character[2][2])               // Ãâ·ÂµÈ ºí·ÏÀ» »èÁ¦ÇÏ´Â ÇÔ¼ö
 {
@@ -31,7 +36,7 @@ void DeleteBlock(char main_character[2][2])               // Ãâ·ÂµÈ ºí·ÏÀ» »èÁ¦Ç
         for (x = 0; x < 2; x++)
         {
             SetCurrentCursorPos(current_position.X + (x * 2), current_position.Y + y);
-            if (main_character[y][x] == 2 || main_character[y][x]==7)              // ¸ÞÀÎ Ä³¸¯ÅÍ¿¡ Àû¿ë
+            if (main_character[y][x] == 2 || main_character[y][x] == 7)              // ¸ÞÀÎ Ä³¸¯ÅÍ¿¡ Àû¿ë
             {
                 printf("  ");
                 game_board[board_array_y + y][board_array_x + x] = 0;
@@ -60,7 +65,7 @@ void ShowBlock(char main_character[2][2])                // ºí·ÏÀ» Ãâ·ÂÇÏ´Â ÇÔ¼ö
             }
             if (main_character[y][x] == 7)                          // ¸ÞÀÎ Ä³¸¯ÅÍ¿¡ Àû¿ë    
             {
-                if(main_character_id == 0)
+                if (main_character_id == 0)
                     printf("¡ã");
                 if (main_character_id == 1)
                     printf("¢¸");
@@ -74,26 +79,6 @@ void ShowBlock(char main_character[2][2])                // ºí·ÏÀ» Ãâ·ÂÇÏ´Â ÇÔ¼ö
     }
     SetCurrentCursorPos(current_position.X, current_position.Y);
 }
-
-char main_character[][2][2] =                     // ¸ÞÀÎ Ä³¸¯ÅÍ Ç¥½Ã
-{
-    {
-        {2, 7},
-        {2, 2}
-    },
-    {
-        {7, 2},
-        {2, 2}
-    },
-    {
-        {2, 2},
-        {7, 2}
-    },
-    {
-        {2, 2},
-        {2, 7}
-    }
-};
 
 void ShiftUp()                                  // »óÇÏÁÂ¿ì ¿òÁ÷ÀÓ
 {
@@ -163,21 +148,38 @@ void ProcessKeyInput(int time)              // ¹æÇâÅ°¸¦ ÀÔ·Â¹Þ¾Æ ¿òÁ÷ÀÌ´Â ÇÔ¼ö À
     }
 }
 
-void LifeDecrease()
+void LifeDecrease(int damaged)
 {
     invincibility_flag = 1;
     life--;
     LifeSetting();
-    //ShowBossZombie();
-    for (int i = 0; i < 2; i++)
+    if (damaged == PLAYER)                      //ÇÃ·¹ÀÌ¾î°¡ ÀÌµ¿ÇÏ´Ù°¡ ¸ÂÀº°æ¿ì
     {
-        DeleteBlock(main_character[main_character_id]);
-        ProcessKeyInput(1);
-        ShowBlock(main_character[main_character_id]);
-        ProcessKeyInput(1);
+        for (int i = 0; i < 2; i++)
+        {
+            DeleteBlock(main_character[main_character_id]);
+            ProcessKeyInput(1);
+            ShowBlock(main_character[main_character_id]);
+            ProcessKeyInput(1);
 
+        }
     }
-    //DeleteBossZombie();
+    else if (damaged == ZOMBIE)                       //ÇÃ·¹ÀÌ¾î°¡ °¡¸¸È÷ ÀÖ´Âµ¥ ÇÇ°Ý´çÇÑ°æ¿ì
+    {
+        ShowBossZombie();
+        ShowNormalZombie();
+        ShowEnergyWave();
+        for (int i = 0; i < 2; i++)
+        {
+            DeleteBlock(main_character[main_character_id]);
+            ProcessKeyInput(1);
+            ShowBlock(main_character[main_character_id]);
+            ProcessKeyInput(1);
+        }
+        DeleteBossZombie();
+        DeleteNormalZombie();
+        DeleteEnergyWave();
+    }
     invincibility_flag = 0;
 }
 
@@ -195,16 +197,16 @@ int MainCharacterDetectCollision(int position_x, int position_y, char main_chara
             }
             if ((main_character[y][x] == PLAYER && game_board[board_array_y + y][board_array_x + x] == ZOMBIE) || (main_character[y][x] == PLAYER_RIGHT && game_board[board_array_y + y][board_array_x + x] == ZOMBIE))     // ¸ÞÀÎ Ä³¸¯ÅÍ¿Í Á»ºñ°¡ ºÎµúÇûÀ» ¶§
             {
-                if(invincibility_flag==0)
-                    LifeDecrease();
+                if (invincibility_flag == 0)
+                    LifeDecrease(PLAYER);
                 return 0;
             }
             if ((main_character[y][x] == PLAYER && game_board[board_array_y + y][board_array_x + x] == ENERGY_WAVE) || (main_character[y][x] == PLAYER_RIGHT && game_board[board_array_y + y][board_array_x + x] == ENERGY_WAVE))  //¸ÞÀÎ Ä³¸¯ÅÍ¿Í Á»ºñ¿¡³ÊÁöÆÄ°¡ ºÎµúÇûÀ»¶§
             {
-                LifeDecrease();
+                LifeDecrease(PLAYER);
                 return 0;
             }
-            if ((main_character[y][x] == PLAYER && game_board[board_array_y + y][board_array_x + x] == ITEM)|| (main_character[y][x] == PLAYER_RIGHT && game_board[board_array_y + y][board_array_x + x] == ITEM))         //¸ÞÀÎ Ä³¸¯ÅÍ¿Í ¾ÆÀÌÅÛ Ãæµ¹
+            if ((main_character[y][x] == PLAYER && game_board[board_array_y + y][board_array_x + x] == ITEM) || (main_character[y][x] == PLAYER_RIGHT && game_board[board_array_y + y][board_array_x + x] == ITEM))         //¸ÞÀÎ Ä³¸¯ÅÍ¿Í ¾ÆÀÌÅÛ Ãæµ¹
             {
                 ;
             }

@@ -1,164 +1,173 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <windows.h>
-#include <time.h>
+//#pragma once
+#include "zombie_world.h"
 
-typedef struct Normal_Zombie_Info {
-	int x;
-	int y;
-	int hp;
-	struct Normal_Zombie_Info *next;
-}Normal_Zombie_Info;
+Normal_Zombie_Info* normal_zombie_list_head = NULL;
+int STAGE;
 
-typedef struct {
-	Normal_Zombie_Info *header;
-}Normal_Zombie_Info_h;
+void PrintNormalZombie(int zombie_x, int zombie_y)
+{
+	int board_array_x = (zombie_x - GBOARD_ORIGIN_X) / 2;
+	int board_array_y = zombie_y - GBOARD_ORIGIN_Y;
 
-Normal_Zombie_Info_h* createZombieList();
-
-int STAGE;																// 스테이지
-													
-Normal_Zombie_Info_h* createZombieList();								// 일반 좀비와 보스 좀비의 수가 0이 되면 스테이지 클리어
-int MakeNormalZombie();													// 일반 좀비 리스폰 위치에 랜덤으로 생성
-void ShowNormalZombie();												// 일반좀비들 화면에 출력
-void DeleteNormalZombie();												// 일반좀비들 이동을 위해 화면에서 삭제
-void MoveNormalZombie(int player_x, int player_y);                      // 일반좀비 이동
-void Remove_Normal_Zombie();											// 일반좀비 개체삭제(체력이 0이 되면 삭제)
-
-
-void SetCurrentCursorPos(int x, int y);
-COORD GetCurrentCursorPos();
-void ShowBlock(char blockinfo[4][4]);
-void DeleteBlock(char blockinfo[4][4]);
-void Move(int dir, int x, int y);
-
-int main() {
-	int i;
-	int dir;
-	int x, y;
-	int num;
-
-	srand(time(NULL));
-
-	num = MakeNormalZombie();
-
-	MoveNormalZombie(player_x, player_y,num);
-	
-
-	getchar();
-	return 0;
+	for (int y = 0; y < 2; y++)
+	{
+		for (int x = 0; x < 2; x++)
+		{
+			SetCurrentCursorPos(zombie_x + (x * 2), zombie_y + y);
+			printf("◆");
+			game_board[board_array_y + y][board_array_x + x] = ZOMBIE;
+		}
+	}
+	SetCurrentCursorPos(zombie_x, zombie_y);
 }
+void DeletePrintedNormalZombie(int zombie_x, int zombie_y)
+{
+	int board_array_x = (zombie_x - GBOARD_ORIGIN_X) / 2;
+	int board_array_y = zombie_y - GBOARD_ORIGIN_Y;
 
-Normal_Zombie_Info_h* createZombieList() {
-	Normal_Zombie_Info_h *L;
-	L = (Normal_Zombie_Info_h*)malloc(sizeof(Normal_Zombie_Info_h));
-	L->header = (Normal_Zombie_Info*)malloc(sizeof(Normal_Zombie_Info));
-	
-	L->header->next = NULL;
-
-	return L;
-}
-
-int MakeNormalZombie() {
-	int x, y;
-	int n = STAGE;
-
-	Num = (NormalZombie*)malloc(n*sizeof(NormalZombie));				// 스테이지 값을 이용한 연산으로 스테이지에 따라 일반 좀비의 숫자를 조절
-	
-	x = rand() % 180;		// 리스폰 위치(나머지 하는 값은 수정)/
-	y = rand() % 47;
-
-	return n;
+	for (int y = 0; y < 2; y++)
+	{
+		for (int x = 0; x < 2; x++)
+		{
+			SetCurrentCursorPos(zombie_x + (x * 2), zombie_y + y);
+			printf("  ");
+			game_board[board_array_y + y][board_array_x + x] = 0;
+		}
+	}
+	SetCurrentCursorPos(zombie_x, zombie_y);
 }
 
 void ShowNormalZombie() {
-	COORD p = GetCurrentCursorPos();
-	int x, y;
-	
-	printf("◆");
-	SetCurrentCursorPos(p.X, p.Y);
+	Normal_Zombie_Info* normal_zombie = normal_zombie_list_head;
+	while (normal_zombie != NULL) {
+		SetCurrentCursorPos(normal_zombie->x, normal_zombie->y);
+		PrintNormalZombie(normal_zombie->x, normal_zombie->y);
+		normal_zombie = normal_zombie->next;
+	}
 }
 
 void DeleteNormalZombie() {
-	COORD p = GetCurrentCursorPos();
-	int x, y;
-
-	printf("  ");
-	SetCurrentCursorPos(p.X, p.Y);
+	Normal_Zombie_Info* normal_zombie = normal_zombie_list_head;
+	while (normal_zombie != NULL) {
+		SetCurrentCursorPos(normal_zombie->x, normal_zombie->y);
+		DeletePrintedNormalZombie(normal_zombie->x, normal_zombie->y);
+		normal_zombie = normal_zombie->next;
+	}
 }
 
-void MoveNormalZombie(int num) {
-	int dir, i;
-	int x, y;
-	
-	for (i = 0; i < num;i++) {
+void MoveNormalZombie() {
+	int dir;
+
+	Normal_Zombie_Info* normal_zombie = normal_zombie_list_head;
+	while (normal_zombie != NULL) {
 		dir = rand() % 2;
 
-		if (player_x == Num[i].x) {
-			dir == 1;
+		if (main_character_position.X - normal_zombie->x == 0) {
+			dir = 1;
 		}
-		else if (player_y == Num[i].y) {
-			dir == 0;
-		}
-
-		if (dir==0) {
-			if (player_x - Num[i].x < 0) {
-				Num[i].x--;
-				SetCurrentCursorPos(x, y);
-				ShowNormalZombie();
-				Sleep(100);
-				DeleteNormalZombie();
-			}
-			else if (player_x - Num[i].x > 0) {
-				Num[i].x++;
-				SetCurrentCursorPos(x, y);
-				ShowNormalZombie();
-				Sleep(100);
-				DeleteNormalZombie();
-			}
+		else if (main_character_position.Y - normal_zombie->y == 0) {
+			dir = 0;
 		}
 
-		else if(dir==1){
-			if (player_y - Num[i].y < 0) {
-				Num[i].y--;
-				SetCurrentCursorPos(x, y);
-				ShowNormalZombie();
-				Sleep(100);
-				DeleteNormalZombie();
+		if (dir == 0)
+		{
+			if (main_character_position.X - normal_zombie->x < 0)
+			{
+				if (!NormalZombieDetectCollision(normal_zombie->x - 2, normal_zombie->y))
+					normal_zombie->x -= 2;
 			}
-			else if (player_y - Num[i].y > 0) {
-				Num[i].y++;
-				SetCurrentCursorPos(x, y);
-				ShowNormalZombie();
-				Sleep(100);
-				DeleteNormalZombie();
+			else
+			{
+				if (!NormalZombieDetectCollision(normal_zombie->x + 2, normal_zombie->y))
+					normal_zombie->x += 2;
 			}
 		}
+		else if (dir == 1)
+		{
+			if (main_character_position.Y - normal_zombie->y < 0)
+			{
+				if (!NormalZombieDetectCollision(normal_zombie->x, normal_zombie->y - 1))
+					normal_zombie->y--;
+			}
+			else
+			{
+				if (!NormalZombieDetectCollision(normal_zombie->x, normal_zombie->y + 1))
+					normal_zombie->y++;
+			}
+		}
+
+		normal_zombie = normal_zombie->next;
 	}
 }
 
-void Remove_Normal_Zombie(int num) {
-	int i;
+void MakeNormalZombie() {
+	int x, y;
+	int n = STAGE;
+	int cnt = 0;
 
-	for (i = 0; i < num; i++)
-	if (Num[i].hp == 0) {
-
+	Normal_Zombie_Info* normal_zombie = (Normal_Zombie_Info*)malloc(sizeof(Normal_Zombie_Info));
+	normal_zombie->x = GBOARD_ORIGIN_X + GBOARD_WIDTH / 2 + 1;                                //좀비 리스폰 위치 추후 변경가능
+	normal_zombie->y = GBOARD_ORIGIN_Y + 5;
+	normal_zombie->next = NULL;
+	if (normal_zombie_list_head == NULL) {
+		normal_zombie_list_head = normal_zombie;
+		return;
 	}
+	Normal_Zombie_Info* last_normal_zombie = normal_zombie_list_head;
+	while (last_normal_zombie->next != NULL) {
+		last_normal_zombie = last_normal_zombie->next;
+	}
+	last_normal_zombie->next = normal_zombie;
+
+
+
+	//Num = (NormalZombie*)malloc(n * sizeof(NormalZombie));				// 스테이지 값을 이용한 연산으로 스테이지에 따라 일반 좀비의 숫자를 조절
+
 }
 
-
-COORD GetCurrentCursorPos() {
-	CONSOLE_SCREEN_BUFFER_INFO curinfo;
-	COORD curpoint;
-
-	GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &curinfo);
-	curpoint.X = curinfo.dwCursorPosition.X;
-	curpoint.Y = curinfo.dwCursorPosition.Y;
-
-	return curpoint;
+void RemoveNormalZombie(Normal_Zombie_Info* dead_normal_zombie) {
+	Normal_Zombie_Info* normal_zombie = normal_zombie_list_head;
+	Normal_Zombie_Info* prev = NULL;
+	while (normal_zombie != dead_normal_zombie) {
+		prev = normal_zombie;
+		normal_zombie = normal_zombie->next;
+	}
+	if (prev == NULL) {
+		normal_zombie_list_head = NULL;
+	}
+	prev->next = dead_normal_zombie->next;
+	free(dead_normal_zombie);
 }
 
-void SetCurrentCursorPos(int x, int y) {
-	COORD p = { x,y };
-	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), p);
+int NormalZombieDetectCollision(int x, int y)
+{
+	int check_another_zombie = 0;
+	int board_array_x = (x - GBOARD_ORIGIN_X) / 2;
+	int board_array_y = y - GBOARD_ORIGIN_Y;
+
+	for (int x = 0; x < 2; x++)
+	{
+		for (int y = 0; y < 2; y++)
+		{
+			if (game_board[board_array_y + y][board_array_x + x] == MAP_BOUNDARY)
+			{
+				return 1;
+			}
+			if (game_board[board_array_y + y][board_array_x + x] == PLAYER || game_board[board_array_y + y][board_array_x + x] == PLAYER_RIGHT)
+			{
+				LifeDecrease(ZOMBIE);
+				return 1;
+			}
+			if (game_board[board_array_y + y][board_array_x + x] == ZOMBIE)
+			{
+				return 1;
+			}
+			if (game_board[board_array_y][board_array_x] == GUN)
+			{
+				;
+			}
+		}
+	}
+
+	return 0;
 }

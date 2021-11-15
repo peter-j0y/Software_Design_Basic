@@ -1,36 +1,8 @@
-#pragma once
-#include <stdio.h>
-#include <windows.h>
-#include "cursor_function.h"
+//#pragma once
+#include "zombie_world.h"
 
-#define GBOARD_ORIGIN_X 10  //게임보드가 존재하기 전 x축 공백
-#define GBOARD_ORIGIN_Y 3   //게임보드가 존재하기 전 y축 공백
-
-#define GBOARD_WIDTH 53     //게임보드의 크기 (경계선 포함 X)
-#define GBOARD_HEIGHT 32    //게임보드의 크기 (경계선 포함 X)
-
-#define SCORE_X 10          //SCORE, STAGE 등 화면에 보이는 UI의 좌표값들
-#define SCORE_Y 1           //만약 SCORE 점수를 수정한다면    
-#define STAGE_X 56          //SetCurrentPos에 SCORE_X, SCORE_Y를 넣고 점수를 적으면 됨
-#define STAGE_Y 1
-#define LIFE_X 107
-#define LIFE_Y 1
-#define USE_WEAPON_X 19
-#define USE_WEAPON_Y 37
-#define USABLE_WEAPON_X 57
-#define USABLE_WEAPON_Y 37
-
-#define MAP_BOUNDARY 1
-#define PLAYER 2
-#define ZOMBIE 3
-#define GUN 4
-#define ITEM 5
-#define ENERGY_WAVE 6
-#define PLAYER_RIGHT 7
-
-
-extern int score = 0, life = 3, stage = 3, weapon = 3;  //점수, 생명력, 스테이지, 무기의 변수
-extern const char* weapon_name[5] = { "권총", "기관단총", "샷건", "저격총", "바주카" }; //무기 종류
+int score = 0, life = 3, stage = 3, weapon = 3;  //점수, 생명력, 스테이지, 무기의 변수
+const char* weapon_name[5] = { "권총", "기관단총", "샷건", "저격총", "바주카" }; //무기 종류
 
 int game_board[GBOARD_HEIGHT + 2][GBOARD_WIDTH + 2];
 
@@ -56,7 +28,7 @@ void DrawGameBoard() {
             printf("│");
     }
 
-    for (x = 1; x <= GBOARD_WIDTH*2; x++) {
+    for (x = 1; x <= GBOARD_WIDTH * 2; x++) {
         SetCurrentCursorPos(GBOARD_ORIGIN_X + x, GBOARD_ORIGIN_Y);
         printf("─");
         SetCurrentCursorPos(GBOARD_ORIGIN_X + x, GBOARD_ORIGIN_Y + GBOARD_HEIGHT);

@@ -30,24 +30,24 @@
     <ClCompile Include="main_sm.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="boss_zombie.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="cursor_function.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="main_character.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="normal_zombie.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="setting_map.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="block_function.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="cursor_function.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="main_character.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="boss_zombie.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="normal_zombie.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="setting_map.h">
+    <ClInclude Include="zombie_world.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
