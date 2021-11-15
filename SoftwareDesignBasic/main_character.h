@@ -15,6 +15,7 @@
 
 COORD main_character_position = { INITIAL_MAIN_CHARACTER_POS_X ,INITIAL_MAIN_CHARACTER_POS_Y };
 extern int main_character_id = 0;
+extern int invincibility_flag = 0;
 
 int MainCharacterDetectCollision(int position_x, int position_y);
 
@@ -164,6 +165,7 @@ void ProcessKeyInput(int time)              // 방향키를 입력받아 움직이는 함수 �
 
 void LifeDecrease()
 {
+    invincibility_flag = 1;
     life--;
     LifeSetting();
     //ShowBossZombie();
@@ -173,8 +175,10 @@ void LifeDecrease()
         ProcessKeyInput(1);
         ShowBlock(main_character[main_character_id]);
         ProcessKeyInput(1);
+
     }
     //DeleteBossZombie();
+    invincibility_flag = 0;
 }
 
 int MainCharacterDetectCollision(int position_x, int position_y, char main_character[2][2])
@@ -191,13 +195,13 @@ int MainCharacterDetectCollision(int position_x, int position_y, char main_chara
             }
             if ((main_character[y][x] == PLAYER && game_board[board_array_y + y][board_array_x + x] == ZOMBIE) || (main_character[y][x] == PLAYER_RIGHT && game_board[board_array_y + y][board_array_x + x] == ZOMBIE))     // 메인 캐릭터와 좀비가 부딪혔을 때
             {
-                LifeDecrease();
+                if(invincibility_flag==0)
+                    LifeDecrease();
                 return 0;
             }
             if ((main_character[y][x] == PLAYER && game_board[board_array_y + y][board_array_x + x] == ENERGY_WAVE) || (main_character[y][x] == PLAYER_RIGHT && game_board[board_array_y + y][board_array_x + x] == ENERGY_WAVE))  //메인 캐릭터와 좀비에너지파가 부딪혔을때
             {
                 LifeDecrease();
-                
                 return 0;
             }
             if ((main_character[y][x] == PLAYER && game_board[board_array_y + y][board_array_x + x] == ITEM)|| (main_character[y][x] == PLAYER_RIGHT && game_board[board_array_y + y][board_array_x + x] == ITEM))         //메인 캐릭터와 아이템 충돌
