@@ -26,6 +26,7 @@
 #define GUN 4
 #define ITEM 5
 #define ENERGY_WAVE 6
+#define PLAYER_RIGHT 7
 
 
 extern int score = 0, life = 3, stage = 3, weapon = 3;  //점수, 생명력, 스테이지, 무기의 변수

@@ -88,23 +88,29 @@ void MoveNormalZombie() {
 			dir = 0;
 		}
 
-		if (dir == 0) {
-			if (main_character_position.X - normal_zombie->x < 0) {
-				if (!NormalZombieDetectCollision(normal_zombie->x, normal_zombie->y))
+		if (dir == 0) 
+		{
+			if (main_character_position.X - normal_zombie->x < 0) 
+			{
+				if (!NormalZombieDetectCollision(normal_zombie->x - 2, normal_zombie->y))
 					normal_zombie->x -= 2;
 			}
-			else {
-				if (!NormalZombieDetectCollision(normal_zombie->x, normal_zombie->y))
+			else 
+			{
+				if (!NormalZombieDetectCollision(normal_zombie->x+2, normal_zombie->y))
 					normal_zombie->x += 2;
 			}
 		}
-		else if (dir == 1) {
-			if (main_character_position.Y - normal_zombie->y < 0) {
-				if (!NormalZombieDetectCollision(normal_zombie->x, normal_zombie->y))
+		else if (dir == 1) 
+		{
+			if (main_character_position.Y - normal_zombie->y < 0) 
+			{
+				if (!NormalZombieDetectCollision(normal_zombie->x, normal_zombie->y-1))
 					normal_zombie->y--;
 			}
-			else {
-				if (!NormalZombieDetectCollision(normal_zombie->x, normal_zombie->y))
+			else 
+			{
+				if (!NormalZombieDetectCollision(normal_zombie->x, normal_zombie->y+1))
 					normal_zombie->y++;
 			}
 		}
@@ -154,21 +160,33 @@ void RemoveNormalZombie(Normal_Zombie_Info* dead_normal_zombie) {
 
 int NormalZombieDetectCollision(int x, int y)
 {
+	int check_another_zombie = 0;
 	int board_array_x = (x - GBOARD_ORIGIN_X) / 2;
 	int board_array_y = y - GBOARD_ORIGIN_Y;
 
-	if (game_board[board_array_y][board_array_x] == MAP_BOUNDARY)
+	for (int x = 0; x < 2; x++)
 	{
-		return 1;
+		for (int y = 0; y < 2; y++)
+		{
+			if (game_board[board_array_y+y][board_array_x+x] == MAP_BOUNDARY)
+			{
+				return 1;
+			}
+			if (game_board[board_array_y + y][board_array_x + x] == PLAYER || game_board[board_array_y + y][board_array_x + x] == PLAYER_RIGHT)
+			{
+				LifeDecrease();
+				return 1;
+			}
+			if (game_board[board_array_y + y][board_array_x + x] == ZOMBIE)
+			{
+				return 1;
+			}
+			if (game_board[board_array_y][board_array_x] == GUN)
+			{
+				;
+			}
+		}
 	}
-	else if (game_board[board_array_y][board_array_x] == PLAYER)
-	{
-		LifeDecrease();
-		return 1;
-	}
-	else if (game_board[board_array_y][board_array_x] == GUN)
-	{
-		;
-	}
+	
 	return 0;
 }

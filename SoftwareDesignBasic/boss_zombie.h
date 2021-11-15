@@ -248,22 +248,28 @@ int BossZombieDetectCollision(int x, int y)
     int board_array_x = (x - GBOARD_ORIGIN_X) / 2;
     int board_array_y = y - GBOARD_ORIGIN_Y;
 
-    if (game_board[board_array_y][board_array_x] == MAP_BOUNDARY)
+    for (int x = 0; x < 3; x++)
     {
-        return 1;
-    }
-    else if (game_board[board_array_y][board_array_x] == PLAYER)
-    {
-        LifeDecrease();
-        return 1;
-    }
-    else if (game_board[board_array_y][board_array_x] == GUN)
-    {
-        ;
-    }
-    else if (game_board[board_array_y][board_array_x] == ZOMBIE)
-    {
-        ;
+        for (int y = 0; y < 3; y++)
+        {
+            if (game_board[board_array_y + y][board_array_x + x] == MAP_BOUNDARY)
+            {
+                return 1;
+            }
+            else if (game_board[board_array_y + y][board_array_x + x] == PLAYER || game_board[board_array_y + y][board_array_x + x] == PLAYER_RIGHT)
+            {
+                LifeDecrease();
+                return 1;
+            }
+            else if (game_board[board_array_y + y][board_array_x + x] == ZOMBIE)
+            {
+                return 1;
+            }
+            else if (game_board[board_array_y][board_array_x] == GUN)
+            {
+                ;
+            }
+        }
     }
     return 0;
 }
@@ -277,7 +283,7 @@ int EnergyWaveDetectCollision(int x, int y)
     {
         return 1;
     }
-    else if (game_board[board_array_y][board_array_x] == PLAYER)
+    else if (game_board[board_array_y][board_array_x] == PLAYER|| game_board[board_array_y][board_array_x] == PLAYER_RIGHT)
     {
         LifeDecrease();
         return 1;

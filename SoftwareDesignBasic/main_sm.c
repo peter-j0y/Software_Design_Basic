@@ -25,14 +25,16 @@ int main()
     {
         ShowBossZombie();
         ShowNormalZombie();
-        ShowEnergyWave();
+        //ShowEnergyWave();
         ProcessKeyInput(30);
         DeleteBossZombie();
         DeleteNormalZombie();
-        DeleteEnergyWave();
-        MoveEnergyWave();
+        //DeleteEnergyWave();
+        //MoveEnergyWave();
         MoveNormalZombie();
         MoveBossZombie();
+        DeleteBossZombie();
+        DeleteNormalZombie();
     }
     return 0;
 }
