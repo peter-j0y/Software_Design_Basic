@@ -13,18 +13,16 @@ int main()
     ShowBlock(main_character[main_character_id]);
     MakeBossZombie();
     MakeNormalZombie();
+    ShowBossZombie();
+    ShowNormalZombie();
     while (1)
     {
-        ShowBossZombie();
-        ShowNormalZombie();
         ShowEnergyWave();
         ProcessKeyInput(30);
-        DeleteBossZombie();
-        DeleteNormalZombie();
-        DeleteEnergyWave();
-        MoveEnergyWave();
         MoveNormalZombie();
+        MoveEnergyWave();
         MoveBossZombie();
+        //DeleteEnergyWave();
     }
     return 0;
 }

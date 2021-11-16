@@ -46,6 +46,11 @@ void ShowNormalZombie() {
 	}
 }
 
+void ShowOneNormalZombie(Normal_Zombie_Info* normal_zombie) {
+	SetCurrentCursorPos(normal_zombie->x, normal_zombie->y);
+	PrintNormalZombie(normal_zombie->x, normal_zombie->y);
+}
+
 void DeleteNormalZombie() {
 	Normal_Zombie_Info* normal_zombie = normal_zombie_list_head;
 	while (normal_zombie != NULL) {
@@ -55,11 +60,17 @@ void DeleteNormalZombie() {
 	}
 }
 
+void DeleteOneNormalZombie(Normal_Zombie_Info* normal_zombie) {
+	SetCurrentCursorPos(normal_zombie->x, normal_zombie->y);
+	DeletePrintedNormalZombie(normal_zombie->x, normal_zombie->y);
+}
+
 void MoveNormalZombie() {
 	int dir;
 
 	Normal_Zombie_Info* normal_zombie = normal_zombie_list_head;
 	while (normal_zombie != NULL) {
+		DeleteOneNormalZombie(normal_zombie);
 		dir = rand() % 2;
 
 		if (main_character_position.X - normal_zombie->x == 0) {
@@ -95,7 +106,7 @@ void MoveNormalZombie() {
 					normal_zombie->y++;
 			}
 		}
-
+		ShowOneNormalZombie(normal_zombie);
 		normal_zombie = normal_zombie->next;
 	}
 }
@@ -139,11 +150,11 @@ void RemoveNormalZombie(Normal_Zombie_Info* dead_normal_zombie) {
 	free(dead_normal_zombie);
 }
 
-int NormalZombieDetectCollision(int x, int y)
+int NormalZombieDetectCollision(int position_x, int position_y)
 {
 	int check_another_zombie = 0;
-	int board_array_x = (x - GBOARD_ORIGIN_X) / 2;
-	int board_array_y = y - GBOARD_ORIGIN_Y;
+	int board_array_x = (position_x - GBOARD_ORIGIN_X) / 2;
+	int board_array_y = position_y - GBOARD_ORIGIN_Y;
 
 	for (int x = 0; x < 2; x++)
 	{
@@ -155,7 +166,7 @@ int NormalZombieDetectCollision(int x, int y)
 			}
 			if (game_board[board_array_y + y][board_array_x + x] == PLAYER || game_board[board_array_y + y][board_array_x + x] == PLAYER_RIGHT)
 			{
-				LifeDecrease(ZOMBIE);
+				LifeDecrease();
 				return 1;
 			}
 			if (game_board[board_array_y + y][board_array_x + x] == ZOMBIE)
@@ -165,6 +176,13 @@ int NormalZombieDetectCollision(int x, int y)
 			if (game_board[board_array_y][board_array_x] == GUN)
 			{
 				;
+			}
+			if (game_board[board_array_y + y][board_array_x + x] == ENERGY_WAVE)
+			{
+				EnergyWave_Info* remove_energy_wave = FindEnergyWave(position_x + x * 2, position_y + y);
+				if (remove_energy_wave != NULL)
+					RemoveEnergyWave(remove_energy_wave);
+				return 1;
 			}
 		}
 	}

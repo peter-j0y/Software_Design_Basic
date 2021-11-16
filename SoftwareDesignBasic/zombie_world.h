@@ -36,7 +36,8 @@ int BossZombieDetectCollision(int x, int y);                                    
 int EnergyWaveDetectCollision(int x, int y);                                    //에너지파 충돌 감지
 void SetGameBoardEnergyWave(COORD pos);                                      //에너지파의 위치 게임보드에 설정
 void PrintBossZombie(COORD pos);                                             //3x3모양의 보스좀비 출력
-void DeletePrintedBossZombie(COORD pos);                                     //3x3모양의 보스좀비 삭제    
+void DeletePrintedBossZombie(COORD pos);                                     //3x3모양의 보스좀비 삭제   
+EnergyWave_Info* FindEnergyWave(int x, int y);
 
 void RemoveCursor(void);
 void SetCurrentCursorPos(int x, int y);
@@ -67,7 +68,7 @@ void ShiftDown();
 void ShiftRight();
 void ShiftLeft();
 void ProcessKeyInput(int time);
-void LifeDecrease(int damaged);
+void LifeDecrease();
 int MainCharacterDetectCollision(int position_x, int position_y, char main_character[2][2]);
 
 //////////////////////////////////////mainchar.h에 있던거/////////////////////////////////////

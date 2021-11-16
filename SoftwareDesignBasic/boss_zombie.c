@@ -7,10 +7,14 @@ void SetGameBoardEnergyWave(COORD pos)
 {
     int board_array_x = (pos.X - GBOARD_ORIGIN_X) / 2;
     int board_array_y = pos.Y - GBOARD_ORIGIN_Y;
-    if (game_board[board_array_y][board_array_x] == ENERGY_WAVE)
-        game_board[board_array_y][board_array_x] = 0;
-    else
-        game_board[board_array_y][board_array_x] = ENERGY_WAVE;
+    game_board[board_array_y][board_array_x] = ENERGY_WAVE;
+}
+
+void SetGameBoardToZero(COORD pos)
+{
+    int board_array_x = (pos.X - GBOARD_ORIGIN_X) / 2;
+    int board_array_y = pos.Y - GBOARD_ORIGIN_Y;
+    game_board[board_array_y][board_array_x] = 0;
 }
 
 void PrintBossZombie(COORD pos)
@@ -32,6 +36,7 @@ void PrintBossZombie(COORD pos)
     }
     SetCurrentCursorPos(pos.X, pos.Y);
 }
+
 void DeletePrintedBossZombie(COORD pos)
 {
     int board_array_x = (pos.X - GBOARD_ORIGIN_X) / 2;
@@ -57,6 +62,10 @@ void ShowBossZombie() {
         boss_zombie = boss_zombie->next;
     }
 }
+void ShowOneBossZombie(Boss_Zombie_Info* boss_zombie) {
+    SetCurrentCursorPos(boss_zombie->pos.X, boss_zombie->pos.Y);
+    PrintBossZombie(boss_zombie->pos);
+}
 void DeleteBossZombie() {
     Boss_Zombie_Info* boss_zombie = boss_zombie_list_head;
     while (boss_zombie != NULL) {
@@ -64,6 +73,10 @@ void DeleteBossZombie() {
         DeletePrintedBossZombie(boss_zombie->pos);
         boss_zombie = boss_zombie->next;
     }
+}
+void DeleteOneBossZombie(Boss_Zombie_Info* boss_zombie) {
+    SetCurrentCursorPos(boss_zombie->pos.X, boss_zombie->pos.Y);
+    DeletePrintedBossZombie(boss_zombie->pos);
 }
 void ShowEnergyWave() {
     EnergyWave_Info* energy_wave = energy_wave_list_head;
@@ -74,24 +87,36 @@ void ShowEnergyWave() {
         energy_wave = energy_wave->next;
     }
 }
+void ShowOneEnergyWave(EnergyWave_Info* energy_wave) {
+    SetCurrentCursorPos(energy_wave->pos.X, energy_wave->pos.Y);
+    SetGameBoardEnergyWave(energy_wave->pos);
+    printf("o");
+}
 void DeleteEnergyWave() {
     EnergyWave_Info* energy_wave = energy_wave_list_head;
     while (energy_wave != NULL) {
         SetCurrentCursorPos(energy_wave->pos.X, energy_wave->pos.Y);
-        SetGameBoardEnergyWave(energy_wave->pos);
+        SetGameBoardToZero(energy_wave->pos);
         printf(" ");
         energy_wave = energy_wave->next;
     }
 }
+void DeleteOneEnergyWave(EnergyWave_Info* energy_wave) {
+    SetCurrentCursorPos(energy_wave->pos.X, energy_wave->pos.Y);
+    SetGameBoardToZero(energy_wave->pos);
+    printf(" ");
+}
 void MoveEnergyWave() {
     EnergyWave_Info* energy_wave = energy_wave_list_head;
     while (energy_wave != NULL) {
-        if (EnergyWaveDetectCollision(energy_wave->pos.X + energy_wave->direction_x * 2, energy_wave->pos.Y + energy_wave->direction_y * 2))
+        DeleteOneEnergyWave(energy_wave);
+        if (EnergyWaveDetectCollision(energy_wave->pos.X + energy_wave->direction_x * 2, energy_wave->pos.Y + energy_wave->direction_y))
             energy_wave = RemoveEnergyWave(energy_wave);
         else
         {
             energy_wave->pos.X += energy_wave->direction_x * 2;
             energy_wave->pos.Y += energy_wave->direction_y;
+            ShowOneEnergyWave(energy_wave);
             energy_wave = energy_wave->next;
         }
     }
@@ -116,6 +141,7 @@ void MakeEnergyWave(COORD pos, int direction_x, int direction_y) {
 void MoveBossZombie() {
     Boss_Zombie_Info* boss_zombie = boss_zombie_list_head;
     while (boss_zombie != NULL) {
+        DeleteOneBossZombie(boss_zombie);
         if ((main_character_position.X == boss_zombie->pos.X + 2 || main_character_position.Y == boss_zombie->pos.Y + 1)
             || (main_character_position.X + 2 == boss_zombie->pos.X + 2 || main_character_position.Y + 1 == boss_zombie->pos.Y + 1)) {
             if (boss_zombie->cool_time % 3 != 0)
@@ -157,6 +183,7 @@ void MoveBossZombie() {
                 }
             }
         }
+        ShowOneBossZombie(boss_zombie);
         boss_zombie = boss_zombie->next;
     }
 }
@@ -202,10 +229,16 @@ EnergyWave_Info* RemoveEnergyWave(EnergyWave_Info* remove_energy_wave) {
     if (prev == NULL) {
         EnergyWave_Info* first = remove_energy_wave->next;
         energy_wave_list_head = first;
+        SetCurrentCursorPos(remove_energy_wave->pos.X, remove_energy_wave->pos.Y);
+        printf(" ");
+        SetGameBoardToZero(remove_energy_wave->pos);
         free(remove_energy_wave);
         return first;
     }
     prev->next = remove_energy_wave->next;
+    SetCurrentCursorPos(remove_energy_wave->pos.X, remove_energy_wave->pos.Y);
+    printf(" ");
+    SetGameBoardToZero(remove_energy_wave->pos);
     free(remove_energy_wave);
     return prev->next;
 }
@@ -225,7 +258,7 @@ int BossZombieDetectCollision(int x, int y)
             }
             else if (game_board[board_array_y + y][board_array_x + x] == PLAYER || game_board[board_array_y + y][board_array_x + x] == PLAYER_RIGHT)
             {
-                LifeDecrease(ZOMBIE);
+                LifeDecrease();
                 return 1;
             }
             else if (game_board[board_array_y + y][board_array_x + x] == ZOMBIE)
@@ -252,7 +285,7 @@ int EnergyWaveDetectCollision(int x, int y)
     }
     else if (game_board[board_array_y][board_array_x] == PLAYER || game_board[board_array_y][board_array_x] == PLAYER_RIGHT)
     {
-        LifeDecrease(ZOMBIE);
+        LifeDecrease();
         return 1;
     }
     else if (game_board[board_array_y][board_array_x] == ZOMBIE)
@@ -260,4 +293,20 @@ int EnergyWaveDetectCollision(int x, int y)
         return 1;
     }
     return 0;
+}
+
+EnergyWave_Info* FindEnergyWave(int x, int y)
+{
+    EnergyWave_Info* energy_wave = energy_wave_list_head;
+
+    while (energy_wave)
+    {
+        if (energy_wave->pos.X == x && energy_wave->pos.Y == y
+            || energy_wave->pos.X + 1 == x && energy_wave->pos.Y == y)
+        {
+            return energy_wave;
+        }
+        energy_wave = energy_wave->next;
+    }
+    return NULL;
 }

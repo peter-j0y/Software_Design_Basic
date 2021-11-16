@@ -148,37 +148,17 @@ void ProcessKeyInput(int time)              // 방향키를 입력받아 움직이는 함수 �
     }
 }
 
-void LifeDecrease(int damaged)
+void LifeDecrease()
 {
     invincibility_flag = 1;
     life--;
     LifeSetting();
-    if (damaged == PLAYER)                      //플레이어가 이동하다가 맞은경우
+    for (int i = 0; i < 2; i++)
     {
-        for (int i = 0; i < 2; i++)
-        {
-            DeleteBlock(main_character[main_character_id]);
-            ProcessKeyInput(1);
-            ShowBlock(main_character[main_character_id]);
-            ProcessKeyInput(1);
-
-        }
-    }
-    else if (damaged == ZOMBIE)                       //플레이어가 가만히 있는데 피격당한경우
-    {
-        ShowBossZombie();
-        ShowNormalZombie();
-        ShowEnergyWave();
-        for (int i = 0; i < 2; i++)
-        {
-            DeleteBlock(main_character[main_character_id]);
-            ProcessKeyInput(1);
-            ShowBlock(main_character[main_character_id]);
-            ProcessKeyInput(1);
-        }
-        DeleteBossZombie();
-        DeleteNormalZombie();
-        DeleteEnergyWave();
+        DeleteBlock(main_character[main_character_id]);
+        ProcessKeyInput(1);
+        ShowBlock(main_character[main_character_id]);
+        ProcessKeyInput(1);
     }
     invincibility_flag = 0;
 }
@@ -203,6 +183,9 @@ int MainCharacterDetectCollision(int position_x, int position_y, char main_chara
             }
             if ((main_character[y][x] == PLAYER && game_board[board_array_y + y][board_array_x + x] == ENERGY_WAVE) || (main_character[y][x] == PLAYER_RIGHT && game_board[board_array_y + y][board_array_x + x] == ENERGY_WAVE))  //메인 캐릭터와 좀비에너지파가 부딪혔을때
             {
+                EnergyWave_Info* remove_energy_wave = FindEnergyWave(position_x + x * 2, position_y + y);
+                if (remove_energy_wave != NULL)
+                    RemoveEnergyWave(remove_energy_wave);
                 LifeDecrease(PLAYER);
                 return 0;
             }
