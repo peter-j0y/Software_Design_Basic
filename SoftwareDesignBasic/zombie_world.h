@@ -51,13 +51,15 @@ COORD GetCurrentCursorPos(void);
 #define DOWN 80
 #define LEFT 75
 #define RIGHT 77
+#define SPACE 32
 #define INITIAL_MAIN_CHARACTER_POS_X 65
 #define INITIAL_MAIN_CHARACTER_POS_Y 20
 
 extern COORD main_character_position;
 extern int main_character_id;
 extern int invincibility_flag;
-
+extern int GunDirection;
+clock_t start, end;
 extern char main_character[][2][2];               // 메인 캐릭터 표시
 
 
@@ -67,9 +69,13 @@ void ShiftUp();
 void ShiftDown();
 void ShiftRight();
 void ShiftLeft();
+void ShowShooting(int x, int y);
+void DeleteShooting(int x, int y);
+void ShootGun();
 void ProcessKeyInput(int time);
 void LifeDecrease();
 int MainCharacterDetectCollision(int position_x, int position_y, char main_character[2][2]);
+int GunDetectCollision(int position_x, int position_y);
 
 //////////////////////////////////////mainchar.h에 있던거/////////////////////////////////////
 

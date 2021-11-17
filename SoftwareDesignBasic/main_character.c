@@ -3,6 +3,9 @@
 COORD main_character_position = { INITIAL_MAIN_CHARACTER_POS_X ,INITIAL_MAIN_CHARACTER_POS_Y };
 int main_character_id = 0;
 int invincibility_flag = 0;
+int GunDirection = UP;
+
+
 
 char main_character[][2][2] =                     // 메인 캐릭터 표시
 {
@@ -120,6 +123,129 @@ void ShiftLeft()
     ShowBlock(main_character[main_character_id]);
 }
 
+void ShowShooting(int x, int y) {
+    SetCurrentCursorPos(x, y);
+    int board_array_x = (x - GBOARD_ORIGIN_X) / 2;
+    int board_array_y = y - GBOARD_ORIGIN_Y;
+
+
+    if (GunDirection == RIGHT || GunDirection == LEFT)
+        printf("─");
+    else
+        printf("│");
+
+    game_board[board_array_y][board_array_x] = GUN;
+
+
+    SetCurrentCursorPos(x, y);
+}
+
+void DeleteShooting(int x, int y) {
+    SetCurrentCursorPos(x, y);
+    int board_array_x = (x - GBOARD_ORIGIN_X) / 2;
+    int board_array_y = y - GBOARD_ORIGIN_Y;
+
+
+
+
+    if (game_board[board_array_y][board_array_x] == GUN) {
+        printf("  ");
+        game_board[board_array_y][board_array_x] = 0;
+    }
+
+
+    SetCurrentCursorPos(x, y);
+
+}
+
+void ShootGun() {
+    int x = main_character_position.X;
+    int y = main_character_position.Y;
+    switch (GunDirection) {
+    case LEFT:
+        while (1) {
+            if (!GunDetectCollision(x - 2, y))
+                break;
+            x = x - 2;
+            ShowShooting(x, y);
+        }
+        Sleep(50);
+        x = main_character_position.X;
+        y = main_character_position.Y;
+        while (1) {
+            if (!GunDetectCollision(x - 2, y))
+                break;
+            x = x - 2;
+            SetCurrentCursorPos(x, y);
+            DeleteShooting(x, y);
+        }
+        break;
+    case UP:
+        x = x + 2;
+        while (1) {
+            if (!GunDetectCollision(x, y - 1))
+                break;
+            y = y - 1;
+            ShowShooting(x, y);
+        }
+        Sleep(50);
+        x = main_character_position.X;
+        y = main_character_position.Y;
+        x = x + 2;
+        while (1) {
+            if (!GunDetectCollision(x, y - 1))
+                break;
+            y = y - 1;
+            SetCurrentCursorPos(x, y);
+            DeleteShooting(x, y);
+        }
+        break;
+    case RIGHT:
+        x = x + 2;
+        y = y + 1;
+        while (1) {
+            if (!GunDetectCollision(x + 2, y))
+                break;
+            x = x + 2;
+            ShowShooting(x, y);
+        }
+        Sleep(50);
+        x = main_character_position.X;
+        y = main_character_position.Y;
+        x = x + 2;
+        y = y + 1;
+        while (1) {
+            if (!GunDetectCollision(x + 2, y))
+                break;
+            x = x + 2;
+            SetCurrentCursorPos(x, y);
+            DeleteShooting(x, y);
+        }
+        break;
+    case DOWN:
+        y = y + 1;
+        while (1) {
+            if (!GunDetectCollision(x, y + 1))
+                break;
+            y = y + 1;
+            ShowShooting(x, y);
+        }
+        Sleep(50);
+        x = main_character_position.X;
+        y = main_character_position.Y;
+        y = y + 1;
+        while (1) {
+            if (!GunDetectCollision(x, y + 1))
+                break;
+            y = y + 1;
+            SetCurrentCursorPos(x, y);
+            DeleteShooting(x, y);
+        }
+        break;
+    }
+
+}
+
 void ProcessKeyInput(int time)              // 방향키를 입력받아 움직이는 함수 적용 (time 기본값 30)
 {
     int key_input;
@@ -132,15 +258,28 @@ void ProcessKeyInput(int time)              // 방향키를 입력받아 움직이는 함수 �
             {
             case LEFT:
                 ShiftLeft();
+                GunDirection = LEFT;
                 break;
             case RIGHT:
                 ShiftRight();
+                GunDirection = RIGHT;
                 break;
             case UP:
                 ShiftUp();
+                GunDirection = UP;
                 break;
             case DOWN:
                 ShiftDown();
+                GunDirection = DOWN;
+                break;
+
+            case SPACE:
+                end = clock();
+                double time = (double)(end - start) / CLOCKS_PER_SEC;
+                if (time > 1) {
+                    start = clock();
+                    ShootGun();
+                }
                 break;
             }
         }
@@ -195,5 +334,20 @@ int MainCharacterDetectCollision(int position_x, int position_y, char main_chara
             }
         }
     }
+    return 1;
+}
+
+int GunDetectCollision(int position_x, int position_y) {
+
+    int board_array_x = ((position_x - GBOARD_ORIGIN_X) / 2);
+    int board_array_y = (position_y - GBOARD_ORIGIN_Y);
+
+    if (game_board[board_array_y][board_array_x] == MAP_BOUNDARY)     // 메인 캐릭터와 맵이 충돌할 때
+        return 0;
+    if (game_board[board_array_y][board_array_x] == ZOMBIE)     // 메인 캐릭터와 좀비가 부딪혔을 때
+        return 0;
+    if (game_board[board_array_y][board_array_x] == ENERGY_WAVE)
+        return 0;
+
     return 1;
 }

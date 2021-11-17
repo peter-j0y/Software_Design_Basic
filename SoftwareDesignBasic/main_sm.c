@@ -1,7 +1,9 @@
 #include "zombie_world.h"
 
+
 int main()
-{
+{   
+    start = clock();
     RemoveCursor();
     srand(time(0));
     system("mode con cols=130 lines=40"); //콘솔창 크기 조절
