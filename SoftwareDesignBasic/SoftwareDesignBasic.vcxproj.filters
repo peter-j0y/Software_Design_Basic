@@ -45,6 +45,9 @@
     <ClCompile Include="setting_map.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="item.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="zombie_world.h">

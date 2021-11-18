@@ -68,6 +68,9 @@ void LifeSetting() {
     for (int i = 0; i < 3; i++) {
         printf("    ");
     }
+    if (life > 3) {
+        life = 3;
+    }
     SetCurrentCursorPos(LIFE_X, LIFE_Y);
     for (int i = 0; i < life; i++) {
         printf("¢¾ ");

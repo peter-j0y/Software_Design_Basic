@@ -269,6 +269,10 @@ int BossZombieDetectCollision(int x, int y)
             {
                 ;
             }
+            else if (game_board[board_array_y + y][board_array_x + x] == ITEM)
+            {
+                return 1;
+            }
         }
     }
     return 0;
@@ -289,6 +293,10 @@ int EnergyWaveDetectCollision(int x, int y)
         return 1;
     }
     else if (game_board[board_array_y][board_array_x] == ZOMBIE)
+    {
+        return 1;
+    }
+    else if (game_board[board_array_y][board_array_x] == ITEM)
     {
         return 1;
     }

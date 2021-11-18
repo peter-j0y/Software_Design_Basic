@@ -141,6 +141,7 @@
   <ItemGroup>
     <ClCompile Include="boss_zombie.c" />
     <ClCompile Include="cursor_function.c" />
+    <ClCompile Include="item.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="main_character.c" />
     <ClCompile Include="main_hw.c" />

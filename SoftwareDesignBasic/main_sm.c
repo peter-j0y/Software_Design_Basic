@@ -11,6 +11,9 @@ int main()
     DrawGameBoard();
     SettingMap();
 
+    RandomItem();
+    ShowItem();
+  
     SetCurrentCursorPos(main_character_position.X, main_character_position.Y);
     ShowBlock(main_character[main_character_id]);
     MakeBossZombie();

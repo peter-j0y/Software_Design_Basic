@@ -184,6 +184,10 @@ int NormalZombieDetectCollision(int position_x, int position_y)
 					RemoveEnergyWave(remove_energy_wave);
 				return 1;
 			}
+			if (game_board[board_array_y + y][board_array_x + x] == ITEM)
+			{
+				return 1;
+			}
 		}
 	}
 

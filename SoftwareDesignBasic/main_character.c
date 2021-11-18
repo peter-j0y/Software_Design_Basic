@@ -330,8 +330,8 @@ int MainCharacterDetectCollision(int position_x, int position_y, char main_chara
             }
             if ((main_character[y][x] == PLAYER && game_board[board_array_y + y][board_array_x + x] == ITEM) || (main_character[y][x] == PLAYER_RIGHT && game_board[board_array_y + y][board_array_x + x] == ITEM))         //메인 캐릭터와 아이템 충돌
             {
-                ;
-            }
+                ItemEffect();
+            }// 아이템과 부딪히면 아이템 효과 발동
         }
     }
     return 1;
@@ -346,7 +346,9 @@ int GunDetectCollision(int position_x, int position_y) {
         return 0;
     if (game_board[board_array_y][board_array_x] == ZOMBIE)     // 메인 캐릭터와 좀비가 부딪혔을 때
         return 0;
-    if (game_board[board_array_y][board_array_x] == ENERGY_WAVE)
+    if (game_board[board_array_y][board_array_x] == ENERGY_WAVE) // 메인 캐릭터가 에너지파에 맞았을 때
+        return 0;
+    if (game_board[board_array_y][board_array_x] == ITEM)      // 메인 캐릭터가 아이템에 부딪쳤을 때
         return 0;
 
     return 1;

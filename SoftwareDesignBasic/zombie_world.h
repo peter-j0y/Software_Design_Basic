@@ -142,3 +142,17 @@ void WeaponSetting();
 void StageSetting();
 void SettingMap();
 //////////////////////////////////////setting_map.h에 있던거/////////////////////////////////////
+
+int item_type;
+int item_location;
+int board_array_x, board_array_y;
+COORD item_pos;
+void ShowItem();
+void DeleteItem();
+void ItemEffect();
+void LifeIncreaseItem();
+void ZombieSpeedDecreaseItem();
+void DoubleScoreItem();
+
+
+///////////////////////////////////////////item///////////////////////////////////////////////////
