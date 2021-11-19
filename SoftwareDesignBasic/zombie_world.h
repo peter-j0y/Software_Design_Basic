@@ -54,12 +54,17 @@ COORD GetCurrentCursorPos(void);
 #define SPACE 32
 #define INITIAL_MAIN_CHARACTER_POS_X 65
 #define INITIAL_MAIN_CHARACTER_POS_Y 20
+#define WEAPON_1 49
+#define WEAPON_2 50
+#define WEAPON_3 51
+#define WEAPON_4 52
+#define WEAPON_5 53
 
 extern COORD main_character_position;
 extern int main_character_id;
 extern int invincibility_flag;
 extern int GunDirection;
-clock_t start, end;
+clock_t shoot_start, shoot_end, gun_start, gun_end;
 extern char main_character[][2][2];               // 메인 캐릭터 표시
 
 

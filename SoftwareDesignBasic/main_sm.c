@@ -3,7 +3,8 @@
 
 int main()
 {   
-    start = clock();
+    shoot_start = clock();
+    gun_start = clock();
     RemoveCursor();
     srand(time(0));
     system("mode con cols=130 lines=40"); //콘솔창 크기 조절

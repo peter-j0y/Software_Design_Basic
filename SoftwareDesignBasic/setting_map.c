@@ -1,7 +1,7 @@
 //#pragma once
 #include "zombie_world.h"
 
-int score = 0, life = 3, stage = 3, weapon = 3;  //점수, 생명력, 스테이지, 무기의 변수
+int score = 0, life = 3, stage = 5, weapon = 1;  //점수, 생명력, 스테이지, 무기의 변수
 const char* weapon_name[5] = { "권총", "기관단총", "샷건", "저격총", "바주카" }; //무기 종류
 
 int game_board[GBOARD_HEIGHT + 2][GBOARD_WIDTH + 2];
@@ -80,7 +80,7 @@ void WeaponSetting() {
     SetCurrentCursorPos(USE_WEAPON_X, USE_WEAPON_Y);
     for (int i = 1; i <= 5; i++) {
         if (i == weapon)
-            printf("%s", weapon_name[i - 1]);
+            printf("%s    ", weapon_name[i - 1]);
     }
     SetCurrentCursorPos(USABLE_WEAPON_X, USABLE_WEAPON_Y);
     for (int i = 1; i <= 5; i++) {
@@ -88,6 +88,7 @@ void WeaponSetting() {
             printf("%s  ", weapon_name[i - 1]);
         }
     }
+    printf("                        ");
 }
 void StageSetting() {
     SetCurrentCursorPos(STAGE_X, STAGE_Y);

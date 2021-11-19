@@ -163,85 +163,201 @@ void ShootGun() {
     int y = main_character_position.Y;
     switch (GunDirection) {
     case LEFT:
-        while (1) {
-            if (!GunDetectCollision(x - 2, y))
-                break;
-            x = x - 2;
-            ShowShooting(x, y);
+        if (weapon == 1 || weapon == 2) {
+            while (1) {
+                if (!(GunDetectCollision(x - 2, y) == 1))
+                    break;
+                x = x - 2;
+                ShowShooting(x, y);
+             }
+            Sleep(50);
+            x = main_character_position.X;
+            y = main_character_position.Y;
+            while (1) {
+                if (!(GunDetectCollision(x - 2, y) == 1))
+                    break;
+                x = x - 2;
+                SetCurrentCursorPos(x, y);
+                DeleteShooting(x, y);
+            }
+                
         }
-        Sleep(50);
-        x = main_character_position.X;
-        y = main_character_position.Y;
-        while (1) {
-            if (!GunDetectCollision(x - 2, y))
-                break;
-            x = x - 2;
-            SetCurrentCursorPos(x, y);
-            DeleteShooting(x, y);
-        }
+         else if (weapon == 4) {
+            while(1){
+                if (GunDetectCollision(x - 2, y) == 2) {
+                    x = x - 2;
+                    continue;
+                }
+                else if (GunDetectCollision(x - 2, y) != 1)
+                    break;
+                x = x - 2;
+                ShowShooting(x, y);
+                }
+            Sleep(50);
+            x = main_character_position.X;
+            y = main_character_position.Y;
+            while (1) {
+                if (GunDetectCollision(x - 2, y) == 2) {
+                    x = x - 2;
+                    continue;
+                }
+                else if (GunDetectCollision(x - 2, y) != 1)
+                    break;
+               x = x - 2;
+               DeleteShooting(x, y);
+            }
+         }
+            
         break;
     case UP:
         x = x + 2;
-        while (1) {
-            if (!GunDetectCollision(x, y - 1))
-                break;
-            y = y - 1;
-            ShowShooting(x, y);
+        if (weapon == 1 || weapon == 2) {
+            while (1) {
+                if (!(GunDetectCollision(x, y - 1) == 1))
+                    break;
+                y = y - 1;
+                ShowShooting(x, y);
+            }
+            Sleep(50);
+            x = main_character_position.X;
+            y = main_character_position.Y;
+            x = x + 2;
+            while (1) {
+                if (!(GunDetectCollision(x, y - 1) == 1))
+                    break;
+                y = y - 1;
+                SetCurrentCursorPos(x, y);
+                DeleteShooting(x, y);
+            }
         }
-        Sleep(50);
-        x = main_character_position.X;
-        y = main_character_position.Y;
-        x = x + 2;
-        while (1) {
-            if (!GunDetectCollision(x, y - 1))
-                break;
-            y = y - 1;
-            SetCurrentCursorPos(x, y);
-            DeleteShooting(x, y);
+        else if (weapon == 4) {
+            while (1) {
+                if (GunDetectCollision(x, y - 1) == 2) {
+                    y = y - 1;
+                    continue;
+                }
+                else if (GunDetectCollision(x , y - 1) != 1)
+                    break;
+                y = y - 1;
+                ShowShooting(x, y);
+            }
+            Sleep(50);
+            x = main_character_position.X;
+            y = main_character_position.Y;
+            x = x + 2;
+            while (1) {
+                if (GunDetectCollision(x, y - 1) == 2) {
+                    y = y - 1;
+                    continue;
+                }
+                else if (GunDetectCollision(x, y - 1) != 1)
+                    break;
+                y = y - 1;
+                DeleteShooting(x, y);
+            }
         }
         break;
     case RIGHT:
         x = x + 2;
         y = y + 1;
-        while (1) {
-            if (!GunDetectCollision(x + 2, y))
-                break;
+        if (weapon == 1 || weapon == 2) {
+            while (1) {
+                if (!(GunDetectCollision(x + 2, y) == 1))
+                    break;
+                x = x + 2;
+                ShowShooting(x, y);
+            }
+            Sleep(50);
+            x = main_character_position.X;
+            y = main_character_position.Y;
             x = x + 2;
-            ShowShooting(x, y);
+            y = y + 1;
+            while (1) {
+                if (!(GunDetectCollision(x + 2, y) == 1))
+                    break;
+                x = x + 2;
+                SetCurrentCursorPos(x, y);
+                DeleteShooting(x, y);
+            }
         }
-        Sleep(50);
-        x = main_character_position.X;
-        y = main_character_position.Y;
-        x = x + 2;
-        y = y + 1;
-        while (1) {
-            if (!GunDetectCollision(x + 2, y))
-                break;
+        else if (weapon == 4) {
+            while (1) {
+                if (GunDetectCollision(x + 2, y) == 2) {
+                    x = x + 2;
+                    continue;
+                }
+                else if (GunDetectCollision(x + 2, y) != 1)
+                    break;
+                x = x + 2;
+                ShowShooting(x, y);
+            }
+            Sleep(50);
+            x = main_character_position.X;
+            y = main_character_position.Y;
             x = x + 2;
-            SetCurrentCursorPos(x, y);
-            DeleteShooting(x, y);
+            y = y + 1;
+            while (1) {
+                if (GunDetectCollision(x + 2, y) == 2) {
+                    x = x + 2;
+                    continue;
+                }
+                else if (GunDetectCollision(x + 2, y) != 1)
+                    break;
+                x = x + 2;
+                DeleteShooting(x, y);
+            }
         }
+        
         break;
     case DOWN:
         y = y + 1;
-        while (1) {
-            if (!GunDetectCollision(x, y + 1))
-                break;
+        if (weapon == 1 || weapon == 2) {
+            while (1) {
+                if (!(GunDetectCollision(x, y + 1) == 1))
+                    break;
+                y = y + 1;
+                ShowShooting(x, y);
+            }
+            Sleep(50);
+            x = main_character_position.X;
+            y = main_character_position.Y;
             y = y + 1;
-            ShowShooting(x, y);
+            while (1) {
+                if (!(GunDetectCollision(x, y + 1) == 1))
+                    break;
+                y = y + 1;
+                SetCurrentCursorPos(x, y);
+                DeleteShooting(x, y);
+            }
+            break;
         }
-        Sleep(50);
-        x = main_character_position.X;
-        y = main_character_position.Y;
-        y = y + 1;
-        while (1) {
-            if (!GunDetectCollision(x, y + 1))
-                break;
+        else if (weapon == 4) {
+            while (1) {
+                if (GunDetectCollision(x, y + 1) == 2) {
+                    y = y + 1;
+                    continue;
+                }
+                else if (GunDetectCollision(x, y + 1) != 1)
+                    break;
+                y = y + 1;
+                ShowShooting(x, y);
+            }
+            Sleep(50);
+            x = main_character_position.X;
+            y = main_character_position.Y;
             y = y + 1;
-            SetCurrentCursorPos(x, y);
-            DeleteShooting(x, y);
+            while (1) {
+                if (GunDetectCollision(x, y + 1) == 2) {
+                    y = y + 1;
+                    continue;
+                }
+                else if (GunDetectCollision(x, y + 1) != 1)
+                    break;
+                y = y + 1;
+                DeleteShooting(x, y);
+            }
         }
-        break;
+       
     }
 
 }
@@ -274,11 +390,83 @@ void ProcessKeyInput(int time)              // 방향키를 입력받아 움직이는 함수 �
                 break;
 
             case SPACE:
-                end = clock();
-                double time = (double)(end - start) / CLOCKS_PER_SEC;
-                if (time > 1) {
-                    start = clock();
+                shoot_end = clock();
+                double time = (double)(shoot_end - shoot_start) / CLOCKS_PER_SEC;
+                if (weapon == 1 && time > 1) {
+                    shoot_start = clock();
                     ShootGun();
+                }
+                else if (weapon == 2 && time > 0.3) {
+                    shoot_start = clock();
+                    ShootGun();
+                }
+                else if (weapon == 3 && time > 2) {
+                    shoot_start = clock();
+                    ShootGun();
+                }
+                else if (weapon == 4 && time > 1.5) {
+                    shoot_start = clock();
+                    ShootGun();
+                }
+                else if (weapon == 5 && time > 3) {
+                    shoot_start = clock();
+                    ShootGun();
+                }
+                break;
+
+            case WEAPON_1:
+                if (weapon != 1) {
+                    gun_end = clock();
+                    double time = (double)(gun_end - gun_start) / CLOCKS_PER_SEC;
+                    if (time > 3) {
+                        gun_start = clock();
+                        weapon = 1;
+                        WeaponSetting();
+                    }
+                }
+                break;
+            case WEAPON_2:
+                if (weapon != 2 && stage > 1) {
+                    gun_end = clock();
+                    double time = (double)(gun_end - gun_start) / CLOCKS_PER_SEC;
+                    if (time > 3) {
+                        gun_start = clock();
+                        weapon = 2;
+                        WeaponSetting();
+                    }
+                }
+                break;
+            case WEAPON_3:
+                if (weapon != 3 && stage > 2) {
+                    gun_end = clock();
+                    double time = (double)(gun_end - gun_start) / CLOCKS_PER_SEC;
+                    if (time > 3) {
+                        gun_start = clock();
+                        weapon = 3;
+                        WeaponSetting();
+                    }
+                }
+                break;
+            case WEAPON_4:
+                if (weapon != 4 && stage > 3) {
+                    gun_end = clock();
+                    double time = (double)(gun_end - gun_start) / CLOCKS_PER_SEC;
+                    if (time > 3) {
+                        gun_start = clock();
+                        weapon = 4;
+                        WeaponSetting();
+                    }
+                }
+                break;
+            case WEAPON_5:
+                if (weapon != 5 && stage > 4) {
+                    gun_end = clock();
+                    double time = (double)(gun_end - gun_start) / CLOCKS_PER_SEC;
+                    if (time > 3) {
+                        gun_start = clock();
+                        weapon = 5;
+                        WeaponSetting();
+                    }
                 }
                 break;
             }
@@ -345,9 +533,9 @@ int GunDetectCollision(int position_x, int position_y) {
     if (game_board[board_array_y][board_array_x] == MAP_BOUNDARY)     // 메인 캐릭터와 맵이 충돌할 때
         return 0;
     if (game_board[board_array_y][board_array_x] == ZOMBIE)     // 메인 캐릭터와 좀비가 부딪혔을 때
-        return 0;
+        return 2;
     if (game_board[board_array_y][board_array_x] == ENERGY_WAVE) // 메인 캐릭터가 에너지파에 맞았을 때
-        return 0;
+        return 2;
     if (game_board[board_array_y][board_array_x] == ITEM)      // 메인 캐릭터가 아이템에 부딪쳤을 때
         return 0;
 
