@@ -28,7 +28,7 @@ int main()
             RandomItem();
             ShowItem();
             item_flag =0;
-        }
+        }// 아이템 쿨 타임
      
         ShowEnergyWave();
         ProcessKeyInput(30);
