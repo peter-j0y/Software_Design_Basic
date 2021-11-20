@@ -44,17 +44,8 @@ void DeleteItem() {     // 아이템 삭제
 
 void ItemEffect() {   // 아이템을 먹었을 시 발생하는 효과
 	DeleteItem();
-
-	shoot_end = clock();
-	double time = (double)(shoot_end - shoot_start) / CLOCKS_PER_SEC;
-	SetCurrentCursorPos(GBOARD_ORIGIN_X + GBOARD_WIDTH, GBOARD_ORIGIN_Y + GBOARD_HEIGHT+10);
-	printf("%lf", time);
-	if (time > 5) {
-		shoot_start = clock();
-		RandomItem();
-		ShowItem();
-	}
-
+	item_start = clock();
+	item_flag = 1;
 	if (item_type == 0) {
 		LifeIncreaseItem();
 	}
