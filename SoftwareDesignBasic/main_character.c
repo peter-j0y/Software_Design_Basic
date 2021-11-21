@@ -1,4 +1,4 @@
-#include "zombie_world.h"
+ï»¿#include "zombie_world.h"
 
 COORD main_character_position = { INITIAL_MAIN_CHARACTER_POS_X ,INITIAL_MAIN_CHARACTER_POS_Y };
 int main_character_id = 0;
@@ -7,7 +7,7 @@ int GunDirection = UP;
 
 
 
-char main_character[][2][2] =                     // ¸ŞÀÎ Ä³¸¯ÅÍ Ç¥½Ã
+char main_character[][2][2] =                     // ë©”ì¸ ìºë¦­í„° í‘œì‹œ
 {
     {
         {2, 7},
@@ -27,7 +27,7 @@ char main_character[][2][2] =                     // ¸ŞÀÎ Ä³¸¯ÅÍ Ç¥½Ã
     }
 };
 
-void DeleteBlock(char main_character[2][2])               // Ãâ·ÂµÈ ºí·ÏÀ» »èÁ¦ÇÏ´Â ÇÔ¼ö
+void DeleteBlock(char main_character[2][2])               // ì¶œë ¥ëœ ë¸”ë¡ì„ ì‚­ì œí•˜ëŠ” í•¨ìˆ˜
 {
     int y, x;
     COORD current_position = main_character_position;
@@ -39,7 +39,7 @@ void DeleteBlock(char main_character[2][2])               // Ãâ·ÂµÈ ºí·ÏÀ» »èÁ¦Ç
         for (x = 0; x < 2; x++)
         {
             SetCurrentCursorPos(current_position.X + (x * 2), current_position.Y + y);
-            if (main_character[y][x] == 2 || main_character[y][x] == 7)              // ¸ŞÀÎ Ä³¸¯ÅÍ¿¡ Àû¿ë
+            if (main_character[y][x] == 2 || main_character[y][x] == 7)              // ë©”ì¸ ìºë¦­í„°ì— ì ìš©
             {
                 printf("  ");
                 game_board[board_array_y + y][board_array_x + x] = 0;
@@ -49,7 +49,7 @@ void DeleteBlock(char main_character[2][2])               // Ãâ·ÂµÈ ºí·ÏÀ» »èÁ¦Ç
     SetCurrentCursorPos(current_position.X, current_position.Y);
 }
 
-void ShowBlock(char main_character[2][2])                // ºí·ÏÀ» Ãâ·ÂÇÏ´Â ÇÔ¼ö
+void ShowBlock(char main_character[2][2])                // ë¸”ë¡ì„ ì¶œë ¥í•˜ëŠ” í•¨ìˆ˜
 {
     int y, x;
     COORD current_position = main_character_position;
@@ -61,21 +61,21 @@ void ShowBlock(char main_character[2][2])                // ºí·ÏÀ» Ãâ·ÂÇÏ´Â ÇÔ¼ö
         for (x = 0; x < 2; x++)
         {
             SetCurrentCursorPos(current_position.X + (x * 2), current_position.Y + y);
-            if (main_character[y][x] == 2)                          // ¸ŞÀÎ Ä³¸¯ÅÍ¿¡ Àû¿ë    
+            if (main_character[y][x] == 2)                          // ë©”ì¸ ìºë¦­í„°ì— ì ìš©    
             {
-                printf("¡á");
+                printf("â– ");
                 game_board[board_array_y + y][board_array_x + x] = PLAYER;
             }
-            if (main_character[y][x] == 7)                          // ¸ŞÀÎ Ä³¸¯ÅÍ¿¡ Àû¿ë    
+            if (main_character[y][x] == 7)                          // ë©”ì¸ ìºë¦­í„°ì— ì ìš©    
             {
                 if (main_character_id == 0)
-                    printf("¡ã");
+                    printf("â–²");
                 if (main_character_id == 1)
-                    printf("¢¸");
+                    printf("â—€");
                 if (main_character_id == 2)
-                    printf("¡å");
+                    printf("â–¼");
                 if (main_character_id == 3)
-                    printf("¢º");
+                    printf("â–¶");
                 game_board[board_array_y + y][board_array_x + x] = PLAYER;
             }
         }
@@ -83,7 +83,7 @@ void ShowBlock(char main_character[2][2])                // ºí·ÏÀ» Ãâ·ÂÇÏ´Â ÇÔ¼ö
     SetCurrentCursorPos(current_position.X, current_position.Y);
 }
 
-void ShiftUp()                                  // »óÇÏÁÂ¿ì ¿òÁ÷ÀÓ
+void ShiftUp()                                  // ìƒí•˜ì¢Œìš° ì›€ì§ì„
 {
     if (!MainCharacterDetectCollision(main_character_position.X, main_character_position.Y - 1, main_character[main_character_id]))
         return;
@@ -130,9 +130,9 @@ void ShowShooting(int x, int y) {
 
 
     if (GunDirection == RIGHT || GunDirection == LEFT)
-        printf("¦¡");
+        printf("â”€");
     else
-        printf("¦¢");
+        printf("â”‚");
 
     game_board[board_array_y][board_array_x] = GUN;
 
@@ -158,6 +158,195 @@ void DeleteShooting(int x, int y) {
 
 }
 
+ShowShotgun(int x, int y) {
+    int cnt, break_cnt = 0;
+    switch (GunDirection) {
+    case LEFT:
+        for (int i = 0; i < SHOTGUN_RANGE; i= i+2) {
+            cnt = -1 * i;
+            if (i == 0) {
+                if (!(GunDetectCollision(x, y) == 1))
+                    break;
+                SetCurrentCursorPos(x, y);
+                printf("ã†");
+                game_board[y - GBOARD_ORIGIN_Y][((x - GBOARD_ORIGIN_X) / 2)] = GUN;
+                if (!(GunDetectCollision(x - 2, y) == 1))
+                    break;
+            }
+            else {
+                while (cnt <= i) { 
+                    SetCurrentCursorPos(x - i, y + cnt/2);
+                    if (!(GunDetectCollision(x - i, y + cnt/2) == 1)) {
+                        break_cnt++;
+                        cnt += 2;
+                        continue;
+                    }
+                    else {
+                        if (cnt == -1 * i)printf("ã†");
+                        else if (cnt == i)printf("ã†");
+                        else printf("ã†");
+
+                        game_board[y - GBOARD_ORIGIN_Y + cnt / 2][((x - GBOARD_ORIGIN_X - i) / 2)] = GUN;
+                    }
+                    cnt += 2;
+                }
+            }
+            if (break_cnt > i * 2)break;
+            break_cnt = 0;
+        }
+        Sleep(150);
+        for (int i = 0; i < SHOTGUN_RANGE; i = i + 2) {
+            cnt = -1 * i;
+            while (cnt <= i) {
+                if (game_board[y - GBOARD_ORIGIN_Y + cnt / 2][((x - GBOARD_ORIGIN_X - i) / 2)] == GUN) {
+                    SetCurrentCursorPos(x - i, y + cnt / 2);
+                    printf("  ");
+                    game_board[y - GBOARD_ORIGIN_Y + cnt / 2][((x - GBOARD_ORIGIN_X - i) / 2)] = 0;
+                }
+                cnt += 2;
+            }
+        }
+        break;
+    case UP:
+        for (int i = 0; i < SHOTGUN_RANGE; i = i + 2) {
+            cnt = -1 * i;
+            if (i == 0) {
+                if (!(GunDetectCollision(x, y) == 1))
+                    break;
+                SetCurrentCursorPos(x, y);
+                printf("ã†");
+                game_board[y - GBOARD_ORIGIN_Y][((x - GBOARD_ORIGIN_X) / 2)] = GUN;
+                if (!(GunDetectCollision(x, y - 1) == 1))
+                    break;
+            }
+            else {
+                while (cnt <= i) {
+                    SetCurrentCursorPos(x + cnt, y - i / 2);
+                    if (!(GunDetectCollision(x + cnt, y - i / 2) == 1)) {
+                        break_cnt++;
+                        cnt += 2;
+                        continue;
+                    }
+                    else {
+                        if (cnt == -1 * i)printf("ã†");
+                        else if (cnt == i)printf("ã†");
+                        else printf("ã†");
+
+                        game_board[y - GBOARD_ORIGIN_Y - i / 2][((x - GBOARD_ORIGIN_X + cnt) / 2)] = GUN;
+                    }
+                    cnt += 2;
+                }
+            }
+            if (break_cnt > i * 2)break;
+            break_cnt = 0;
+        }
+        Sleep(150);
+        for (int i = 0; i < SHOTGUN_RANGE; i = i + 2) {
+            cnt = -1 * i;
+            while (cnt <= i) {
+                if (game_board[y - GBOARD_ORIGIN_Y - i / 2][((x - GBOARD_ORIGIN_X + cnt) / 2)] == GUN) {
+                    SetCurrentCursorPos(x + cnt, y - i / 2);
+                    printf("  ");
+                    game_board[y - GBOARD_ORIGIN_Y - i / 2][((x - GBOARD_ORIGIN_X + cnt) / 2)] = 0;
+                }
+                cnt += 2;
+            }
+        }
+        break;
+    case RIGHT:
+        for (int i = 0; i < SHOTGUN_RANGE; i = i + 2) {
+            cnt = -1 * i;
+            if (i == 0) {
+                if (!(GunDetectCollision(x, y) == 1))
+                    break;
+                SetCurrentCursorPos(x, y);
+                printf("ã†");
+                game_board[y - GBOARD_ORIGIN_Y][((x - GBOARD_ORIGIN_X) / 2)] = GUN;
+                if (!(GunDetectCollision(x + 2, y) == 1))
+                    break;
+            }
+            else {
+                while (cnt <= i) {
+                    SetCurrentCursorPos(x + i, y + cnt / 2);
+                    if (!(GunDetectCollision(x + i, y + cnt / 2) == 1)) {
+                        break_cnt++;
+                        cnt += 2;
+                        continue;
+                    }
+                    else {
+                        if (cnt == -1 * i)printf("ã†");
+                        else if (cnt == i)printf("ã†");
+                        else printf("ã†");
+
+                        game_board[y - GBOARD_ORIGIN_Y + cnt / 2][((x - GBOARD_ORIGIN_X + i) / 2)] = GUN;
+                    }
+                    cnt += 2;
+                }
+            }
+            if (break_cnt > i * 2)break;
+            break_cnt = 0;
+        }
+        Sleep(150);
+        for (int i = 0; i < SHOTGUN_RANGE; i = i + 2) {
+            cnt = -1 * i;
+            while (cnt <= i) {
+                if (game_board[y - GBOARD_ORIGIN_Y + cnt / 2][((x - GBOARD_ORIGIN_X + i) / 2)] == GUN) {
+                    SetCurrentCursorPos(x + i, y + cnt / 2);
+                    printf("  ");
+                    game_board[y - GBOARD_ORIGIN_Y + cnt / 2][((x - GBOARD_ORIGIN_X + i) / 2)] = 0;
+                }
+                cnt += 2;
+            }
+        }
+        break;
+    case DOWN:
+        for (int i = 0; i < SHOTGUN_RANGE; i = i + 2) {
+            cnt = -1 * i;
+            if (i == 0) {
+                if (!(GunDetectCollision(x, y) == 1))
+                    break;
+                SetCurrentCursorPos(x, y);
+                printf("ã†");
+                game_board[y - GBOARD_ORIGIN_Y][((x - GBOARD_ORIGIN_X) / 2)] = GUN;
+                if (!(GunDetectCollision(x, y + 1) == 1))
+                    break;
+            }
+            else {
+                while (cnt <= i) {
+                    SetCurrentCursorPos(x + cnt, y + i/2);
+                    if (!(GunDetectCollision(x + cnt, y + i/2) == 1)) {
+                        break_cnt++;
+                        cnt += 2;
+                        continue;
+                    }
+                    else {
+                        if (cnt == -1 * i)printf("ã†");
+                        else if (cnt == i)printf("ã†");
+                        else printf("ã†");
+
+                        game_board[y - GBOARD_ORIGIN_Y + i/2][((x - GBOARD_ORIGIN_X + cnt) / 2)] = GUN;
+                    }
+                    cnt += 2;
+                }
+            }
+            if (break_cnt > i * 2)break;
+            break_cnt = 0;
+        }
+        Sleep(150);
+        for (int i = 0; i < SHOTGUN_RANGE; i = i + 2) {
+            cnt = -1 * i;
+            while (cnt <= i) {
+                if (game_board[y - GBOARD_ORIGIN_Y + i/2][((x - GBOARD_ORIGIN_X + cnt) / 2)] == GUN) {
+                    SetCurrentCursorPos(x + cnt, y + i / 2);
+                    printf("  ");
+                    game_board[y - GBOARD_ORIGIN_Y + i / 2][((x - GBOARD_ORIGIN_X + cnt) / 2)] = 0;
+                }
+                cnt += 2;
+            }
+        }
+        break;
+    }
+}
 void ShootGun() {
     int x = main_character_position.X;
     int y = main_character_position.Y;
@@ -207,7 +396,9 @@ void ShootGun() {
                DeleteShooting(x, y);
             }
          }
-            
+         else if (weapon == 3) {
+            ShowShotgun(x-2,y);
+        }
         break;
     case UP:
         x = x + 2;
@@ -255,6 +446,9 @@ void ShootGun() {
                 y = y - 1;
                 DeleteShooting(x, y);
             }
+        }
+        else if (weapon == 3) {
+            ShowShotgun(x, y - 1);
         }
         break;
     case RIGHT:
@@ -307,7 +501,9 @@ void ShootGun() {
                 DeleteShooting(x, y);
             }
         }
-        
+        else if (weapon == 3) {
+            ShowShotgun(x + 2, y);
+        }
         break;
     case DOWN:
         y = y + 1;
@@ -357,12 +553,14 @@ void ShootGun() {
                 DeleteShooting(x, y);
             }
         }
-       
+        else if (weapon == 3) {
+            ShowShotgun(x, y + 1);
+        }
     }
 
 }
 
-void ProcessKeyInput(int time)              // ¹æÇâÅ°¸¦ ÀÔ·Â¹Ş¾Æ ¿òÁ÷ÀÌ´Â ÇÔ¼ö Àû¿ë (time ±âº»°ª 30)
+void ProcessKeyInput(int time)              // ë°©í–¥í‚¤ë¥¼ ì…ë ¥ë°›ì•„ ì›€ì§ì´ëŠ” í•¨ìˆ˜ ì ìš© (time ê¸°ë³¸ê°’ 30)
 {
     int key_input;
     for (int i = 0; i < 20; i++)
@@ -498,17 +696,17 @@ int MainCharacterDetectCollision(int position_x, int position_y, char main_chara
     {
         for (int y = 0; y < 2; y++)
         {
-            if ((main_character[y][x] == PLAYER && game_board[board_array_y + y][board_array_x + x] == MAP_BOUNDARY) || (main_character[y][x] == PLAYER_RIGHT && game_board[board_array_y + y][board_array_x + x] == MAP_BOUNDARY))     // ¸ŞÀÎ Ä³¸¯ÅÍ¿Í ¸ÊÀÌ Ãæµ¹ÇÒ ¶§
+            if ((main_character[y][x] == PLAYER && game_board[board_array_y + y][board_array_x + x] == MAP_BOUNDARY) || (main_character[y][x] == PLAYER_RIGHT && game_board[board_array_y + y][board_array_x + x] == MAP_BOUNDARY))     // ë©”ì¸ ìºë¦­í„°ì™€ ë§µì´ ì¶©ëŒí•  ë•Œ
             {
                 return 0;
             }
-            if ((main_character[y][x] == PLAYER && game_board[board_array_y + y][board_array_x + x] == ZOMBIE) || (main_character[y][x] == PLAYER_RIGHT && game_board[board_array_y + y][board_array_x + x] == ZOMBIE))     // ¸ŞÀÎ Ä³¸¯ÅÍ¿Í Á»ºñ°¡ ºÎµúÇûÀ» ¶§
+            if ((main_character[y][x] == PLAYER && game_board[board_array_y + y][board_array_x + x] == ZOMBIE) || (main_character[y][x] == PLAYER_RIGHT && game_board[board_array_y + y][board_array_x + x] == ZOMBIE))     // ë©”ì¸ ìºë¦­í„°ì™€ ì¢€ë¹„ê°€ ë¶€ë”ªí˜”ì„ ë•Œ
             {
                 if (invincibility_flag == 0)
                     LifeDecrease(PLAYER);
                 return 0;
             }
-            if ((main_character[y][x] == PLAYER && game_board[board_array_y + y][board_array_x + x] == ENERGY_WAVE) || (main_character[y][x] == PLAYER_RIGHT && game_board[board_array_y + y][board_array_x + x] == ENERGY_WAVE))  //¸ŞÀÎ Ä³¸¯ÅÍ¿Í Á»ºñ¿¡³ÊÁöÆÄ°¡ ºÎµúÇûÀ»¶§
+            if ((main_character[y][x] == PLAYER && game_board[board_array_y + y][board_array_x + x] == ENERGY_WAVE) || (main_character[y][x] == PLAYER_RIGHT && game_board[board_array_y + y][board_array_x + x] == ENERGY_WAVE))  //ë©”ì¸ ìºë¦­í„°ì™€ ì¢€ë¹„ì—ë„ˆì§€íŒŒê°€ ë¶€ë”ªí˜”ì„ë•Œ
             {
                 EnergyWave_Info* remove_energy_wave = FindEnergyWave(position_x + x * 2, position_y + y);
                 if (remove_energy_wave != NULL)
@@ -516,10 +714,10 @@ int MainCharacterDetectCollision(int position_x, int position_y, char main_chara
                 LifeDecrease(PLAYER);
                 return 0;
             }
-            if ((main_character[y][x] == PLAYER && game_board[board_array_y + y][board_array_x + x] == ITEM) || (main_character[y][x] == PLAYER_RIGHT && game_board[board_array_y + y][board_array_x + x] == ITEM))         //¸ŞÀÎ Ä³¸¯ÅÍ¿Í ¾ÆÀÌÅÛ Ãæµ¹
+            if ((main_character[y][x] == PLAYER && game_board[board_array_y + y][board_array_x + x] == ITEM) || (main_character[y][x] == PLAYER_RIGHT && game_board[board_array_y + y][board_array_x + x] == ITEM))         //ë©”ì¸ ìºë¦­í„°ì™€ ì•„ì´í…œ ì¶©ëŒ
             {
                 ItemEffect();
-            }// ¾ÆÀÌÅÛ°ú ºÎµúÈ÷¸é ¾ÆÀÌÅÛ È¿°ú ¹ßµ¿
+            }// ì•„ì´í…œê³¼ ë¶€ë”ªíˆë©´ ì•„ì´í…œ íš¨ê³¼ ë°œë™
         }
     }
     return 1;
@@ -530,13 +728,13 @@ int GunDetectCollision(int position_x, int position_y) {
     int board_array_x = ((position_x - GBOARD_ORIGIN_X) / 2);
     int board_array_y = (position_y - GBOARD_ORIGIN_Y);
 
-    if (game_board[board_array_y][board_array_x] == MAP_BOUNDARY)     // ¸ŞÀÎ Ä³¸¯ÅÍ¿Í ¸ÊÀÌ Ãæµ¹ÇÒ ¶§
+    if (game_board[board_array_y][board_array_x] == MAP_BOUNDARY)     // ë©”ì¸ ìºë¦­í„°ì™€ ë§µì´ ì¶©ëŒí•  ë•Œ
         return 0;
-    if (game_board[board_array_y][board_array_x] == ZOMBIE)     // ¸ŞÀÎ Ä³¸¯ÅÍ¿Í Á»ºñ°¡ ºÎµúÇûÀ» ¶§
+    if (game_board[board_array_y][board_array_x] == ZOMBIE)     // ë©”ì¸ ìºë¦­í„°ì™€ ì¢€ë¹„ê°€ ë¶€ë”ªí˜”ì„ ë•Œ
         return 2;
-    if (game_board[board_array_y][board_array_x] == ENERGY_WAVE) // ¸ŞÀÎ Ä³¸¯ÅÍ°¡ ¿¡³ÊÁöÆÄ¿¡ ¸Â¾ÒÀ» ¶§
+    if (game_board[board_array_y][board_array_x] == ENERGY_WAVE) // ë©”ì¸ ìºë¦­í„°ê°€ ì—ë„ˆì§€íŒŒì— ë§ì•˜ì„ ë•Œ
         return 2;
-    if (game_board[board_array_y][board_array_x] == ITEM)      // ¸ŞÀÎ Ä³¸¯ÅÍ°¡ ¾ÆÀÌÅÛ¿¡ ºÎµúÃÆÀ» ¶§
+    if (game_board[board_array_y][board_array_x] == ITEM)      // ë©”ì¸ ìºë¦­í„°ê°€ ì•„ì´í…œì— ë¶€ë”ªì³¤ì„ ë•Œ
         return 0;
 
     return 1;

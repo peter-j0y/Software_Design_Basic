@@ -124,6 +124,7 @@ int NormalZombieDetectCollision(int x, int y);							// 일반좀비 충돌감지
 #define USE_WEAPON_Y 37
 #define USABLE_WEAPON_X 57
 #define USABLE_WEAPON_Y 37
+#define SHOTGUN_RANGE 8
 
 #define MAP_BOUNDARY 1
 #define PLAYER 2
