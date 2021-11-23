@@ -5,6 +5,9 @@
 #include <time.h>
 #include <stdlib.h>
 
+//////////////////////////////////////play_game.c에 있는 함수//////////////////////////////////
+void PlayGame();
+
 //////////////////////////////////////bosszombie.h에 있던거/////////////////////////////////////
 typedef struct Boss_Zombie_Info {
     COORD pos;
@@ -52,6 +55,7 @@ COORD GetCurrentCursorPos(void);
 #define LEFT 75
 #define RIGHT 77
 #define SPACE 32
+#define ENTER 13
 #define INITIAL_MAIN_CHARACTER_POS_X 65
 #define INITIAL_MAIN_CHARACTER_POS_Y 20
 #define WEAPON_1 49

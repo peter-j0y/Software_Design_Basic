@@ -149,6 +149,7 @@
     <ClCompile Include="main_sj.c" />
     <ClCompile Include="main_sm.c" />
     <ClCompile Include="normal_zombie.c" />
+    <ClCompile Include="game_menu.c" />
     <ClCompile Include="setting_map.c" />
   </ItemGroup>
   <ItemGroup>
