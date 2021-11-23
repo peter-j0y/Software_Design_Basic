@@ -158,7 +158,7 @@ void DeleteShooting(int x, int y) {
 
 }
 
-ShowShotgun(int x, int y) {
+void ShowShotgun(int x, int y) {
     int cnt, break_cnt = 0;
     switch (GunDirection) {
     case LEFT:

@@ -76,6 +76,7 @@ void ShiftRight();
 void ShiftLeft();
 void ShowShooting(int x, int y);
 void DeleteShooting(int x, int y);
+void ShowShotgun(int x, int y);
 void ShootGun();
 void ProcessKeyInput(int time);
 void LifeDecrease();
