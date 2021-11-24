@@ -40,6 +40,33 @@ void PlayGame()
 void Menual()
 {
     system("cls");
+    SetCurrentCursorPos(44, 2);
+    printf("*********게임소개********");
+    SetCurrentCursorPos(5, 4);
+    printf("나는 바이러스 연구소장 이민석...");
+    SetCurrentCursorPos(72, 5);
+    printf("※※※");
+    SetCurrentCursorPos(60, 6);
+    printf("보스좀비 :");
+    SetCurrentCursorPos(72, 6);
+    printf("※◈※");
+    SetCurrentCursorPos(80, 6);
+    printf("일반좀비 :");
+    SetCurrentCursorPos(92, 6);
+    printf("◆◆");
+    SetCurrentCursorPos(98, 6);
+    printf("아이템 :");
+    SetCurrentCursorPos(108, 6);
+    printf("♣");
+
+    SetCurrentCursorPos(92, 7);
+    printf("◆◆");
+    SetCurrentCursorPos(72, 7);
+    printf("※※※");
+    SetCurrentCursorPos(5, 6);
+    printf("누군가에 의해 좀비 바이러스가 유출됐다...!");
+    SetCurrentCursorPos(5, 8);
+    printf("어서 이곳을 탈출하고 세상을 구해야해!!!");
     SetCurrentCursorPos(44, 10);
     printf("**********조작법**********");
     SetCurrentCursorPos(32, 12);
