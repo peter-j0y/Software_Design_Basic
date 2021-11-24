@@ -95,8 +95,7 @@ int GunDetectCollision(int position_x, int position_y);
 
 //////////////////////////////////////normal_zombie.h에 있던거/////////////////////////////////////
 typedef struct Normal_Zombie_Info {
-    int x;
-    int y;
+    COORD pos;
     int hp;
     struct Normal_Zombie_Info* next;
 }Normal_Zombie_Info;
@@ -158,8 +157,15 @@ void StageSetting();
 void SettingMap();
 //////////////////////////////////////setting_map.h에 있던거/////////////////////////////////////
 int item_flag;
+int zombie_speed_flag;
+int score_flag;
+
 clock_t item_start;
 clock_t item_end;
+clock_t zombie_speed_decrease_start;
+clock_t zombie_speed_decrease_end;
+clock_t double_score_start;
+clock_t double_score_end;
 
 int item_type;
 int item_location;
@@ -175,5 +181,8 @@ void LifeIncreaseItem();
 void ZombieSpeedDecreaseItem();
 void DoubleScoreItem();
 
+void ItemTimer();
+void ZombieSpeedTimer();
+void ScoreTimer();
 
 ///////////////////////////////////////////item///////////////////////////////////////////////////

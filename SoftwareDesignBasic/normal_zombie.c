@@ -40,29 +40,29 @@ void DeletePrintedNormalZombie(int zombie_x, int zombie_y)
 void ShowNormalZombie() {
 	Normal_Zombie_Info* normal_zombie = normal_zombie_list_head;
 	while (normal_zombie != NULL) {
-		SetCurrentCursorPos(normal_zombie->x, normal_zombie->y);
-		PrintNormalZombie(normal_zombie->x, normal_zombie->y);
+		SetCurrentCursorPos(normal_zombie->pos.X, normal_zombie->pos.Y);
+		PrintNormalZombie(normal_zombie->pos.X, normal_zombie->pos.Y);
 		normal_zombie = normal_zombie->next;
 	}
 }
 
 void ShowOneNormalZombie(Normal_Zombie_Info* normal_zombie) {
-	SetCurrentCursorPos(normal_zombie->x, normal_zombie->y);
-	PrintNormalZombie(normal_zombie->x, normal_zombie->y);
+	SetCurrentCursorPos(normal_zombie->pos.X, normal_zombie->pos.Y);
+	PrintNormalZombie(normal_zombie->pos.X, normal_zombie->pos.Y);
 }
 
 void DeleteNormalZombie() {
 	Normal_Zombie_Info* normal_zombie = normal_zombie_list_head;
 	while (normal_zombie != NULL) {
-		SetCurrentCursorPos(normal_zombie->x, normal_zombie->y);
-		DeletePrintedNormalZombie(normal_zombie->x, normal_zombie->y);
+		SetCurrentCursorPos(normal_zombie->pos.X, normal_zombie->pos.Y);
+		DeletePrintedNormalZombie(normal_zombie->pos.X, normal_zombie->pos.Y);
 		normal_zombie = normal_zombie->next;
 	}
 }
 
 void DeleteOneNormalZombie(Normal_Zombie_Info* normal_zombie) {
-	SetCurrentCursorPos(normal_zombie->x, normal_zombie->y);
-	DeletePrintedNormalZombie(normal_zombie->x, normal_zombie->y);
+	SetCurrentCursorPos(normal_zombie->pos.X, normal_zombie->pos.Y);
+	DeletePrintedNormalZombie(normal_zombie->pos.X, normal_zombie->pos.Y);
 }
 
 void MoveNormalZombie() {
@@ -73,37 +73,37 @@ void MoveNormalZombie() {
 		DeleteOneNormalZombie(normal_zombie);
 		dir = rand() % 2;
 
-		if (main_character_position.X - normal_zombie->x == 0) {
+		if (main_character_position.X - normal_zombie->pos.X == 0) {
 			dir = 1;
 		}
-		else if (main_character_position.Y - normal_zombie->y == 0) {
+		else if (main_character_position.Y - normal_zombie->pos.Y == 0) {
 			dir = 0;
 		}
 
 		if (dir == 0)
 		{
-			if (main_character_position.X - normal_zombie->x < 0)
+			if (main_character_position.X - normal_zombie->pos.X < 0)
 			{
-				if (!NormalZombieDetectCollision(normal_zombie->x - 2, normal_zombie->y))
-					normal_zombie->x -= 2;
+				if (!NormalZombieDetectCollision(normal_zombie->pos.X - 2, normal_zombie->pos.Y))
+					normal_zombie->pos.X -= 2;
 			}
 			else
 			{
-				if (!NormalZombieDetectCollision(normal_zombie->x + 2, normal_zombie->y))
-					normal_zombie->x += 2;
+				if (!NormalZombieDetectCollision(normal_zombie->pos.X + 2, normal_zombie->pos.Y))
+					normal_zombie->pos.X += 2;
 			}
 		}
 		else if (dir == 1)
 		{
-			if (main_character_position.Y - normal_zombie->y < 0)
+			if (main_character_position.Y - normal_zombie->pos.Y < 0)
 			{
-				if (!NormalZombieDetectCollision(normal_zombie->x, normal_zombie->y - 1))
-					normal_zombie->y--;
+				if (!NormalZombieDetectCollision(normal_zombie->pos.X, normal_zombie->pos.Y - 1))
+					normal_zombie->pos.Y--;
 			}
 			else
 			{
-				if (!NormalZombieDetectCollision(normal_zombie->x, normal_zombie->y + 1))
-					normal_zombie->y++;
+				if (!NormalZombieDetectCollision(normal_zombie->pos.X, normal_zombie->pos.Y + 1))
+					normal_zombie->pos.Y++;
 			}
 		}
 		ShowOneNormalZombie(normal_zombie);
@@ -112,13 +112,12 @@ void MoveNormalZombie() {
 }
 
 void MakeNormalZombie() {
-	int x, y;
 	int n = STAGE;
 	int cnt = 0;
 
 	Normal_Zombie_Info* normal_zombie = (Normal_Zombie_Info*)malloc(sizeof(Normal_Zombie_Info));
-	normal_zombie->x = GBOARD_ORIGIN_X + GBOARD_WIDTH / 2 + 1;                                //좀비 리스폰 위치 추후 변경가능
-	normal_zombie->y = GBOARD_ORIGIN_Y + 5;
+	normal_zombie->pos.X = GBOARD_ORIGIN_X + GBOARD_WIDTH / 2 + 1;                                //좀비 리스폰 위치 추후 변경가능
+	normal_zombie->pos.Y = GBOARD_ORIGIN_Y + 5;
 	normal_zombie->hp = 70;
 	normal_zombie->next = NULL;
 	if (normal_zombie_list_head == NULL) {

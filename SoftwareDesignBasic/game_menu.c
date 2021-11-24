@@ -8,6 +8,7 @@ void PlayGame()
     gun_start = clock();
     item_start = clock();
     item_flag = 1;
+    zombie_speed_flag = 1;
 
     srand(time(0));
 
@@ -24,16 +25,11 @@ void PlayGame()
     ShowNormalZombie();
     while (1)
     {
-        item_end = clock();
-        double time = (double)(item_end - item_start) / CLOCKS_PER_SEC;
-        if (item_flag == 1 && time > 5) {
-            RandomItem();
-            ShowItem();
-            item_flag = 0;
-        }// 아이템 쿨 타임
+        ZombieSpeedTimer(); // ProcessKeyInput 가지고 있음
+        ScoreTimer();
+        ItemTimer();
 
         ShowEnergyWave();
-        ProcessKeyInput(30);
         MoveNormalZombie();
         MoveEnergyWave();
         MoveBossZombie();
