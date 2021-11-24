@@ -193,6 +193,7 @@ void MakeBossZombie() {
     boss_zombie->pos.X = GBOARD_ORIGIN_X + GBOARD_WIDTH / 2 + 1;                                //좀비 리스폰 위치 추후 변경가능
     boss_zombie->pos.Y = GBOARD_ORIGIN_Y + 10;
     boss_zombie->cool_time = 0;
+    boss_zombie->hp = 150;          //추후변경
     boss_zombie->next = NULL;
     if (boss_zombie_list_head == NULL) {
         boss_zombie_list_head = boss_zombie;
@@ -205,7 +206,7 @@ void MakeBossZombie() {
     last_boss_zombie->next = boss_zombie;
 }
 
-void RemoveBossZombie(Boss_Zombie_Info* dead_boss_zombie) {
+Boss_Zombie_Info* RemoveBossZombie(Boss_Zombie_Info* dead_boss_zombie) {
     Boss_Zombie_Info* boss_zombie = boss_zombie_list_head;
     Boss_Zombie_Info* prev = NULL;
     while (boss_zombie != dead_boss_zombie) {
@@ -214,9 +215,12 @@ void RemoveBossZombie(Boss_Zombie_Info* dead_boss_zombie) {
     }
     if (prev == NULL) {
         boss_zombie_list_head = NULL;
+        free(dead_boss_zombie);
+        return boss_zombie_list_head;
     }
     prev->next = dead_boss_zombie->next;
     free(dead_boss_zombie);
+    return prev->next;
 }
 
 EnergyWave_Info* RemoveEnergyWave(EnergyWave_Info* remove_energy_wave) {
@@ -317,4 +321,33 @@ EnergyWave_Info* FindEnergyWave(int x, int y)
         energy_wave = energy_wave->next;
     }
     return NULL;
+}
+
+Boss_Zombie_Info* findBossZombie(int x, int y)
+{
+    Boss_Zombie_Info* boss_zombie = boss_zombie_list_head;
+
+    while (boss_zombie)
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                if (boss_zombie->pos.X + i * 2 == x && boss_zombie->pos.Y + j == y
+                    || boss_zombie->pos.X + i * 2 + 1 == x && boss_zombie->pos.Y + j == y) {
+                    return boss_zombie;
+                }
+            }
+        }
+        boss_zombie = boss_zombie->next;
+    }
+    return NULL;
+}
+Boss_Zombie_Info* DecreaseBossZombieHp(Boss_Zombie_Info* boss_zombie, int damage)
+{
+    boss_zombie->hp -= damage;
+    if (boss_zombie->hp <= 0)
+    {
+        return RemoveBossZombie(boss_zombie);
+    }
 }

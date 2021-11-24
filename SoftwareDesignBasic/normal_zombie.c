@@ -119,6 +119,7 @@ void MakeNormalZombie() {
 	Normal_Zombie_Info* normal_zombie = (Normal_Zombie_Info*)malloc(sizeof(Normal_Zombie_Info));
 	normal_zombie->x = GBOARD_ORIGIN_X + GBOARD_WIDTH / 2 + 1;                                //좀비 리스폰 위치 추후 변경가능
 	normal_zombie->y = GBOARD_ORIGIN_Y + 5;
+	normal_zombie->hp = 70;
 	normal_zombie->next = NULL;
 	if (normal_zombie_list_head == NULL) {
 		normal_zombie_list_head = normal_zombie;
@@ -136,7 +137,7 @@ void MakeNormalZombie() {
 
 }
 
-void RemoveNormalZombie(Normal_Zombie_Info* dead_normal_zombie) {
+Normal_Zombie_Info* RemoveNormalZombie(Normal_Zombie_Info* dead_normal_zombie) {
 	Normal_Zombie_Info* normal_zombie = normal_zombie_list_head;
 	Normal_Zombie_Info* prev = NULL;
 	while (normal_zombie != dead_normal_zombie) {
@@ -145,9 +146,12 @@ void RemoveNormalZombie(Normal_Zombie_Info* dead_normal_zombie) {
 	}
 	if (prev == NULL) {
 		normal_zombie_list_head = NULL;
+		free(dead_normal_zombie);
+		return normal_zombie_list_head;
 	}
 	prev->next = dead_normal_zombie->next;
 	free(dead_normal_zombie);
+	return prev->next;
 }
 
 int NormalZombieDetectCollision(int position_x, int position_y)
@@ -192,4 +196,32 @@ int NormalZombieDetectCollision(int position_x, int position_y)
 	}
 
 	return 0;
+}
+Normal_Zombie_Info* findNormalZombie(int x, int y)
+{
+	Normal_Zombie_Info* normal_zombie = normal_zombie_list_head;
+
+	while (normal_zombie)
+	{
+		for (int i = 0; i < 2; i++)
+		{
+			for (int j = 0; j < 2; j++)
+			{
+				if (normal_zombie->pos.X + i * 2 == x && normal_zombie->pos.Y + j == y
+					|| normal_zombie->pos.X + i * 2 + 1 == x && normal_zombie->pos.Y + j == y) {
+					return normal_zombie;
+				}
+			}
+		}
+		normal_zombie = normal_zombie->next;
+	}
+	return NULL;
+}
+Boss_Zombie_Info* DecreaseNormalZombieHp(Boss_Zombie_Info* normal_zombie, int damage)
+{
+	normal_zombie->hp -= damage;
+	if (normal_zombie->hp < 0)
+	{
+		return RemoveNormalZombie(normal_zombie);
+	}
 }

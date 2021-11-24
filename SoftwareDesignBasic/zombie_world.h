@@ -14,6 +14,7 @@ void ChooseMenu();
 typedef struct Boss_Zombie_Info {
     COORD pos;
     int cool_time;
+    int hp;
     struct Boss_Zombie_Info* next;
 }Boss_Zombie_Info;
 
@@ -31,7 +32,7 @@ void MakeBossZombie();                      //보스좀비 생성
 void ShowBossZombie();                      //보스좀비들 화면에 출력
 void MoveBossZombie();                      //보스좀비 이동
 void DeleteBossZombie();                    //보스좀비들 화면에서 삭제
-void RemoveBossZombie(Boss_Zombie_Info* dead_boss_zombie); //보스좀비 개체삭제
+Boss_Zombie_Info* RemoveBossZombie(Boss_Zombie_Info* dead_boss_zombie); //보스좀비 개체삭제
 void MakeEnergyWave(COORD pos, int direction_x, int direction_y);          //에너지파 생성
 void ShowEnergyWave();                      //보스좀비의 에너지파 화면 출력
 void MoveEnergyWave();
@@ -43,6 +44,7 @@ void SetGameBoardEnergyWave(COORD pos);                                      //�
 void PrintBossZombie(COORD pos);                                             //3x3모양의 보스좀비 출력
 void DeletePrintedBossZombie(COORD pos);                                     //3x3모양의 보스좀비 삭제   
 EnergyWave_Info* FindEnergyWave(int x, int y);
+void SetGameBoardToZero(COORD pos);
 
 void RemoveCursor(void);
 void SetCurrentCursorPos(int x, int y);
@@ -108,7 +110,7 @@ void MakeNormalZombie();												// 일반 좀비 리스폰 위치에 랜덤으로 생성
 void ShowNormalZombie();												// 일반좀비들 화면에 출력
 void DeleteNormalZombie();												// 일반좀비들 이동을 위해 화면에서 삭제
 void MoveNormalZombie();                      // 일반좀비 이동
-void RemoveNormalZombie(Normal_Zombie_Info* dead_normal_zombie);		// 일반좀비 개체삭제(체력이 0이 되면 삭제)
+Normal_Zombie_Info* RemoveNormalZombie(Normal_Zombie_Info* dead_normal_zombie);// 일반좀비 개체삭제(체력이 0이 되면 삭제)
 int NormalZombieDetectCollision(int x, int y);							// 일반좀비 충돌감지
 
 //////////////////////////////////////normal_zombie.h에 있던거/////////////////////////////////////
