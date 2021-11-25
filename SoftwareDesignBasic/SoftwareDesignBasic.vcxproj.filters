@@ -51,6 +51,9 @@
     <ClCompile Include="game_menu.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="bazuka.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="zombie_world.h">

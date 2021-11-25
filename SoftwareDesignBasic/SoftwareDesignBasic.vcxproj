@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="bazuka.c" />
     <ClCompile Include="boss_zombie.c" />
     <ClCompile Include="cursor_function.c" />
     <ClCompile Include="item.c" />

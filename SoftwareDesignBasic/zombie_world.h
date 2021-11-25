@@ -93,6 +93,33 @@ int GunDetectCollision(int position_x, int position_y);
 
 //////////////////////////////////////mainchar.h에 있던거/////////////////////////////////////
 
+
+
+//////////////////////////////////////bazuka.c에 있던거/////////////////////////////////////
+
+typedef struct bazuka_bullet_info {
+    COORD pos;
+    int direction_x;
+    int direction_y;
+    struct bazuka_bullet_info* next;
+}Bazuka_Bullet_Info;
+
+extern Bazuka_Bullet_Info* bazuka_bullet_list_head;
+
+void SetGameBoardBazukaBullet(COORD pos);
+void MakeBazukaBullet(COORD pos, int direction_x, int direction_y);
+void ShowBazukaBullet();
+Bazuka_Bullet_Info* RemoveBazukaBullet(Bazuka_Bullet_Info* remove_bazuka_bullet);
+void ShowOneBazukaBullet(Bazuka_Bullet_Info* bazuka_bullet);
+void DeleteOneBazukaBullet(Bazuka_Bullet_Info* bazuka_bullet);
+void MoveBazukaBullet();
+int BazukaBulletDetectCollision(int x, int y);
+void bazuka_explosion(Bazuka_Bullet_Info* bazuka_bullet);
+
+//////////////////////////////////////bazuka.c에 있던거/////////////////////////////////////
+
+
+
 //////////////////////////////////////normal_zombie.h에 있던거/////////////////////////////////////
 typedef struct Normal_Zombie_Info {
     COORD pos;

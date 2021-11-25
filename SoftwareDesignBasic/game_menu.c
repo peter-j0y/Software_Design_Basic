@@ -33,6 +33,7 @@ void PlayGame()
         MoveNormalZombie();
         MoveEnergyWave();
         MoveBossZombie();
+        MoveBazukaBullet();
         //DeleteEnergyWave();
     }
 }

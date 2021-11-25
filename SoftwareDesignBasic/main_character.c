@@ -399,6 +399,9 @@ void ShootGun() {
          else if (weapon == 3) {
             ShowShotgun(x-2,y);
         }
+         else if (weapon == 5) {
+            MakeBazukaBullet(main_character_position, -1, 0);
+         }
         break;
     case UP:
         x = x + 2;
@@ -450,7 +453,13 @@ void ShootGun() {
         else if (weapon == 3) {
             ShowShotgun(x, y - 1);
         }
+        else if (weapon == 5) {
+            COORD pos = main_character_position;
+            pos.X += 2;
+            MakeBazukaBullet(pos, 0, -1);
+        }
         break;
+        
     case RIGHT:
         x = x + 2;
         y = y + 1;
@@ -504,6 +513,12 @@ void ShootGun() {
         else if (weapon == 3) {
             ShowShotgun(x + 2, y);
         }
+        else if (weapon == 5) {
+            COORD pos = main_character_position;
+            pos.X += 2;
+            pos.Y += 1;
+            MakeBazukaBullet(pos, 1, 0);
+        }
         break;
     case DOWN:
         y = y + 1;
@@ -556,6 +571,12 @@ void ShootGun() {
         else if (weapon == 3) {
             ShowShotgun(x, y + 1);
         }
+        else if (weapon == 5) {
+            COORD pos = main_character_position;
+            pos.Y += 1;
+            MakeBazukaBullet(pos, 0, 1);
+        }
+        break;
     }
 
 }
