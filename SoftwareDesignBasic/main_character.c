@@ -698,6 +698,8 @@ void LifeDecrease()
 {
     invincibility_flag = 1;
     life--;
+    if (life == 0)
+        return;
     LifeSetting();
     for (int i = 0; i < 2; i++)
     {

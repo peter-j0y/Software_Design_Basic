@@ -4,6 +4,7 @@
 void PlayGame() 
 {
     system("mode con cols=130 lines=40"); //콘솔창 크기 조절
+    life = 3;
     shoot_start = clock();
     gun_start = clock();
     item_start = clock();
@@ -25,6 +26,11 @@ void PlayGame()
     ShowNormalZombie();
     while (1)
     {
+        if (life <= 0)
+        {
+            system("cls");
+            return;
+        }
         ZombieSpeedTimer(); // ProcessKeyInput 가지고 있음
         ScoreTimer();
         ItemTimer();
@@ -181,6 +187,73 @@ void ChooseMenu()
                         SetCurrentCursorPos(48, 10);
                         printf("▶");
                         choose_menu_flag--;
+                    }
+                    break;
+                }
+            }
+        }
+        if (life <= 0)
+            break;
+    }
+    system("cls");
+    EndGame();
+}
+
+void EndGame()
+{
+    int end_game_menu_flag = 1;
+    while (1)
+    {
+        SetCurrentCursorPos(50, 10);
+        printf("결국 세상을 지켜내지 못했군...");
+        if (end_game_menu_flag == 1)
+        {
+            SetCurrentCursorPos(54, 15);
+            printf("▶");
+        }
+        SetCurrentCursorPos(61, 15);
+        printf("다시 시작");
+        SetCurrentCursorPos(62, 17);
+        printf("끝내기");
+        for (int i = 0; i < 20; i++)
+        {
+            int key_input;
+            if (_kbhit() != 0)
+            {
+                key_input = _getch();
+                switch (key_input)
+                {
+                case ENTER:
+                    if (end_game_menu_flag == 1)
+                    {
+                        // 다시 시작
+                        system("cls");
+                        PlayGame();
+                    }
+                    if (end_game_menu_flag == 2)
+                    {
+                        // 게임 종료
+                        exit(0);
+                    }
+                    break;
+                case DOWN:
+                    if (end_game_menu_flag == 1)
+                    {
+                        SetCurrentCursorPos(54, 15);
+                        printf("  ");
+                        SetCurrentCursorPos(54, 17);
+                        printf("▶");
+                        end_game_menu_flag++;
+                    }
+                    break;
+                case UP:
+                    if (end_game_menu_flag == 2)
+                    {
+                        SetCurrentCursorPos(54, 17);
+                        printf("  ");
+                        SetCurrentCursorPos(54, 15);
+                        printf("▶");
+                        end_game_menu_flag--;
                     }
                     break;
                 }
