@@ -108,7 +108,17 @@ int BazukaBulletDetectCollision(int x, int y)
 		return 1;
 	}
 	else if (game_board[board_array_y][board_array_x] == ZOMBIE)
-	{
+	{	
+		for (int i = -1; i < 2; i++) {
+			for (int j = -1; j < 2; j++) {
+				findBossZombie(x + (i*2), y + j);
+			}
+		}
+		for (int i = -1; i < 2; i++) {
+			for (int j = -1; j < 2; j++) {
+				findNormalZombie(x + (i * 2), y + j);
+			}
+		}
 		return 2;
 	}
 	else if (game_board[board_array_y][board_array_x] == ITEM)

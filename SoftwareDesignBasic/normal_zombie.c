@@ -196,7 +196,7 @@ int NormalZombieDetectCollision(int position_x, int position_y)
 
 	return 0;
 }
-Normal_Zombie_Info* findNormalZombie(int x, int y)
+void findNormalZombie(int x, int y)
 {
 	Normal_Zombie_Info* normal_zombie = normal_zombie_list_head;
 
@@ -208,7 +208,8 @@ Normal_Zombie_Info* findNormalZombie(int x, int y)
 			{
 				if (normal_zombie->pos.X + i * 2 == x && normal_zombie->pos.Y + j == y
 					|| normal_zombie->pos.X + i * 2 + 1 == x && normal_zombie->pos.Y + j == y) {
-					return normal_zombie;
+					DecreaseNormalZombieHp(normal_zombie);
+					return;
 				}
 			}
 		}
@@ -216,11 +217,32 @@ Normal_Zombie_Info* findNormalZombie(int x, int y)
 	}
 	return NULL;
 }
-Boss_Zombie_Info* DecreaseNormalZombieHp(Boss_Zombie_Info* normal_zombie, int damage)
-{
+
+Normal_Zombie_Info* DecreaseNormalZombieHp(Normal_Zombie_Info* normal_zombie)
+{	
+	int damage;
+	switch (weapon) {
+	case 1:
+		damage = 20;
+		break;
+	case 2:
+		damage = 20;
+		break;
+	case 3:
+		damage = 150;
+		break;
+	case 4:
+		damage = 150;
+		break;
+	case 5:
+		damage = 150;
+		break;
+	}
+
 	normal_zombie->hp -= damage;
 	if (normal_zombie->hp < 0)
-	{
+	{	
+		DeleteNormalZombie(normal_zombie);
 		return RemoveNormalZombie(normal_zombie);
 	}
 }

@@ -751,8 +751,12 @@ int GunDetectCollision(int position_x, int position_y) {
 
     if (game_board[board_array_y][board_array_x] == MAP_BOUNDARY)     // 메인 캐릭터와 맵이 충돌할 때
         return 0;
-    if (game_board[board_array_y][board_array_x] == ZOMBIE)     // 메인 캐릭터와 좀비가 부딪혔을 때
+    if (game_board[board_array_y][board_array_x] == ZOMBIE) {           // 메인 캐릭터와 좀비가 부딪혔을 때
+        findBossZombie(position_x, position_y);
+        findNormalZombie(position_x, position_y);
         return 2;
+    }
+        
     if (game_board[board_array_y][board_array_x] == ENERGY_WAVE) // 메인 캐릭터가 에너지파에 맞았을 때
         return 2;
     if (game_board[board_array_y][board_array_x] == ITEM)      // 메인 캐릭터가 아이템에 부딪쳤을 때

@@ -45,6 +45,8 @@ void PrintBossZombie(COORD pos);                                             //3
 void DeletePrintedBossZombie(COORD pos);                                     //3x3모양의 보스좀비 삭제   
 EnergyWave_Info* FindEnergyWave(int x, int y);
 void SetGameBoardToZero(COORD pos);
+Boss_Zombie_Info* DecreaseBossZombieHp(Boss_Zombie_Info* boss_zombie);
+void findBossZombie(int x, int y);
 
 void RemoveCursor(void);
 void SetCurrentCursorPos(int x, int y);
@@ -138,6 +140,8 @@ void DeleteNormalZombie();												// 일반좀비들 이동을 위해 화면에서 삭제
 void MoveNormalZombie();                      // 일반좀비 이동
 Normal_Zombie_Info* RemoveNormalZombie(Normal_Zombie_Info* dead_normal_zombie);// 일반좀비 개체삭제(체력이 0이 되면 삭제)
 int NormalZombieDetectCollision(int x, int y);							// 일반좀비 충돌감지
+void findNormalZombie(int x, int y);
+Normal_Zombie_Info* DecreaseNormalZombieHp(Normal_Zombie_Info* normal_zombie);
 
 //////////////////////////////////////normal_zombie.h에 있던거/////////////////////////////////////
 

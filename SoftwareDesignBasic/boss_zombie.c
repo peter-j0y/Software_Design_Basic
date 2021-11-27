@@ -323,7 +323,7 @@ EnergyWave_Info* FindEnergyWave(int x, int y)
     return NULL;
 }
 
-Boss_Zombie_Info* findBossZombie(int x, int y)
+void findBossZombie(int x, int y)
 {
     Boss_Zombie_Info* boss_zombie = boss_zombie_list_head;
 
@@ -335,19 +335,42 @@ Boss_Zombie_Info* findBossZombie(int x, int y)
             {
                 if (boss_zombie->pos.X + i * 2 == x && boss_zombie->pos.Y + j == y
                     || boss_zombie->pos.X + i * 2 + 1 == x && boss_zombie->pos.Y + j == y) {
-                    return boss_zombie;
+                    DecreaseBossZombieHp(boss_zombie);
+                    return;
                 }
             }
         }
         boss_zombie = boss_zombie->next;
     }
-    return NULL;
+    return;
 }
-Boss_Zombie_Info* DecreaseBossZombieHp(Boss_Zombie_Info* boss_zombie, int damage)
-{
+
+
+Boss_Zombie_Info* DecreaseBossZombieHp(Boss_Zombie_Info* boss_zombie)
+{   
+    int damage;
+    switch (weapon) {
+    case 1:
+        damage = 20;
+        break;
+    case 2:
+        damage = 20;
+        break;
+    case 3:
+        damage = 150;
+        break;
+    case 4:
+        damage = 150;
+        break;
+    case 5:
+        damage = 150;
+        break;
+    }
+
     boss_zombie->hp -= damage;
     if (boss_zombie->hp <= 0)
-    {
+    {   
+        DeleteBossZombie(boss_zombie);
         return RemoveBossZombie(boss_zombie);
     }
 }
