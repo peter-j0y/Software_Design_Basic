@@ -1,8 +1,9 @@
 //#pragma once
 #include "zombie_world.h"
 
-int score = 0, life = 3, stage = 5, weapon = 3;  //점수, 생명력, 스테이지, 무기의 변수
+int score = 0, life = 3, stage = 1, weapon = 1;  //점수, 생명력, 스테이지, 무기의 변수
 const char* weapon_name[5] = { "권총", "기관단총", "샷건", "저격총", "바주카" }; //무기 종류
+Stage_Info stage_info[5] = { {1,1,0,0,0,0},{3,10,0,0,0,0} ,{7,15,0,0,0,0} ,{10,20,0,0,0,0} ,{15,30,0,0,0,0} };  //보스좀비수, 일반좀비수, , 만든보스좀비수, 만든일반좀비수, 죽인보스좀비수, 죽인일반좀비수
 
 int game_board[GBOARD_HEIGHT + 2][GBOARD_WIDTH + 2];
 
@@ -113,4 +114,40 @@ void SettingMap() {
     LifeSetting();
     WeaponSetting();
     StageSetting();
+}
+
+void SetStage()
+{
+    if ((stage_info[stage - 1].killed_boss_zombie >= stage_info[stage - 1].number_of_boss_zombie) && (stage_info[stage - 1].killed_normal_zombie >= stage_info[stage - 1].number_of_normal_zombie)) {
+        stage++;
+        StageSetting();
+        WeaponSetting();
+    }
+}
+void resetGame()
+{
+    stage = 1;
+    weapon = 1;
+
+    Boss_Zombie_Info* boss_zombie = boss_zombie_list_head;
+    DeleteBossZombie();
+    while (boss_zombie) {
+        boss_zombie = RemoveBossZombie(boss_zombie);
+    }
+    Normal_Zombie_Info* normal_zombie = normal_zombie_list_head;
+    DeleteNormalZombie();
+    while (normal_zombie) {
+        normal_zombie = RemoveNormalZombie(normal_zombie);
+    }
+    EnergyWave_Info* energy_wave = energy_wave_list_head;
+    DeleteEnergyWave();
+    while (energy_wave) {
+        energy_wave = RemoveEnergyWave(energy_wave);
+    }
+    for (int i = 0; i < 5; i++) {
+        stage_info[i].killed_boss_zombie = 0;
+        stage_info[i].killed_normal_zombie = 0;
+        stage_info[i].made_number_of_boss_zombie = 0;
+        stage_info[i].made_number_of_normal_zombie = 0;
+    }
 }

@@ -584,7 +584,7 @@ void ShootGun() {
 void ProcessKeyInput(int time)              // 방향키를 입력받아 움직이는 함수 적용 (time 기본값 30)
 {
     int key_input;
-    for (int i = 0; i < 20; i++)
+    for (int i = 0; i < 20/stage; i++)
     {
         if (_kbhit() != 0)
         {

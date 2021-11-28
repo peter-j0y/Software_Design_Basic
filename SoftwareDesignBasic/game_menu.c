@@ -6,6 +6,7 @@ void PlayGame()
     system("mode con cols=130 lines=40"); //콘솔창 크기 조절
     life = 3;
     score = 0;
+    stage = 1;
 
     shoot_start = clock();
     gun_start = clock();
@@ -25,10 +26,6 @@ void PlayGame()
 
 
     ShowBlock(main_character[main_character_id]);
-    MakeBossZombie();
-    MakeNormalZombie();
-    ShowBossZombie();
-    ShowNormalZombie();
     while (1)
     {
         if (life <= 0)
@@ -36,11 +33,14 @@ void PlayGame()
             system("cls");
             return;
         }
+        SetStage();
+        ShowEnergyWave();
         ZombieSpeedTimer(); // ProcessKeyInput 가지고 있음
         ScoreTimer();
         ItemTimer();
 
-        ShowEnergyWave();
+        MakeBossZombie();
+        MakeNormalZombie();
         MoveNormalZombie();
         MoveEnergyWave();
         MoveBossZombie();
@@ -233,6 +233,7 @@ void EndGame()
                     {
                         // 다시 시작
                         system("cls");
+                        resetGame();
                         PlayGame();
                     }
                     if (end_game_menu_flag == 2)

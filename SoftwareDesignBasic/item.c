@@ -1,4 +1,4 @@
-#include "zombie_world.h";
+#include "zombie_world.h"
 
 void RandomItem() {                                         // 아이템의 생성 위치와 종류 결정
 	item_location = rand() % 4;

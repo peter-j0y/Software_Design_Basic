@@ -4,7 +4,7 @@
 #include <conio.h>
 #include <time.h>
 #include <stdlib.h>
-
+#include <math.h>
 //////////////////////////////////////game_menu.c에 있는 함수//////////////////////////////////
 void PlayGame();
 void Menual();
@@ -39,7 +39,7 @@ void ShowEnergyWave();                      //보스좀비의 에너지파 화면 출력
 void MoveEnergyWave();
 void DeleteEnergyWave();                    //보스좀비의 에너지파 화면에서 삭제
 EnergyWave_Info* RemoveEnergyWave(EnergyWave_Info* remove_energy_wave);         //에너지파 제거 
-int BossZombieDetectCollision(int x, int y);                                    //보스좀비충돌 감지
+int BossZombieDetectCollision(int x, int y, int flag);                                    //보스좀비충돌 감지
 int EnergyWaveDetectCollision(int x, int y);                                    //에너지파 충돌 감지
 void SetGameBoardEnergyWave(COORD pos);                                      //에너지파의 위치 게임보드에 설정
 void PrintBossZombie(COORD pos);                                             //3x3모양의 보스좀비 출력
@@ -48,10 +48,13 @@ EnergyWave_Info* FindEnergyWave(int x, int y);
 void SetGameBoardToZero(COORD pos);
 Boss_Zombie_Info* DecreaseBossZombieHp(Boss_Zombie_Info* boss_zombie);
 void findBossZombie(int x, int y);
+COORD MakeBossZombiePos();
 
 void RemoveCursor(void);
 void SetCurrentCursorPos(int x, int y);
 COORD GetCurrentCursorPos(void);
+
+extern clock_t boss_zombie_start, boss_zombie_end, normal_zombie_start, normal_zombie_end;
 
 //////////////////////////////////////bosszombie.h에 있던거/////////////////////////////////////
 
@@ -140,9 +143,10 @@ void ShowNormalZombie();												// 일반좀비들 화면에 출력
 void DeleteNormalZombie();												// 일반좀비들 이동을 위해 화면에서 삭제
 void MoveNormalZombie();                      // 일반좀비 이동
 Normal_Zombie_Info* RemoveNormalZombie(Normal_Zombie_Info* dead_normal_zombie);// 일반좀비 개체삭제(체력이 0이 되면 삭제)
-int NormalZombieDetectCollision(int x, int y);							// 일반좀비 충돌감지
+int NormalZombieDetectCollision(int x, int y, int flag);							// 일반좀비 충돌감지
 void findNormalZombie(int x, int y);
 Normal_Zombie_Info* DecreaseNormalZombieHp(Normal_Zombie_Info* normal_zombie);
+COORD MakeNormalZombiePos();
 
 //////////////////////////////////////normal_zombie.h에 있던거/////////////////////////////////////
 
@@ -187,6 +191,19 @@ void LifeSetting();
 void WeaponSetting();
 void StageSetting();
 void SettingMap();
+void SetStage();
+void resetGame();
+
+typedef struct stage_info {
+    int number_of_boss_zombie;
+    int number_of_normal_zombie;
+    int made_number_of_boss_zombie;
+    int made_number_of_normal_zombie;
+    int killed_boss_zombie;
+    int killed_normal_zombie;
+}Stage_Info;
+extern Stage_Info stage_info[5];
+
 //////////////////////////////////////setting_map.h에 있던거/////////////////////////////////////
 int item_flag;
 int zombie_speed_flag;

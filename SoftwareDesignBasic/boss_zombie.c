@@ -2,7 +2,8 @@
 
 Boss_Zombie_Info* boss_zombie_list_head = NULL;
 EnergyWave_Info* energy_wave_list_head = NULL;
-
+boss_zombie_start = 0;
+boss_zombie_end = 0;
 void SetGameBoardEnergyWave(COORD pos)
 {
     int board_array_x = (pos.X - GBOARD_ORIGIN_X) / 2;
@@ -164,21 +165,21 @@ void MoveBossZombie() {
             boss_zombie->cool_time = 0;
             if (rand() % 2) {
                 if (main_character_position.X - boss_zombie->pos.X < 0) {
-                    if (!BossZombieDetectCollision(boss_zombie->pos.X - 2, boss_zombie->pos.Y))
-                        boss_zombie->pos.X -= 2;
+                    if (!BossZombieDetectCollision(boss_zombie->pos.X - 2, boss_zombie->pos.Y, 1))
+                        boss_zombie->pos.X -= 2; 
                 }
                 else {
-                    if (!BossZombieDetectCollision(boss_zombie->pos.X + 2, boss_zombie->pos.Y))
+                    if (!BossZombieDetectCollision(boss_zombie->pos.X + 2, boss_zombie->pos.Y, 1))
                         boss_zombie->pos.X += 2;
                 }
             }
             else {
                 if (main_character_position.Y - boss_zombie->pos.Y < 0) {
-                    if (!BossZombieDetectCollision(boss_zombie->pos.X, boss_zombie->pos.Y - 1))
+                    if (!BossZombieDetectCollision(boss_zombie->pos.X, boss_zombie->pos.Y - 1, 1))
                         boss_zombie->pos.Y--;
                 }
                 else {
-                    if (!BossZombieDetectCollision(boss_zombie->pos.X, boss_zombie->pos.Y + 1))
+                    if (!BossZombieDetectCollision(boss_zombie->pos.X, boss_zombie->pos.Y + 1, 1))
                         boss_zombie->pos.Y++;
                 }
             }
@@ -189,9 +190,23 @@ void MoveBossZombie() {
 }
 
 void MakeBossZombie() {
+    boss_zombie_end = clock();
+    COORD pos = MakeBossZombiePos();
+
+    if (pos.X == -1)
+        return;
+    double time = (double)(boss_zombie_end - boss_zombie_start) / CLOCKS_PER_SEC;
+    if (time > 1)
+        boss_zombie_start = clock();
+    else
+        return;
+    if (stage_info[stage - 1].made_number_of_boss_zombie >= stage_info[stage - 1].number_of_boss_zombie)
+        return;
+    stage_info[stage - 1].made_number_of_boss_zombie++;
     Boss_Zombie_Info* boss_zombie = (Boss_Zombie_Info*)malloc(sizeof(Boss_Zombie_Info));
-    boss_zombie->pos.X = GBOARD_ORIGIN_X + GBOARD_WIDTH / 2 + 1;                                //좀비 리스폰 위치 추후 변경가능
-    boss_zombie->pos.Y = GBOARD_ORIGIN_Y + 10;
+    //boss_zombie->pos.X = GBOARD_ORIGIN_X + GBOARD_WIDTH / 2 + 1;                                //좀비 리스폰 위치 추후 변경가능
+    //boss_zombie->pos.Y = GBOARD_ORIGIN_Y + 10;
+    boss_zombie->pos = pos;
     boss_zombie->cool_time = 0;
     boss_zombie->hp = 150;          //추후변경
     boss_zombie->next = NULL;
@@ -209,18 +224,19 @@ void MakeBossZombie() {
 Boss_Zombie_Info* RemoveBossZombie(Boss_Zombie_Info* dead_boss_zombie) {
     Boss_Zombie_Info* boss_zombie = boss_zombie_list_head;
     Boss_Zombie_Info* prev = NULL;
+
+    stage_info[stage - 1].killed_boss_zombie++;
     while (boss_zombie != dead_boss_zombie) {
         prev = boss_zombie;
         boss_zombie = boss_zombie->next;
     }
     if (prev == NULL) {
-        boss_zombie_list_head = NULL;
+        boss_zombie_list_head = dead_boss_zombie->next;
         free(dead_boss_zombie);
         return boss_zombie_list_head;
     }
     prev->next = dead_boss_zombie->next;
     free(dead_boss_zombie);
-    
     return prev->next;
 }
 
@@ -248,7 +264,7 @@ EnergyWave_Info* RemoveEnergyWave(EnergyWave_Info* remove_energy_wave) {
     return prev->next;
 }
 
-int BossZombieDetectCollision(int x, int y)
+int BossZombieDetectCollision(int x, int y, int flag)               //여기서 flag는 좀비 이동시 충돌검사할때 == 1, 좀비좌표 구하는 함수에서 사용할때 == 2
 {
     int board_array_x = (x - GBOARD_ORIGIN_X) / 2;
     int board_array_y = y - GBOARD_ORIGIN_Y;
@@ -263,7 +279,8 @@ int BossZombieDetectCollision(int x, int y)
             }
             else if (game_board[board_array_y + y][board_array_x + x] == PLAYER || game_board[board_array_y + y][board_array_x + x] == PLAYER_RIGHT)
             {
-                LifeDecrease();
+                if (flag == 1)
+                    LifeDecrease();
                 return 1;
             }
             else if (game_board[board_array_y + y][board_array_x + x] == ZOMBIE)
@@ -376,7 +393,52 @@ Boss_Zombie_Info* DecreaseBossZombieHp(Boss_Zombie_Info* boss_zombie)
             score += 100;
         }
         ScoreSetting();
-        DeleteBossZombie(boss_zombie);
+        DeleteOneBossZombie(boss_zombie);
         return RemoveBossZombie(boss_zombie);
     }
+}
+
+COORD MakeBossZombiePos()
+{
+    COORD pos;
+    pos.X = -1;
+    pos.Y = -1;
+    int cnt = 0;
+    while (1) {
+        int random = rand() % 4;
+        cnt++;
+        if (cnt > 10) {
+            pos.X = -1;
+            pos.Y = -1;
+            break;
+        }
+        if (random == 0) {                //동
+            pos.X = ((GBOARD_WIDTH - 3) * 2 + GBOARD_ORIGIN_X) / 2 * 2 - 1;
+            pos.Y = rand() % (GBOARD_HEIGHT - 3 - GBOARD_HEIGHT / 2) + GBOARD_ORIGIN_Y + GBOARD_HEIGHT / 4;
+        }
+        else if (random == 1) {        //서
+            if (stage < 2)
+                continue;
+            pos.X = (GBOARD_ORIGIN_X)+4 + 1;
+            pos.Y = rand() % (GBOARD_HEIGHT - 3 - GBOARD_HEIGHT / 2) + GBOARD_ORIGIN_Y + GBOARD_HEIGHT / 4;
+        }
+        else if (random == 2) {         //남
+            if (stage < 3)
+                continue;
+            pos.X = (rand() % (GBOARD_WIDTH - 3 - GBOARD_WIDTH / 6) * 2 + (GBOARD_ORIGIN_X + GBOARD_WIDTH / 6) * 2) / 2 * 2 + 1;
+            pos.Y = GBOARD_HEIGHT - 3 + GBOARD_ORIGIN_Y - 1;
+        }
+        else if (random == 3) {         //북
+            if (stage < 4)
+                continue;
+            pos.X = (rand() % (GBOARD_WIDTH - 3 - GBOARD_WIDTH / 6) * 2 + (GBOARD_ORIGIN_X + GBOARD_WIDTH / 6)) / 2 * 2 + 1;
+            pos.Y = GBOARD_ORIGIN_Y + 1;
+        }
+        if (pos.X == -1)
+            continue;
+        if (!BossZombieDetectCollision(pos.X, pos.Y, 2)) {
+            break;
+        }
+    }
+    return pos;
 }
