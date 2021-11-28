@@ -2,7 +2,7 @@
 
 void RandomItem() {                                         // 아이템의 생성 위치와 종류 결정
 	item_location = rand() % 4;
-	item_type = 1;   // rand() % 3;
+	item_type = rand() % 3;
 
 	if (item_location == 0) {
 		item_pos.X = (rand() % GBOARD_WIDTH) + (GBOARD_ORIGIN_X + 1);
@@ -30,15 +30,7 @@ void RandomItem() {                                         // 아이템의 생성 위�
 
 void ShowItem() {       // 아이템 보여주기
 	SetCurrentCursorPos(item_pos.X, item_pos.Y);
-	if (item_type == 0) {
-		printf("♥");
-	}
-	else if (item_type == 1) {
-		printf("↓");
-	}
-	else if (item_type == 2) {
-		printf("②");
-	}
+	printf("♣");
 	game_board[board_array_y][board_array_x] = ITEM;
 }
 
@@ -74,8 +66,8 @@ void ZombieSpeedDecreaseItem() { // 좀비 속도 느려지기
 }
 
 void DoubleScoreItem() { // 점수 2배
-	score_flag = 1;
 	double_score_start = clock();
+	score_flag = 0;
 }
 
 void ItemTimer() {
@@ -95,7 +87,7 @@ void ZombieSpeedTimer() {
 		ProcessKeyInput(30);
 	}
 	else if (zombie_speed_flag == 0) {
-		ProcessKeyInput(50);
+		ProcessKeyInput(55);
 		if (time > 5) {
 			zombie_speed_flag = 1;
 		}
@@ -105,8 +97,7 @@ void ZombieSpeedTimer() {
 void ScoreTimer() {
 	double_score_end = clock();
 	double time = (double)(double_score_end - double_score_start) / CLOCKS_PER_SEC;
-	if (score_flag == 1 && time > 10) {
-		// 점수 획득 원래대로 하는 코드 작성 예정
-		score_flag = 0;
+	if (score_flag == 0 && time > 10) {
+		score_flag = 1;
 	}
 }

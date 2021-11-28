@@ -150,6 +150,7 @@ Normal_Zombie_Info* RemoveNormalZombie(Normal_Zombie_Info* dead_normal_zombie) {
 	}
 	prev->next = dead_normal_zombie->next;
 	free(dead_normal_zombie);
+
 	return prev->next;
 }
 
@@ -242,6 +243,11 @@ Normal_Zombie_Info* DecreaseNormalZombieHp(Normal_Zombie_Info* normal_zombie)
 	normal_zombie->hp -= damage;
 	if (normal_zombie->hp < 0)
 	{	
+		score += 50;
+		if (score_flag == 0) {
+			score += 50;
+		}
+		ScoreSetting();
 		DeleteNormalZombie(normal_zombie);
 		return RemoveNormalZombie(normal_zombie);
 	}

@@ -5,11 +5,16 @@ void PlayGame()
 {
     system("mode con cols=130 lines=40"); //콘솔창 크기 조절
     life = 3;
+    score = 0;
+
     shoot_start = clock();
     gun_start = clock();
     item_start = clock();
+    zombie_speed_decrease_start = clock();
+    double_score_start = clock();
     item_flag = 1;
     zombie_speed_flag = 1;
+    score_flag = 1;
 
     srand(time(0));
 

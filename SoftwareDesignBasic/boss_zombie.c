@@ -220,6 +220,7 @@ Boss_Zombie_Info* RemoveBossZombie(Boss_Zombie_Info* dead_boss_zombie) {
     }
     prev->next = dead_boss_zombie->next;
     free(dead_boss_zombie);
+    
     return prev->next;
 }
 
@@ -370,6 +371,11 @@ Boss_Zombie_Info* DecreaseBossZombieHp(Boss_Zombie_Info* boss_zombie)
     boss_zombie->hp -= damage;
     if (boss_zombie->hp <= 0)
     {   
+        score += 100;
+        if (score_flag == 0) {
+            score += 100;
+        }
+        ScoreSetting();
         DeleteBossZombie(boss_zombie);
         return RemoveBossZombie(boss_zombie);
     }
