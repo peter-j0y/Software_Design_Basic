@@ -123,7 +123,16 @@ void SetStage()
         stage++;
         StageSetting();
         WeaponSetting();
+        stage_start_flag = 1;
     }
+
+    if (stage_start_flag == 1) {
+        StageDraw();
+        Sleep(2000);
+        StageErase();
+        stage_start_flag = 0;
+    }
+
     if (stage == 2 && stage_initial_flag[0]==0)
     {
         for (int i = 0; i < 40; i++)
@@ -174,5 +183,159 @@ void resetGame()
         stage_info[i].killed_normal_zombie = 0;
         stage_info[i].made_number_of_boss_zombie = 0;
         stage_info[i].made_number_of_normal_zombie = 0;
+    }
+}
+
+void StageDraw() {
+    int x = 40, y = 8;
+    int num_x = x + 45, num_y = y;
+    
+    SetCurrentCursorPos(x, y++);
+    printf(" ####   #####     ##        #####    ######    ");
+    SetCurrentCursorPos(x, y++);
+    printf("#         #      #  #      #         #         ");
+    SetCurrentCursorPos(x, y++);
+    printf(" ###      #     ######    #   ####   #####     ");
+    SetCurrentCursorPos(x, y++);
+    printf("    #     #    #      #    #    #    #         ");
+    SetCurrentCursorPos(x, y++);
+    printf("####      #   #        #    #####    ######    ");
+
+    if (stage == 1) {
+        SetCurrentCursorPos(num_x, num_y++);
+        printf("  #   ");
+        SetCurrentCursorPos(num_x, num_y++);
+        printf(" ##   ");
+        SetCurrentCursorPos(num_x, num_y++);
+        printf("  #   ");
+        SetCurrentCursorPos(num_x, num_y++);
+        printf("  #   ");
+        SetCurrentCursorPos(num_x, num_y++);
+        printf(" ###  ");
+    }
+    if (stage == 2) {
+        SetCurrentCursorPos(num_x, num_y++);
+        printf("##### ");
+        SetCurrentCursorPos(num_x, num_y++);
+        printf("    # ");
+        SetCurrentCursorPos(num_x, num_y++);
+        printf("##### ");
+        SetCurrentCursorPos(num_x, num_y++);
+        printf("#     ");
+        SetCurrentCursorPos(num_x, num_y++);
+        printf("##### ");
+    }
+    if (stage == 3) {
+        SetCurrentCursorPos(num_x, num_y++);
+        printf("##### ");
+        SetCurrentCursorPos(num_x, num_y++);
+        printf("    # ");
+        SetCurrentCursorPos(num_x, num_y++);
+        printf(" #### ");
+        SetCurrentCursorPos(num_x, num_y++);
+        printf("    # ");
+        SetCurrentCursorPos(num_x, num_y++);
+        printf("##### ");
+    }
+    if (stage == 4) {
+        SetCurrentCursorPos(num_x, num_y++);
+        printf("  # #   ");
+        SetCurrentCursorPos(num_x, num_y++);
+        printf(" #  #   ");
+        SetCurrentCursorPos(num_x, num_y++);
+        printf("####### ");
+        SetCurrentCursorPos(num_x, num_y++);
+        printf("    #   ");
+        SetCurrentCursorPos(num_x, num_y++);
+        printf("    #   ");
+    }
+    if (stage == 5) {
+        SetCurrentCursorPos(num_x, num_y++);
+        printf("##### ");
+        SetCurrentCursorPos(num_x, num_y++);
+        printf("#     ");
+        SetCurrentCursorPos(num_x, num_y++);
+        printf("##### ");
+        SetCurrentCursorPos(num_x, num_y++);
+        printf("    # ");
+        SetCurrentCursorPos(num_x, num_y++);
+        printf("##### ");
+    }
+}
+
+void StageErase() {
+    int x = 40, y = 8;
+    int num_x = x + 45, num_y = y;
+
+    SetCurrentCursorPos(x, y++);
+    printf("                                               ");
+    SetCurrentCursorPos(x, y++);
+    printf("                                               ");
+    SetCurrentCursorPos(x, y++);
+    printf("                                               ");
+    SetCurrentCursorPos(x, y++);
+    printf("                                               ");
+    SetCurrentCursorPos(x, y++);
+    printf("                                               ");
+
+    if (stage == 1) {
+        SetCurrentCursorPos(num_x, num_y++);
+        printf("      ");
+        SetCurrentCursorPos(num_x, num_y++);
+        printf("      ");        
+        SetCurrentCursorPos(num_x, num_y++);
+        printf("      ");
+        SetCurrentCursorPos(num_x, num_y++);
+        printf("      ");
+        SetCurrentCursorPos(num_x, num_y++);
+        printf("      ");
+    }
+    if (stage == 2) {
+        SetCurrentCursorPos(num_x, num_y++);
+        printf("      ");
+        SetCurrentCursorPos(num_x, num_y++);
+        printf("      ");
+        SetCurrentCursorPos(num_x, num_y++);
+        printf("      ");
+        SetCurrentCursorPos(num_x, num_y++);
+        printf("      ");
+        SetCurrentCursorPos(num_x, num_y++);
+        printf("      ");
+    }
+    if (stage == 3) {
+        SetCurrentCursorPos(num_x, num_y++);
+        printf("      ");
+        SetCurrentCursorPos(num_x, num_y++);
+        printf("      ");
+        SetCurrentCursorPos(num_x, num_y++);
+        printf("      ");
+        SetCurrentCursorPos(num_x, num_y++);
+        printf("      ");
+        SetCurrentCursorPos(num_x, num_y++);
+        printf("      ");
+    }
+    if (stage == 4) {
+        SetCurrentCursorPos(num_x, num_y++);
+        printf("        ");
+        SetCurrentCursorPos(num_x, num_y++);
+        printf("        ");
+        SetCurrentCursorPos(num_x, num_y++);
+        printf("        ");
+        SetCurrentCursorPos(num_x, num_y++);
+        printf("        ");
+        SetCurrentCursorPos(num_x, num_y++);
+        printf("        ");
+    }
+    if (stage == 5) {
+        SetCurrentCursorPos(num_x, num_y++);
+        printf("      ");
+        SetCurrentCursorPos(num_x, num_y++);
+        printf("      ");
+        SetCurrentCursorPos(num_x, num_y++);
+        printf("      ");
+        SetCurrentCursorPos(num_x, num_y++);
+        printf("      ");
+        SetCurrentCursorPos(num_x, num_y++);
+        printf("      ");
     }
 }

@@ -16,6 +16,7 @@ void PlayGame()
     item_flag = 1;
     zombie_speed_flag = 1;
     score_flag = 1;
+    stage_start_flag = 1;
 
     srand(time(0));
 
@@ -121,14 +122,14 @@ void ChooseMenu()
     {
         if (choose_menu_flag == 1)
         {
-            SetCurrentCursorPos(48, 10);
+            SetCurrentCursorPos(48, 18);
             printf("▶");
         }
-        SetCurrentCursorPos(52, 10);
+        SetCurrentCursorPos(52, 18);
         printf("게임 시작");
-        SetCurrentCursorPos(52, 13);
+        SetCurrentCursorPos(52, 21);
         printf("게임 설명");
-        SetCurrentCursorPos(52, 16);
+        SetCurrentCursorPos(52, 24);
         printf("게임 종료");
         for (int i = 0; i < 20; i++)
         {
@@ -160,17 +161,17 @@ void ChooseMenu()
                 case DOWN:
                     if (choose_menu_flag == 1)
                     {
-                        SetCurrentCursorPos(48, 10);
+                        SetCurrentCursorPos(48, 18);
                         printf("  ");
-                        SetCurrentCursorPos(48, 13);
+                        SetCurrentCursorPos(48, 21);
                         printf("▶");
                         choose_menu_flag++;
                     }
                     else if (choose_menu_flag == 2)
                     {
-                        SetCurrentCursorPos(48, 13);
+                        SetCurrentCursorPos(48, 21);
                         printf("  ");
-                        SetCurrentCursorPos(48, 16);
+                        SetCurrentCursorPos(48, 24);
                         printf("▶");
                         choose_menu_flag++;
                     }
@@ -178,17 +179,17 @@ void ChooseMenu()
                 case UP:
                     if (choose_menu_flag == 3)
                     {
-                        SetCurrentCursorPos(48, 16);
+                        SetCurrentCursorPos(48, 24);
                         printf("  ");
-                        SetCurrentCursorPos(48, 13);
+                        SetCurrentCursorPos(48, 21);
                         printf("▶");
                         choose_menu_flag--;
                     }
                     else if (choose_menu_flag == 2)
                     {
-                        SetCurrentCursorPos(48, 13);
+                        SetCurrentCursorPos(48, 21);
                         printf("  ");
-                        SetCurrentCursorPos(48, 10);
+                        SetCurrentCursorPos(48, 18);
                         printf("▶");
                         choose_menu_flag--;
                     }
@@ -265,4 +266,31 @@ void EndGame()
             }
         }
     }
+}
+
+void TitleDraw() {
+    int x=30, y=4;
+    RemoveCursor();
+
+    SetCurrentCursorPos(x, y++);
+    printf("#####    ####   ##       ##  ######   #####    ##### ");
+    SetCurrentCursorPos(x, y++);
+    printf("   #    #    #  # #     # #  #   ##     #      #     ");
+    SetCurrentCursorPos(x, y++);
+    printf("  #     #    #  #  #   #  #  ####       #      ####  ");
+    SetCurrentCursorPos(x, y++);
+    printf(" #      #    #  #   # #   #  #   ##     #      #     ");
+    SetCurrentCursorPos(x, y++);
+    printf("#####    ####   #    #    #  ######   #####    ##### ");
+    y++;
+    SetCurrentCursorPos(x, y++);
+    printf("  #    #    #    ####    ######   #        #####     ");
+    SetCurrentCursorPos(x, y++);
+    printf("  #   # #   #   #    #   #    #   #        #    #    ");
+    SetCurrentCursorPos(x, y++);
+    printf("  #  #   #  #   #    #   #####    #        #     #   ");
+    SetCurrentCursorPos(x, y++);
+    printf("  # #     # #   #    #   #   #    #        #    #    ");
+    SetCurrentCursorPos(x, y++);
+    printf("  ##       ##    ####    #    #   ######   #####     ");
 }

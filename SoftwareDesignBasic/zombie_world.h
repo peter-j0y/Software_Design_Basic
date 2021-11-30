@@ -10,6 +10,7 @@ void PlayGame();
 void Menual();
 void ChooseMenu();
 void EndGame();
+void TitleDraw();
 
 //////////////////////////////////////bosszombie.h에 있던거/////////////////////////////////////
 typedef struct Boss_Zombie_Info {
@@ -184,6 +185,7 @@ extern const char* weapon_name[5]; //무기 종류
 
 extern int game_board[GBOARD_HEIGHT + 2][GBOARD_WIDTH + 2];
 
+int stage_start_flag;
 
 void DrawGameBoard();
 void ScoreSetting();
@@ -193,6 +195,8 @@ void StageSetting();
 void SettingMap();
 void SetStage();
 void resetGame();
+void StageDraw();
+void StageErase();
 
 typedef struct stage_info {
     int number_of_boss_zombie;
