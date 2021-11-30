@@ -2,6 +2,7 @@
 #include "zombie_world.h"
 
 int score = 0, life = 3, stage = 1, weapon = 1;  //점수, 생명력, 스테이지, 무기의 변수
+int stage_initial_flag[4] = { 0 };
 const char* weapon_name[5] = { "권총", "기관단총", "샷건", "저격총", "바주카" }; //무기 종류
 Stage_Info stage_info[5] = { {1,1,0,0,0,0},{3,10,0,0,0,0} ,{7,15,0,0,0,0} ,{10,20,0,0,0,0} ,{15,30,0,0,0,0} };  //보스좀비수, 일반좀비수, , 만든보스좀비수, 만든일반좀비수, 죽인보스좀비수, 죽인일반좀비수
 
@@ -123,7 +124,31 @@ void SetStage()
         StageSetting();
         WeaponSetting();
     }
+    if (stage == 2 && stage_initial_flag[0]==0)
+    {
+        for (int i = 0; i < 40; i++)
+        {
+            SetCurrentCursorPos(GBOARD_ORIGIN_X+19+i, GBOARD_ORIGIN_Y+10);
+            if (i == 0)
+                printf("┌");
+            else {
+                printf("─");
+            }
+            if(i<20)
+                game_board[10][9+i] = 1;
+        }
+
+        for (int i = 1; i < 5; i++)
+        {
+            SetCurrentCursorPos(GBOARD_ORIGIN_X + 19, GBOARD_ORIGIN_Y + 10 + i);
+            printf("│");
+            game_board[10 + i][9] = 1;
+        }
+        
+        stage_initial_flag[0] = 1;
+    }
 }
+
 void resetGame()
 {
     stage = 1;
