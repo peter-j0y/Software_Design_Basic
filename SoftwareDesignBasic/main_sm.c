@@ -2,7 +2,6 @@
 
 int main()
 {
-    TitleDraw();
     ChooseMenu();
     return 0;
 }

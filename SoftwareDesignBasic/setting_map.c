@@ -121,6 +121,11 @@ void SetStage()
 {
     if ((stage_info[stage - 1].killed_boss_zombie >= stage_info[stage - 1].number_of_boss_zombie) && (stage_info[stage - 1].killed_normal_zombie >= stage_info[stage - 1].number_of_normal_zombie)) {
         stage++;
+        DeleteBlock(main_character[main_character_id]);
+        main_character_position.X = INITIAL_MAIN_CHARACTER_POS_X;
+        main_character_position.Y = INITIAL_MAIN_CHARACTER_POS_Y;
+        SetCurrentCursorPos(INITIAL_MAIN_CHARACTER_POS_X, INITIAL_MAIN_CHARACTER_POS_Y);
+        ShowBlock(main_character[main_character_id]);
         StageSetting();
         WeaponSetting();
         stage_start_flag = 1;
@@ -135,7 +140,49 @@ void SetStage()
 
     if (stage == 2 && stage_initial_flag[0]==0)
     {
-        for (int i = 0; i < 40; i++)
+        int start_x, start_y;
+        start_x = GBOARD_ORIGIN_X + 21;
+        start_y = GBOARD_ORIGIN_Y + 7;
+
+        SetCurrentCursorPos(start_x, start_y);
+        printf("忙式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式忖");
+        for (int i = 0; i < 35; i++)
+        {
+            game_board[7][10 + i] = 1;
+        }
+        SetCurrentCursorPos(start_x, ++start_y);
+        printf("弛                                                                  弛 ");
+        for (int i = 0; i < 34; i++)
+        {
+            game_board[8][10 + i] = 1;
+        }
+        SetCurrentCursorPos(start_x, ++start_y);
+        printf("戌式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式戎");
+        for (int i = 0; i < 34; i++)
+        {
+            game_board[9][10 + i] = 1;
+        }
+
+
+        SetCurrentCursorPos(start_x, start_y+=16);
+        printf("忙式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式忖");
+        for (int i = 0; i < 34; i++)
+        {
+            game_board[25][10 + i] = 1;
+        }
+        SetCurrentCursorPos(start_x, ++start_y);
+        printf("弛                                                                  弛 ");
+        for (int i = 0; i < 34; i++)
+        {
+            game_board[26][10 + i] = 1;
+        }
+        SetCurrentCursorPos(start_x, ++start_y);
+        printf("戌式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式戎");
+        for (int i = 0; i < 34; i++)
+        {
+            game_board[27][10 + i] = 1;
+        }
+        /*for (int i = 0; i < 40; i++)
         {
             SetCurrentCursorPos(GBOARD_ORIGIN_X+19+i, GBOARD_ORIGIN_Y+10);
             if (i == 0)
@@ -145,14 +192,14 @@ void SetStage()
             }
             if(i<20)
                 game_board[10][9+i] = 1;
-        }
+        }*/
 
-        for (int i = 1; i < 5; i++)
+        /*for (int i = 1; i < 5; i++)
         {
             SetCurrentCursorPos(GBOARD_ORIGIN_X + 19, GBOARD_ORIGIN_Y + 10 + i);
             printf("弛");
             game_board[10 + i][9] = 1;
-        }
+        }*/
         
         stage_initial_flag[0] = 1;
     }
@@ -162,6 +209,12 @@ void resetGame()
 {
     stage = 1;
     weapon = 1;
+
+    DeleteBlock(main_character[main_character_id]);
+    main_character_position.X = INITIAL_MAIN_CHARACTER_POS_X;
+    main_character_position.Y = INITIAL_MAIN_CHARACTER_POS_Y;
+    SetCurrentCursorPos(INITIAL_MAIN_CHARACTER_POS_X, INITIAL_MAIN_CHARACTER_POS_Y);
+    ShowBlock(main_character[main_character_id]);
 
     Boss_Zombie_Info* boss_zombie = boss_zombie_list_head;
     DeleteBossZombie();

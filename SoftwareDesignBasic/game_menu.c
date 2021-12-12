@@ -117,6 +117,7 @@ void Menual()
 void ChooseMenu()
 {
     RemoveCursor();
+    TitleDraw();
     int choose_menu_flag = 1;
     while (1)
     {
@@ -270,7 +271,6 @@ void EndGame()
 
 void TitleDraw() {
     int x=30, y=4;
-    RemoveCursor();
 
     SetCurrentCursorPos(x, y++);
     printf("#####    ####   ##       ##  ######   #####    ##### ");

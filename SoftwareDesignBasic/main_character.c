@@ -5,8 +5,6 @@ int main_character_id = 0;
 int invincibility_flag = 0;
 int GunDirection = UP;
 
-
-
 char main_character[][2][2] =                     // 메인 캐릭터 표시
 {
     {
