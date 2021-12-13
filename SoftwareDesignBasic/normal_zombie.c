@@ -311,7 +311,7 @@ COORD MakeNormalZombiePos()
 		}
 		if (random == 0) {                //µ¿
 			pos.X = ((GBOARD_WIDTH - 3) * 2 + GBOARD_ORIGIN_X) / 2 * 2 - 1;
-			pos.Y = rand() % (GBOARD_HEIGHT - 3 - GBOARD_HEIGHT / 2) + GBOARD_ORIGIN_Y + GBOARD_HEIGHT / 4;
+			pos.Y = rand() % (10) + GBOARD_ORIGIN_Y + 11;
 		}
 		else if (random == 1) {        //¼­
 			if (stage < 2)
