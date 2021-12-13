@@ -13,7 +13,7 @@ void PlayGame()
     item_start = clock();
     zombie_speed_decrease_start = clock();
     double_score_start = clock();
-    item_flag = 1;
+    
     zombie_speed_flag = 1;
     score_flag = 1;
     stage_start_flag = 1;
@@ -36,7 +36,6 @@ void PlayGame()
         SetStage();
         ZombieSpeedTimer(); // ProcessKeyInput 가지고 있음
         ScoreTimer();
-        ItemTimer();
 
         MakeBossZombie();
         MoveBossZombie();
@@ -124,14 +123,16 @@ void ChooseMenu()
     {
         if (choose_menu_flag == 1)
         {
-            SetCurrentCursorPos(48, 18);
+            SetCurrentCursorPos(54, 11);
+            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 10);
             printf("▶");
+            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
         }
-        SetCurrentCursorPos(52, 18);
+        SetCurrentCursorPos(58, 11);
         printf("게임 시작");
-        SetCurrentCursorPos(52, 21);
+        SetCurrentCursorPos(58, 14);
         printf("게임 설명");
-        SetCurrentCursorPos(52, 24);
+        SetCurrentCursorPos(58, 17);
         printf("게임 종료");
         for (int i = 0; i < 20; i++)
         {
@@ -163,36 +164,44 @@ void ChooseMenu()
                 case DOWN:
                     if (choose_menu_flag == 1)
                     {
-                        SetCurrentCursorPos(48, 18);
+                        SetCurrentCursorPos(54, 11);
                         printf("  ");
-                        SetCurrentCursorPos(48, 21);
+                        SetCurrentCursorPos(54, 14);
+                        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 9);
                         printf("▶");
+                        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
                         choose_menu_flag++;
                     }
                     else if (choose_menu_flag == 2)
                     {
-                        SetCurrentCursorPos(48, 21);
+                        SetCurrentCursorPos(54, 14);
                         printf("  ");
-                        SetCurrentCursorPos(48, 24);
+                        SetCurrentCursorPos(54, 17);
+                        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 13);
                         printf("▶");
+                        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
                         choose_menu_flag++;
                     }
                     break;
                 case UP:
                     if (choose_menu_flag == 3)
                     {
-                        SetCurrentCursorPos(48, 24);
+                        SetCurrentCursorPos(54, 17);
                         printf("  ");
-                        SetCurrentCursorPos(48, 21);
+                        SetCurrentCursorPos(54, 14);
+                        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 9);
                         printf("▶");
+                        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
                         choose_menu_flag--;
                     }
                     else if (choose_menu_flag == 2)
                     {
-                        SetCurrentCursorPos(48, 21);
+                        SetCurrentCursorPos(54, 14);
                         printf("  ");
-                        SetCurrentCursorPos(48, 18);
+                        SetCurrentCursorPos(54, 11);
+                        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 13);
                         printf("▶");
+                        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
                         choose_menu_flag--;
                     }
                     break;
@@ -208,19 +217,23 @@ void ChooseMenu()
 
 void EndGame()
 {
+    GameOverDraw();
+
     int end_game_menu_flag = 1;
     while (1)
     {
-        SetCurrentCursorPos(50, 10);
+        SetCurrentCursorPos(50, 20);
         printf("결국 세상을 지켜내지 못했군...");
         if (end_game_menu_flag == 1)
         {
-            SetCurrentCursorPos(54, 15);
+            SetCurrentCursorPos(54, 25);
+            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 10);
             printf("▶");
+            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
         }
-        SetCurrentCursorPos(61, 15);
+        SetCurrentCursorPos(61, 25);
         printf("다시 시작");
-        SetCurrentCursorPos(62, 17);
+        SetCurrentCursorPos(62, 27);
         printf("끝내기");
         for (int i = 0; i < 20; i++)
         {
@@ -247,9 +260,9 @@ void EndGame()
                 case DOWN:
                     if (end_game_menu_flag == 1)
                     {
-                        SetCurrentCursorPos(54, 15);
+                        SetCurrentCursorPos(54, 25);
                         printf("  ");
-                        SetCurrentCursorPos(54, 17);
+                        SetCurrentCursorPos(54, 27);
                         printf("▶");
                         end_game_menu_flag++;
                     }
@@ -257,10 +270,12 @@ void EndGame()
                 case UP:
                     if (end_game_menu_flag == 2)
                     {
-                        SetCurrentCursorPos(54, 17);
+                        SetCurrentCursorPos(54, 27);
                         printf("  ");
-                        SetCurrentCursorPos(54, 15);
+                        SetCurrentCursorPos(54, 25);
+                        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 10);
                         printf("▶");
+                        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
                         end_game_menu_flag--;
                     }
                     break;
@@ -271,27 +286,85 @@ void EndGame()
 }
 
 void TitleDraw() {
-    int x=30, y=4;
-
+    int x = 20, y = 3;
+    system("color 2");
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
     SetCurrentCursorPos(x, y++);
-    printf("#####    ####   ##       ##  ######   #####    ##### ");
+    printf("■■■■■    ■■■■     ■■      ■■   ■■■■■   ■■■■■   ■■■■■ ");
     SetCurrentCursorPos(x, y++);
-    printf("   #    #    #  # #     # #  #   ##     #      #     ");
+    printf("      ■    ■        ■   ■ ■    ■ ■   ■      ■       ■       ■  ");
     SetCurrentCursorPos(x, y++);
-    printf("  #     #    #  #  #   #  #  ####       #      ####  ");
+    printf("    ■      ■        ■   ■  ■  ■  ■   ■■■■         ■       ■■■■");
     SetCurrentCursorPos(x, y++);
-    printf(" #      #    #  #   # #   #  #   ##     #      #     ");
+    printf("  ■        ■        ■   ■    ■    ■   ■      ■       ■       ■");
     SetCurrentCursorPos(x, y++);
-    printf("#####    ####   #    #    #  ######   #####    ##### ");
+    printf("■■■■■    ■■■■     ■          ■   ■■■■■   ■■■■■   ■■■■■");
+    SetCurrentCursorPos(x, y++);
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 12);
+    printf("■■■■                   ■               ■■             ■■         ■■■  ");
+    SetCurrentCursorPos(x, y++);
+    printf("■  ■■                                    ■                 ■         ■  ■ ");
+    SetCurrentCursorPos(x, y++);
+    printf("■  ■                                                         ■         ■   ");
+    SetCurrentCursorPos(x, y++);
+    printf("    ■                                                                    ■     ");
+    SetCurrentCursorPos(x, y++);
+    printf("    ■                                                 ");
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+    y++;
+    y++;
+    y++;
+    y++;
+    y++;
+    y++;
     y++;
     SetCurrentCursorPos(x, y++);
-    printf("  #    #    #    ####    ######   #        #####     ");
+    printf("      ■     ■     ■     ■■■■     ■■■■     ■           ■■■■        ");
     SetCurrentCursorPos(x, y++);
-    printf("  #   # #   #   #    #   #    #   #        #    #    ");
+    printf("      ■   ■  ■   ■   ■        ■   ■      ■   ■           ■      ■      ");
     SetCurrentCursorPos(x, y++);
-    printf("  #  #   #  #   #    #   #####    #        #     #   ");
+    printf("      ■  ■    ■  ■   ■        ■   ■■■■     ■           ■       ■     ");
     SetCurrentCursorPos(x, y++);
-    printf("  # #     # #   #    #   #   #    #        #    #    ");
+    printf("      ■ ■      ■ ■   ■        ■   ■   ■      ■           ■      ■      ");
     SetCurrentCursorPos(x, y++);
-    printf("  ##       ##    ####    #    #   ######   #####     ");
+    printf("      ■■        ■■     ■■■■     ■     ■    ■■■■■   ■■■■        ");
+    SetCurrentCursorPos(x, y++);
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 12);
+    printf("      ■■                   ■■       ■       ■    ■■         ■■■      ");
+    SetCurrentCursorPos(x, y++);
+    printf("      ■■                   ■                          ■         ■  ■  ");
+    SetCurrentCursorPos(x, y++);
+    printf("      ■                     ■                                         ■ ");
+    SetCurrentCursorPos(x, y++);
+    printf("      ■                                                                ■");
+    SetCurrentCursorPos(x, y++);
+    printf("      ■                                                 ");
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+}
+
+void GameOverDraw() {
+    int x = 8, y = 7;
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 10);
+    SetCurrentCursorPos(x, y++);
+    printf("  ■■■■■       ■■      ■■      ■■    ■■■■■         ■■■■     ■        ■   ■■■■■   ■■■■       ");
+    SetCurrentCursorPos(x, y++);
+    printf(" ■               ■  ■     ■ ■    ■ ■    ■               ■        ■    ■      ■    ■           ■      ■     ");
+    SetCurrentCursorPos(x, y++);
+    printf("■      ■■■   ■■■■    ■  ■  ■  ■    ■■■■         ■        ■     ■    ■     ■■■■     ■■■■       ");
+    SetCurrentCursorPos(x, y++);
+    printf(" ■       ■    ■      ■   ■    ■    ■    ■               ■        ■      ■  ■      ■           ■   ■       ");
+    SetCurrentCursorPos(x, y++);
+    printf("  ■■■■■   ■        ■  ■          ■    ■■■■■         ■■■■          ■        ■■■■■   ■     ■     ");
+    SetCurrentCursorPos(x, y++);
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 4);
+    printf("  ■■                   ■                    ■■                 ■■■                    ■■  ■■          ■      ");
+    SetCurrentCursorPos(x, y++);
+    printf("  ■■                   ■                    ■                   ■  ■                    ■      ■          ■     ");
+    SetCurrentCursorPos(x, y++);
+    printf("  ■                     ■                    ■                       ■                            ■          ■     ");
+    SetCurrentCursorPos(x, y++);
+    printf("  ■                                                                    ■                            ■              ");
+    SetCurrentCursorPos(x, y++);
+    printf("  ■                                                 ");
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
 }

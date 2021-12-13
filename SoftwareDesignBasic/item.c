@@ -2,7 +2,7 @@
 
 void RandomItem() {                                         // 아이템의 생성 위치와 종류 결정
 	item_location = rand() % 4;
-	item_type = rand() % 3;
+	item_type = rand() % 30;
 
 	if (item_location == 0) {
 		item_pos.X = (rand() % GBOARD_WIDTH) + (GBOARD_ORIGIN_X + 1);
@@ -30,7 +30,17 @@ void RandomItem() {                                         // 아이템의 생성 위�
 
 void ShowItem() {       // 아이템 보여주기
 	SetCurrentCursorPos(item_pos.X, item_pos.Y);
-	printf("♣");
+	if (item_type / 3 == 0) {
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 12);
+		printf("♥ ");
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+	}
+	if (item_type / 3 == 1) {
+		printf("♣");
+	}
+	if (item_type / 3 == 2) {
+		printf("②");
+	}
 	game_board[board_array_y][board_array_x] = ITEM;
 }
 
@@ -44,13 +54,13 @@ void ItemEffect() {   // 아이템을 먹었을 시 발생하는 효과
 	DeleteItem();
 	item_start = clock();
 	item_flag = 1;
-	if (item_type == 0) {
+	if (item_type / 3 == 0) {
 		LifeIncreaseItem();
 	}
-	else if (item_type == 1) {
+	else if (item_type / 3 == 1) {
 		ZombieSpeedDecreaseItem();
 	}
-	else if (item_type == 2) {
+	else if (item_type / 3 == 2) {
 		DoubleScoreItem();
 	}
 }

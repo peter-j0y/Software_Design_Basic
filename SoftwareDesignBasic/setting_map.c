@@ -64,7 +64,10 @@ void LifeSetting() {
     }
     SetCurrentCursorPos(LIFE_X, LIFE_Y);
     for (int i = 0; i < life; i++) {
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 12);
         printf("♥ ");
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+
     }
 }
 void WeaponSetting() {
@@ -84,7 +87,9 @@ void WeaponSetting() {
 void StageSetting() {
     SetCurrentCursorPos(STAGE_X, STAGE_Y);
     for (int i = 0; i < stage; i++) {
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 14);
         printf("★ ");
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
     }
     switch (stage) {
     case 1: printf("(A동 3층 연구실 복도)");
@@ -122,6 +127,8 @@ void SettingMap() {
 
 void SetStage()
 {
+    ItemTimer();
+
     if ((stage_info[stage - 1].killed_boss_zombie >= stage_info[stage - 1].number_of_boss_zombie) && (stage_info[stage - 1].killed_normal_zombie >= stage_info[stage - 1].number_of_normal_zombie)) {
         stage++;
         DeleteBlock(main_character[main_character_id]);

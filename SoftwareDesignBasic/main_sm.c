@@ -2,6 +2,7 @@
 
 int main()
 {
+    system("title ZOMBIE WORLD");
     ChooseMenu();
     return 0;
 }
