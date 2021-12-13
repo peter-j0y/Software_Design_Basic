@@ -109,13 +109,13 @@ int BazukaBulletDetectCollision(int x, int y)
 	}
 	else if (game_board[board_array_y][board_array_x] == ZOMBIE)
 	{	
-		for (int i = -1; i < 2; i++) {
-			for (int j = -1; j < 2; j++) {
+		for (int i = -2; i < 3; i++) {
+			for (int j = -2; j < 3; j++) {
 				findBossZombie(x + (i*2), y + j);
 			}
 		}
-		for (int i = -1; i < 2; i++) {
-			for (int j = -1; j < 2; j++) {
+		for (int i = -2; i < 3; i++) {
+			for (int j = -2; j < 3; j++) {
 				findNormalZombie(x + (i * 2), y + j);
 			}
 		}
@@ -133,8 +133,8 @@ void bazuka_explosion(Bazuka_Bullet_Info* bazuka_bullet) {
 	int x = bazuka_bullet->pos.X;
 	int y = bazuka_bullet->pos.Y;
 
-	for (int i = -2; i < 3; i+=2) {
-		for (int j = -1; j < 2; j++) {
+	for (int i = -4; i < 5; i+=2) {
+		for (int j = -2; j < 3; j++) {
 			int board_array_x = (x + i - GBOARD_ORIGIN_X) / 2;
 			int board_array_y = y + j - GBOARD_ORIGIN_Y;
 			if (game_board[board_array_y][board_array_x] == MAP_BOUNDARY)
@@ -147,8 +147,8 @@ void bazuka_explosion(Bazuka_Bullet_Info* bazuka_bullet) {
 
 	Sleep(50);
 
-	for (int i = -2; i < 3; i += 2) {
-		for (int j = -1; j < 2; j++) {
+	for (int i = -4; i < 5; i += 2) {
+		for (int j = -2; j < 3; j++) {
 			int board_array_x = (x + i - GBOARD_ORIGIN_X) / 2;
 			int board_array_y = y + j - GBOARD_ORIGIN_Y;
 			if (game_board[board_array_y][board_array_x] == MAP_BOUNDARY)

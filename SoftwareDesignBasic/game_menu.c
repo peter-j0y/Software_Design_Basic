@@ -6,7 +6,7 @@ void PlayGame()
     system("mode con cols=130 lines=40"); //콘솔창 크기 조절
     life = 3;
     score = 0;
-    stage = 1;
+    stage = 5;
 
     shoot_start = clock();
     gun_start = clock();
@@ -34,16 +34,17 @@ void PlayGame()
             return;
         }
         SetStage();
-        ShowEnergyWave();
         ZombieSpeedTimer(); // ProcessKeyInput 가지고 있음
         ScoreTimer();
         ItemTimer();
 
         MakeBossZombie();
         MoveBossZombie();
+        ShowEnergyWave();
         MakeNormalZombie();
         MoveNormalZombie();
         MoveEnergyWave();
+        MoveBazukaBullet();
         MoveBazukaBullet();
         MoveBazukaBullet();
         //DeleteEnergyWave();

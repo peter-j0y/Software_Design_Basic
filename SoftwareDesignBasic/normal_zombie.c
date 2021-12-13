@@ -269,16 +269,16 @@ Normal_Zombie_Info* DecreaseNormalZombieHp(Normal_Zombie_Info* normal_zombie)
 		damage = 20;
 		break;
 	case 2:
-		damage = 20;
+		damage = 10;
 		break;
 	case 3:
 		damage = 150;
 		break;
 	case 4:
-		damage = 150;
+		damage = 100;
 		break;
 	case 5:
-		damage = 150;
+		damage = 200;
 		break;
 	}
 

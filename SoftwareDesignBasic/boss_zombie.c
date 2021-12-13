@@ -147,12 +147,51 @@ void MakeEnergyWave(COORD pos, int direction_x, int direction_y) {
     }
     last_energy_wave->next = energy_wave;
 }
+int InterruptMoveRoute(int x, int y, int to_x, int to_y) {
+    if (x == to_x + 2) {
+        to_x = x;
+    }
+    if (y == to_y + 1) {
+        to_y = y;
+    }
+    int board_array_x = (x - GBOARD_ORIGIN_X) / 2;
+    int board_array_y = y - GBOARD_ORIGIN_Y;
+    int board_array_to_x = (to_x - GBOARD_ORIGIN_X) / 2;
+    int board_array_to_y = to_y - GBOARD_ORIGIN_Y;
+
+    if (board_array_x == board_array_to_x) {
+        if (board_array_y > board_array_to_y) {
+            int tmp = board_array_y;
+            board_array_y = board_array_to_y;
+            board_array_to_y = tmp;
+        }
+        for (int i = board_array_y; i < board_array_to_y; i++) {
+            if (game_board[i][board_array_x] == MAP_BOUNDARY) {
+                return 0;
+            }
+        }
+    }
+    else if (board_array_y == board_array_to_y) {
+        if (board_array_x > board_array_to_x) {
+            int tmp = board_array_x;
+            board_array_x = board_array_to_x;
+            board_array_to_x = tmp;
+        }
+        for (int i = board_array_x; i < board_array_to_x; i++) {
+            if (game_board[board_array_y][i] == MAP_BOUNDARY) {
+                return 0;
+            }
+        }
+    }
+    return 1;
+}
 void MoveBossZombie() {
     Boss_Zombie_Info* boss_zombie = boss_zombie_list_head;
     while (boss_zombie != NULL) {
         DeleteOneBossZombie(boss_zombie);
-        if ((main_character_position.X == boss_zombie->pos.X + 2 || main_character_position.Y == boss_zombie->pos.Y + 1)
-            || (main_character_position.X + 2 == boss_zombie->pos.X + 2 || main_character_position.Y + 1 == boss_zombie->pos.Y + 1)) {
+        if (((main_character_position.X == boss_zombie->pos.X + 2 || main_character_position.Y == boss_zombie->pos.Y + 1)
+            || (main_character_position.X + 2 == boss_zombie->pos.X + 2 || main_character_position.Y + 1 == boss_zombie->pos.Y + 1))
+            && InterruptMoveRoute(boss_zombie->pos.X + 2, boss_zombie->pos.Y + 1, main_character_position.X, main_character_position.Y)) {
             if (boss_zombie->cool_time % 3 != 0)
             {
                 boss_zombie->cool_time++;
@@ -380,16 +419,16 @@ Boss_Zombie_Info* DecreaseBossZombieHp(Boss_Zombie_Info* boss_zombie)
         damage = 20;
         break;
     case 2:
-        damage = 20;
+        damage = 10;
         break;
     case 3:
         damage = 150;
         break;
     case 4:
-        damage = 150;
+        damage = 15;
         break;
     case 5:
-        damage = 150;
+        damage = 200;
         break;
     }
 

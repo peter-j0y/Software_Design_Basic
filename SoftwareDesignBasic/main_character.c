@@ -586,7 +586,7 @@ void ShootGun() {
 void ProcessKeyInput(int time)              // 방향키를 입력받아 움직이는 함수 적용 (time 기본값 30)
 {
     int key_input;
-    for (int i = 0; i < 20/stage; i++)
+    for (int i = 0; i < 15/stage + 5; i++)
     {
         if (_kbhit() != 0)
         {
@@ -617,19 +617,19 @@ void ProcessKeyInput(int time)              // 방향키를 입력받아 움직�
                     shoot_start = clock();
                     ShootGun();
                 }
-                else if (weapon == 2 && time > 0.3) {
+                else if (weapon == 2 && time > 0.1) {
                     shoot_start = clock();
                     ShootGun();
                 }
-                else if (weapon == 3 && time > 2) {
+                else if (weapon == 3 && time > 1) {
                     shoot_start = clock();
                     ShootGun();
                 }
-                else if (weapon == 4 && time > 1.5) {
+                else if (weapon == 4 && time > 1) {
                     shoot_start = clock();
                     ShootGun();
                 }
-                else if (weapon == 5 && time > 3) {
+                else if (weapon == 5 && time > 1) {
                     shoot_start = clock();
                     ShootGun();
                 }
@@ -639,7 +639,7 @@ void ProcessKeyInput(int time)              // 방향키를 입력받아 움직�
                 if (weapon != 1) {
                     gun_end = clock();
                     double time = (double)(gun_end - gun_start) / CLOCKS_PER_SEC;
-                    if (time > 3) {
+                    if (time > WEAPON_COOLTIME) {
                         gun_start = clock();
                         weapon = 1;
                         WeaponSetting();
@@ -650,7 +650,7 @@ void ProcessKeyInput(int time)              // 방향키를 입력받아 움직�
                 if (weapon != 2 && stage > 1) {
                     gun_end = clock();
                     double time = (double)(gun_end - gun_start) / CLOCKS_PER_SEC;
-                    if (time > 3) {
+                    if (time > WEAPON_COOLTIME) {
                         gun_start = clock();
                         weapon = 2;
                         WeaponSetting();
@@ -661,7 +661,7 @@ void ProcessKeyInput(int time)              // 방향키를 입력받아 움직�
                 if (weapon != 3 && stage > 2) {
                     gun_end = clock();
                     double time = (double)(gun_end - gun_start) / CLOCKS_PER_SEC;
-                    if (time > 3) {
+                    if (time > WEAPON_COOLTIME) {
                         gun_start = clock();
                         weapon = 3;
                         WeaponSetting();
@@ -672,7 +672,7 @@ void ProcessKeyInput(int time)              // 방향키를 입력받아 움직�
                 if (weapon != 4 && stage > 3) {
                     gun_end = clock();
                     double time = (double)(gun_end - gun_start) / CLOCKS_PER_SEC;
-                    if (time > 3) {
+                    if (time > WEAPON_COOLTIME) {
                         gun_start = clock();
                         weapon = 4;
                         WeaponSetting();
@@ -683,7 +683,7 @@ void ProcessKeyInput(int time)              // 방향키를 입력받아 움직�
                 if (weapon != 5 && stage > 4) {
                     gun_end = clock();
                     double time = (double)(gun_end - gun_start) / CLOCKS_PER_SEC;
-                    if (time > 3) {
+                    if (time > WEAPON_COOLTIME) {
                         gun_start = clock();
                         weapon = 5;
                         WeaponSetting();

@@ -169,7 +169,8 @@ COORD MakeNormalZombiePos();
 #define USE_WEAPON_Y 37
 #define USABLE_WEAPON_X 57
 #define USABLE_WEAPON_Y 37
-#define SHOTGUN_RANGE 8
+#define SHOTGUN_RANGE 12
+#define WEAPON_COOLTIME 1
 
 #define MAP_BOUNDARY 1
 #define PLAYER 2
