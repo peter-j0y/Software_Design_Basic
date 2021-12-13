@@ -1,27 +1,31 @@
 #include "zombie_world.h"
 
 void RandomItem() {                                         // 아이템의 생성 위치와 종류 결정
-	item_location = rand() % 4;
-	item_type = rand() % 30;
+	int temp_item_location;
+	temp_item_location = rand() % 4;
+	while (temp_item_location == item_location)
+		temp_item_location = rand() % 4;
+	item_location = temp_item_location;
+	item_type = rand() % 3;
 
 	if (item_location == 0) {
-		item_pos.X = (rand() % GBOARD_WIDTH) + (GBOARD_ORIGIN_X + 1);
-		item_pos.Y = (rand() % (GBOARD_HEIGHT / 2)) + (GBOARD_ORIGIN_Y + 1);
+		item_pos.X = GBOARD_ORIGIN_X + 55;
+		item_pos.Y = GBOARD_ORIGIN_Y + 6;
 	}
 
 	else if (item_location == 1) {
-		item_pos.X = (rand() % GBOARD_WIDTH) + (GBOARD_ORIGIN_X + GBOARD_WIDTH);
-		item_pos.Y = (rand() % (GBOARD_HEIGHT / 2)) + (GBOARD_ORIGIN_Y + 1);
+		item_pos.X = GBOARD_ORIGIN_X + 11;
+		item_pos.Y = GBOARD_ORIGIN_Y + 16;
 	}
 
 	else if (item_location == 2) {
-		item_pos.X = (rand() % GBOARD_WIDTH) + (GBOARD_ORIGIN_X + 1);
-		item_pos.Y = (rand() % (GBOARD_HEIGHT / 2)) + (GBOARD_ORIGIN_Y + GBOARD_HEIGHT / 2);
+		item_pos.X = GBOARD_ORIGIN_X + 89;
+		item_pos.Y = GBOARD_ORIGIN_Y + 16;
 	}
 
 	else if (item_location == 3) {
-		item_pos.X = (rand() % GBOARD_WIDTH) + (GBOARD_ORIGIN_X + GBOARD_WIDTH);
-		item_pos.Y = (rand() % (GBOARD_HEIGHT / 2)) + (GBOARD_ORIGIN_Y + GBOARD_HEIGHT / 2);
+		item_pos.X = GBOARD_ORIGIN_X + 55;
+		item_pos.Y = GBOARD_ORIGIN_Y + 24;
 	}
 
 	board_array_x = (item_pos.X - GBOARD_ORIGIN_X) / 2;
@@ -30,18 +34,32 @@ void RandomItem() {                                         // 아이템의 생성 위�
 
 void ShowItem() {       // 아이템 보여주기
 	SetCurrentCursorPos(item_pos.X, item_pos.Y);
-	if (item_type / 3 == 0) {
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 12);
-		printf("♥ ");
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
-	}
-	if (item_type / 3 == 1) {
-		printf("♣");
-	}
-	if (item_type / 3 == 2) {
-		printf("②");
-	}
+	if (item_type == 0)
+		printf("♥");
+	if (item_type == 1)
+		printf("▼");
+	if (item_type == 2)
+		printf("X2");
 	game_board[board_array_y][board_array_x] = ITEM;
+}
+
+void CreateVaccine()
+{
+	if (stage == 3 && get_vaccine == 0)
+	{
+		SetCurrentCursorPos(20, 5);
+		printf("VC");
+		game_board[5 - GBOARD_ORIGIN_Y][(20 - GBOARD_ORIGIN_X) / 2] = VACCINE;
+	}
+}
+
+void DeleteVaccine()
+{
+	SetCurrentCursorPos(20, 5);
+	printf("  ");
+	game_board[(21 - GBOARD_ORIGIN_X) / 2][5 - GBOARD_ORIGIN_Y] = 0;
+	get_vaccine = 1;
+	VaccineSetting();
 }
 
 void DeleteItem() {     // 아이템 삭제

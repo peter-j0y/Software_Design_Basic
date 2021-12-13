@@ -7,7 +7,7 @@ void PlayGame()
     life = 3;
     score = 0;
     stage = 1;
-
+    get_vaccine = 0;
     shoot_start = clock();
     gun_start = clock();
     item_start = clock();
@@ -25,7 +25,6 @@ void PlayGame()
 
     SetCurrentCursorPos(main_character_position.X, main_character_position.Y);
 
-    ShowBlock(main_character[main_character_id]);
     while (1)
     {
         if (life <= 0)
@@ -69,8 +68,8 @@ void Menual()
     printf("◆◆");
     SetCurrentCursorPos(98, 6);
     printf("아이템 :");
-    SetCurrentCursorPos(108, 6);
-    printf("♣");
+    SetCurrentCursorPos(106, 6);
+    printf("♥ ▼ X2 VC");
 
     SetCurrentCursorPos(92, 7);
     printf("◆◆");
@@ -79,7 +78,7 @@ void Menual()
     SetCurrentCursorPos(5, 6);
     printf("누군가에 의해 좀비 바이러스가 유출됐다...!");
     SetCurrentCursorPos(5, 8);
-    printf("어서 이곳을 탈출하고 세상을 구해야해!!!");
+    printf("백신을 찾아 이곳을 탈출하고 세상을 구해야해!!!");
     SetCurrentCursorPos(44, 10);
     printf("**********조작법**********");
     SetCurrentCursorPos(32, 12);
@@ -92,17 +91,20 @@ void Menual()
     printf("▽");
     SetCurrentCursorPos(42, 13);
     printf("방향키를 이용해 주인공을 움직일 수 있어요");
-    SetCurrentCursorPos(28, 17);
+    SetCurrentCursorPos(28, 16);
     printf("SPACE BAR");
-    SetCurrentCursorPos(42, 17);
+    SetCurrentCursorPos(42, 16);
     printf("스페이스 바를 이용해 총을 쏘아 좀비를 처치할 수 있어요");
-    SetCurrentCursorPos(28, 21);
+    SetCurrentCursorPos(28, 19);
     printf("①②③④⑤");
-    SetCurrentCursorPos(42, 21);
+    SetCurrentCursorPos(42, 19);
     printf("숫자 키를 이용해 무기의 종류를 바꿀 수 있어요");
-
-    SetCurrentCursorPos(38, 25);
-    printf("아무 키나 눌러 게임을 시작해 보세요!");
+    SetCurrentCursorPos(36, 22);
+    printf("좀비는 소리에 예민해 가까이 다가가면 쫓아와요!");
+    SetCurrentCursorPos(36, 25);
+    printf("백신 보관실에서 백신을 찾아 건물을 탈출하세요!");
+    SetCurrentCursorPos(46, 28);
+    printf("Press Any Key To Start!!");
 
     while (1)
     {

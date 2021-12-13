@@ -743,6 +743,11 @@ int MainCharacterDetectCollision(int position_x, int position_y, char main_chara
             {
                 ItemEffect();
             }// 아이템과 부딪히면 아이템 효과 발동
+            if ((main_character[y][x] == PLAYER && game_board[board_array_y + y][board_array_x + x] == VACCINE) || (main_character[y][x] == PLAYER_RIGHT && game_board[board_array_y + y][board_array_x + x] == VACCINE))         //메인 캐릭터와 백신 충돌
+            {
+                get_vaccine = 1;
+                DeleteVaccine();
+            }
         }
     }
     return 1;

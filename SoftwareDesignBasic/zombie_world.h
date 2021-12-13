@@ -180,10 +180,12 @@ COORD MakeNormalZombiePos();
 #define ITEM 5
 #define ENERGY_WAVE 6
 #define PLAYER_RIGHT 7
+#define VACCINE 8
 
 
 extern int score, life, stage, weapon; //점수, 생명력, 스테이지, 무기의 변수
 extern const char* weapon_name[5]; //무기 종류
+extern int get_vaccine; // 백신 가지고 있는지 여부
 
 extern int game_board[GBOARD_HEIGHT + 2][GBOARD_WIDTH + 2];
 
@@ -194,6 +196,7 @@ void ScoreSetting();
 void LifeSetting();
 void WeaponSetting();
 void StageSetting();
+void VaccineSetting();
 void SettingMap();
 void SetStage();
 void resetGame();
@@ -239,6 +242,9 @@ void RandomItem();
 void ShowItem();
 void DeleteItem();
 void ItemEffect();
+
+void CreateVaccine();
+void DeleteVaccine();
 
 void LifeIncreaseItem();
 void ZombieSpeedDecreaseItem();

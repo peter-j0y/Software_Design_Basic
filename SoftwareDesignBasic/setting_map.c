@@ -1,7 +1,7 @@
 //#pragma once
 #include "zombie_world.h"
 
-int score = 0, life = 3, stage = 1, weapon = 1;  //점수, 생명력, 스테이지, 무기의 변수
+int score = 0, life = 3, stage = 1, weapon = 1, get_vaccine = 0;  //점수, 생명력, 스테이지, 무기의 변수
 int stage_initial_flag[4] = { 0 };
 const char* weapon_name[5] = { "권총", "기관단총", "샷건", "저격총", "바주카" }; //무기 종류
 Stage_Info stage_info[5] = { {1,3,0,0,0,0},{3,10,0,0,0,0} ,{7,15,0,0,0,0} ,{10,20,0,0,0,0} ,{15,30,0,0,0,0} };  //보스좀비수, 일반좀비수, , 만든보스좀비수, 만든일반좀비수, 죽인보스좀비수, 죽인일반좀비수
@@ -54,6 +54,24 @@ void ScoreSetting() {
     printf("%d", score);
 }
 
+void VaccineSetting()
+{
+    if (get_vaccine == 0)
+    {
+        SetCurrentCursorPos(USABLE_WEAPON_X + 31, USABLE_WEAPON_Y);
+        printf("                                    ");
+        SetCurrentCursorPos(USABLE_WEAPON_X + 31, USABLE_WEAPON_Y);
+        printf("A동 백신 보관실에서 백신을 찾으세요!");
+    }
+    else
+    {
+        SetCurrentCursorPos(USABLE_WEAPON_X + 31, USABLE_WEAPON_Y);
+        printf("                                    ");
+        SetCurrentCursorPos(USABLE_WEAPON_X + 31, USABLE_WEAPON_Y);
+        printf("백신 획득! 건물을 탈출하세요!");
+    }
+}
+
 void LifeSetting() {
     SetCurrentCursorPos(LIFE_X, LIFE_Y);
     for (int i = 0; i < 3; i++) {
@@ -70,6 +88,7 @@ void LifeSetting() {
 
     }
 }
+
 void WeaponSetting() {
     SetCurrentCursorPos(USE_WEAPON_X, USE_WEAPON_Y);
     for (int i = 1; i <= 5; i++) {
@@ -82,8 +101,9 @@ void WeaponSetting() {
             printf("%s  ", weapon_name[i - 1]);
         }
     }
-    printf("                        ");
+    printf("           ");
 }
+
 void StageSetting() {
     SetCurrentCursorPos(STAGE_X, STAGE_Y);
     for (int i = 0; i < stage; i++) {
@@ -122,6 +142,7 @@ void SettingMap() {
     ScoreSetting();
     LifeSetting();
     WeaponSetting();
+    VaccineSetting();
     StageSetting();
 }
 
@@ -130,20 +151,39 @@ void SetStage()
     ItemTimer();
 
     if ((stage_info[stage - 1].killed_boss_zombie >= stage_info[stage - 1].number_of_boss_zombie) && (stage_info[stage - 1].killed_normal_zombie >= stage_info[stage - 1].number_of_normal_zombie)) {
-        stage++;
-        DeleteBlock(main_character[main_character_id]);
-        main_character_position.X = INITIAL_MAIN_CHARACTER_POS_X;
-        main_character_position.Y = INITIAL_MAIN_CHARACTER_POS_Y;
-        SetCurrentCursorPos(INITIAL_MAIN_CHARACTER_POS_X, INITIAL_MAIN_CHARACTER_POS_Y);
-        ShowBlock(main_character[main_character_id]);
-        StageSetting();
-        WeaponSetting();
-        EnergyWave_Info* energy_wave = energy_wave_list_head;
-        DeleteEnergyWave();
-        while (energy_wave) {
-            energy_wave = RemoveEnergyWave(energy_wave);
+        if (stage == 3) {
+            if (get_vaccine == 1)
+            {
+                stage++;
+                DeleteBlock(main_character[main_character_id]);
+                main_character_position.X = INITIAL_MAIN_CHARACTER_POS_X;
+                main_character_position.Y = INITIAL_MAIN_CHARACTER_POS_Y;
+                
+                StageSetting();
+                WeaponSetting();
+                EnergyWave_Info* energy_wave = energy_wave_list_head;
+                DeleteEnergyWave();
+                while (energy_wave) {
+                    energy_wave = RemoveEnergyWave(energy_wave);
+                }
+                stage_start_flag = 1;
+            }
         }
-        stage_start_flag = 1;
+        else {
+            stage++;
+            DeleteBlock(main_character[main_character_id]);
+            main_character_position.X = INITIAL_MAIN_CHARACTER_POS_X;
+            main_character_position.Y = INITIAL_MAIN_CHARACTER_POS_Y;
+            
+            StageSetting();
+            WeaponSetting();
+            EnergyWave_Info* energy_wave = energy_wave_list_head;
+            DeleteEnergyWave();
+            while (energy_wave) {
+                energy_wave = RemoveEnergyWave(energy_wave);
+            }
+            stage_start_flag = 1;
+        }
     }
 
     if (stage_start_flag == 1) {
@@ -153,6 +193,8 @@ void SetStage()
             Sleep(2000);
             StageErase();
             PrintStage1Map();
+            SetCurrentCursorPos(INITIAL_MAIN_CHARACTER_POS_X, INITIAL_MAIN_CHARACTER_POS_Y);
+            ShowBlock(main_character[main_character_id]);
             stage_start_flag = 0;
         }
         if (stage == 2)
@@ -162,6 +204,8 @@ void SetStage()
             Sleep(2000);
             StageErase();
             PrintStage2Map();
+            SetCurrentCursorPos(INITIAL_MAIN_CHARACTER_POS_X, INITIAL_MAIN_CHARACTER_POS_Y);
+            ShowBlock(main_character[main_character_id]);
             stage_start_flag = 0;
         }
         if (stage == 3)
@@ -171,6 +215,9 @@ void SetStage()
             Sleep(2000);
             StageErase();
             PrintStage3Map();
+            SetCurrentCursorPos(INITIAL_MAIN_CHARACTER_POS_X, INITIAL_MAIN_CHARACTER_POS_Y);
+            ShowBlock(main_character[main_character_id]);
+            CreateVaccine();
             stage_start_flag = 0;
         }
         if (stage == 4)
@@ -180,6 +227,8 @@ void SetStage()
             Sleep(2000);
             StageErase();
             PrintStage4Map();
+            SetCurrentCursorPos(INITIAL_MAIN_CHARACTER_POS_X, INITIAL_MAIN_CHARACTER_POS_Y);
+            ShowBlock(main_character[main_character_id]);
             stage_start_flag = 0;
         }
         if (stage == 5)
@@ -188,6 +237,8 @@ void SetStage()
             StageDraw();
             Sleep(2000);
             StageErase();
+            SetCurrentCursorPos(INITIAL_MAIN_CHARACTER_POS_X, INITIAL_MAIN_CHARACTER_POS_Y);
+            ShowBlock(main_character[main_character_id]);
             stage_start_flag = 0;
         }
     }
