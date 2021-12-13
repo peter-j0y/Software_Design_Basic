@@ -488,7 +488,150 @@ void RemoveStage3Map()
 }
 
 void PrintStage4Map() {
+    int start_x, start_y;
+    start_x = GBOARD_ORIGIN_X + 51;
+    start_y = GBOARD_ORIGIN_Y + 6;
 
+    SetCurrentCursorPos(start_x, start_y);
+    printf("бсбсбс");
+    for (int i = 0; i < 3; i++)
+        game_board[6][25 + i] = 1;
+
+    SetCurrentCursorPos(start_x, ++start_y);
+    printf("бс  бс");
+    for (int i = 0; i < 3; i++)
+        game_board[7][25 + i] = 1;
+
+    SetCurrentCursorPos(start_x, ++start_y);
+    printf("бсбсбс");
+    for (int i = 0; i < 3; i++)
+        game_board[8][25 + i] = 1;
+
+    start_x = GBOARD_ORIGIN_X + 37;
+    start_y = GBOARD_ORIGIN_Y + 10;
+
+    SetCurrentCursorPos(start_x, start_y);
+    printf("бсбсбс");
+    for (int i = 0; i < 3; i++)
+        game_board[10][18 + i] = 1;
+
+    SetCurrentCursorPos(start_x, ++start_y);
+    printf("бс  бс");
+    for (int i = 0; i < 3; i++)
+        game_board[11][18 + i] = 1;
+
+    SetCurrentCursorPos(start_x, ++start_y);
+    printf("бсбсбс");
+    for (int i = 0; i < 3; i++)
+        game_board[12][18 + i] = 1;
+
+    start_x = GBOARD_ORIGIN_X + 65;
+    start_y = GBOARD_ORIGIN_Y + 10;
+
+    SetCurrentCursorPos(start_x, start_y);
+    printf("бсбсбс");
+    for (int i = 0; i < 3; i++)
+        game_board[10][32 + i] = 1;
+
+    SetCurrentCursorPos(start_x, ++start_y);
+    printf("бс  бс");
+    for (int i = 0; i < 3; i++)
+        game_board[11][32 + i] = 1;
+
+    SetCurrentCursorPos(start_x, ++start_y);
+    printf("бсбсбс");
+    for (int i = 0; i < 3; i++)
+        game_board[12][32 + i] = 1;
+
+    start_x = GBOARD_ORIGIN_X + 23;
+    start_y = GBOARD_ORIGIN_Y + 14;
+
+    SetCurrentCursorPos(start_x, start_y);
+    printf("бсбсбс");
+    for (int i = 0; i < 3; i++)
+        game_board[14][11 + i] = 1;
+
+    SetCurrentCursorPos(start_x, ++start_y);
+    printf("бс  бс");
+    for (int i = 0; i < 3; i++)
+        game_board[15][11 + i] = 1;
+
+    SetCurrentCursorPos(start_x, ++start_y);
+    printf("бсбсбс");
+    for (int i = 0; i < 3; i++)
+        game_board[16][11 + i] = 1;
+
+    start_x = GBOARD_ORIGIN_X + 79;
+    start_y = GBOARD_ORIGIN_Y + 14;
+
+    SetCurrentCursorPos(start_x, start_y);
+    printf("бсбсбс");
+    for (int i = 0; i < 3; i++)
+        game_board[14][39 + i] = 1;
+
+    SetCurrentCursorPos(start_x, ++start_y);
+    printf("бс  бс");
+    for (int i = 0; i < 3; i++)
+        game_board[15][39 + i] = 1;
+
+    SetCurrentCursorPos(start_x, ++start_y);
+    printf("бсбсбс");
+    for (int i = 0; i < 3; i++)
+        game_board[16][39 + i] = 1;
+
+    start_x = GBOARD_ORIGIN_X + 37;
+    start_y = GBOARD_ORIGIN_Y + 19;
+
+    SetCurrentCursorPos(start_x, start_y);
+    printf("бсбсбс");
+    for (int i = 0; i < 3; i++)
+        game_board[19][18 + i] = 1;
+
+    SetCurrentCursorPos(start_x, ++start_y);
+    printf("бс  бс");
+    for (int i = 0; i < 3; i++)
+        game_board[19][18 + i] = 1;
+
+    SetCurrentCursorPos(start_x, ++start_y);
+    printf("бсбсбс");
+    for (int i = 0; i < 3; i++)
+        game_board[20][18 + i] = 1;
+
+    start_x = GBOARD_ORIGIN_X + 65;
+    start_y = GBOARD_ORIGIN_Y + 19;
+
+    SetCurrentCursorPos(start_x, start_y);
+    printf("бсбсбс");
+    for (int i = 0; i < 3; i++)
+        game_board[21][32 + i] = 1;
+
+    SetCurrentCursorPos(start_x, ++start_y);
+    printf("бс  бс");
+    for (int i = 0; i < 3; i++)
+        game_board[20][32 + i] = 1;
+
+    SetCurrentCursorPos(start_x, ++start_y);
+    printf("бсбсбс");
+    for (int i = 0; i < 3; i++)
+        game_board[21][32 + i] = 1;
+
+    start_x = GBOARD_ORIGIN_X + 51;
+    start_y = GBOARD_ORIGIN_Y + 24;
+
+    SetCurrentCursorPos(start_x, start_y);
+    printf("бсбсбс");
+    for (int i = 0; i < 3; i++)
+        game_board[24][25 + i] = 1;
+
+    SetCurrentCursorPos(start_x, ++start_y);
+    printf("бс  бс");
+    for (int i = 0; i < 3; i++)
+        game_board[25][25 + i] = 1;
+
+    SetCurrentCursorPos(start_x, ++start_y);
+    printf("бсбсбс");
+    for (int i = 0; i < 3; i++)
+        game_board[26][25 + i] = 1;
 }
 
 void RemoveStage4Map() {
