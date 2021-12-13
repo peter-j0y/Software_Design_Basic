@@ -4,7 +4,7 @@
 int score = 0, life = 3, stage = 1, weapon = 1;  //점수, 생명력, 스테이지, 무기의 변수
 int stage_initial_flag[4] = { 0 };
 const char* weapon_name[5] = { "권총", "기관단총", "샷건", "저격총", "바주카" }; //무기 종류
-Stage_Info stage_info[5] = { {1,3,0,0,0,0},{3,10,0,0,0,0} ,{7,15,0,0,0,0} ,{9,20,0,0,0,0} ,{10,25,0,0,0,0} };  //보스좀비수, 일반좀비수, , 만든보스좀비수, 만든일반좀비수, 죽인보스좀비수, 죽인일반좀비수
+Stage_Info stage_info[5] = { {1,1,0,0,0,0},{3,10,0,0,0,0} ,{7,15,0,0,0,0} ,{10,20,0,0,0,0} ,{15,30,0,0,0,0} };  //보스좀비수, 일반좀비수, , 만든보스좀비수, 만든일반좀비수, 죽인보스좀비수, 죽인일반좀비수
 
 int game_board[GBOARD_HEIGHT + 2][GBOARD_WIDTH + 2];
 
@@ -86,6 +86,20 @@ void StageSetting() {
     for (int i = 0; i < stage; i++) {
         printf("★ ");
     }
+    switch (stage) {
+    case 1: printf("(A동 3층 연구실 복도)");
+        break;
+    case 2 :printf("(A동 203호 연구실)");
+        break;
+    case 3:printf("(A동 백신 보관실)");
+        break;
+    case 4:printf("(A동 1층 로비)");
+        break;
+    case 5:printf("(운동장)");
+        break;
+    default:
+        break;
+    }
 }
 
 void SettingMap() {
@@ -131,10 +145,12 @@ void SetStage()
             StageDraw();
             Sleep(2000);
             StageErase();
+            PrintStage1Map();
             stage_start_flag = 0;
         }
         if (stage == 2)
         {
+            RemoveStage1Map();
             StageDraw();
             Sleep(2000);
             StageErase();
@@ -165,11 +181,156 @@ void SetStage()
             StageDraw();
             Sleep(2000);
             StageErase();
-            PrintStage5Map();
             stage_start_flag = 0;
         }
     }
-        
+
+}
+
+void PrintStage1Map() {
+    int start_x, start_y;
+    start_x = GBOARD_ORIGIN_X + 31;
+    start_y = GBOARD_ORIGIN_Y;
+
+    for (int i = 1; i <= 10; i++)
+    {
+        SetCurrentCursorPos(start_x, ++start_y);
+        printf("■");
+        game_board[i][15] = 1;
+    }
+
+    start_y = GBOARD_ORIGIN_Y + 21;
+    for (int i = 22; i <= 31; i++)
+    {
+        SetCurrentCursorPos(start_x, ++start_y);
+        printf("■");
+        game_board[i][15] = 1;
+    }
+
+    start_x = GBOARD_ORIGIN_X + 75;
+    start_y = GBOARD_ORIGIN_Y;
+
+    for (int i = 1; i <= 11; i++)
+    {
+        SetCurrentCursorPos(start_x, ++start_y);
+        printf("■");
+        game_board[i][37] = 1;
+    }
+
+    start_x = GBOARD_ORIGIN_X + 75;
+    start_y = GBOARD_ORIGIN_Y + 21;
+
+    for (int i = 22; i <= 31; i++)
+    {
+        SetCurrentCursorPos(start_x, ++start_y);
+        printf("■");
+        game_board[i][37] = 1;
+    }
+
+    start_x = GBOARD_ORIGIN_X + 2;
+    start_y = GBOARD_ORIGIN_Y + 11;
+    SetCurrentCursorPos(start_x, start_y);
+    printf(" ■■■■■■■■■■■■■■■");
+
+    for (int i = 2; i <= 15; i++)
+        game_board[11][i] = 1;
+
+    start_x = GBOARD_ORIGIN_X + 75;
+    start_y = GBOARD_ORIGIN_Y + 11;
+    SetCurrentCursorPos(start_x, start_y);
+    printf("■■■■■■■■■■■■■■■■");
+
+    for (int i = 37; i <= 51; i++)
+        game_board[11][i] = 1;
+
+    start_x = GBOARD_ORIGIN_X + 2;
+    start_y = GBOARD_ORIGIN_Y + 21;
+    SetCurrentCursorPos(start_x, start_y);
+    printf(" ■■■■■■■■■■■■■■■");
+
+    for (int i = 2; i <= 15; i++)
+        game_board[21][i] = 1;
+
+    start_x = GBOARD_ORIGIN_X + 75;
+    start_y = GBOARD_ORIGIN_Y + 21;
+    SetCurrentCursorPos(start_x, start_y);
+    printf("■■■■■■■■■■■■■■■■");
+
+    for (int i = 37; i <= 51; i++)
+        game_board[21][i] = 1;
+}
+
+void RemoveStage1Map() {
+    int start_x, start_y;
+    start_x = GBOARD_ORIGIN_X + 31;
+    start_y = GBOARD_ORIGIN_Y;
+
+    for (int i = 1; i <= 10; i++)
+    {
+        SetCurrentCursorPos(start_x, ++start_y);
+        printf("  ");
+        game_board[i][15] = 0;
+    }
+
+    start_y = GBOARD_ORIGIN_Y + 21;
+    for (int i = 22; i <= 31; i++)
+    {
+        SetCurrentCursorPos(start_x, ++start_y);
+        printf("  ");
+        game_board[i][15] = 0;
+    }
+
+    start_x = GBOARD_ORIGIN_X + 75;
+    start_y = GBOARD_ORIGIN_Y;
+
+    for (int i = 1; i <= 11; i++)
+    {
+        SetCurrentCursorPos(start_x, ++start_y);
+        printf("  ");
+        game_board[i][37] = 0;
+    }
+
+    start_x = GBOARD_ORIGIN_X + 75;
+    start_y = GBOARD_ORIGIN_Y + 21;
+
+    for (int i = 22; i <= 31; i++)
+    {
+        SetCurrentCursorPos(start_x, ++start_y);
+        printf("  ");
+        game_board[i][37] = 0;
+    }
+
+    start_x = GBOARD_ORIGIN_X + 2;
+    start_y = GBOARD_ORIGIN_Y + 11;
+    SetCurrentCursorPos(start_x, start_y);
+    printf("                               ");
+
+    for (int i = 2; i <= 15; i++)
+        game_board[11][i] = 0;
+
+    start_x = GBOARD_ORIGIN_X + 75;
+    start_y = GBOARD_ORIGIN_Y + 11;
+    SetCurrentCursorPos(start_x, start_y);
+    printf("                                ");
+
+    for (int i = 37; i <= 51; i++)
+        game_board[11][i] = 0;
+
+    start_x = GBOARD_ORIGIN_X + 2;
+    start_y = GBOARD_ORIGIN_Y + 21;
+    SetCurrentCursorPos(start_x, start_y);
+    printf("                               ");
+
+    for (int i = 2; i <= 15; i++)
+        game_board[21][i] = 0;
+
+    start_x = GBOARD_ORIGIN_X + 75;
+    start_y = GBOARD_ORIGIN_Y + 21;
+    SetCurrentCursorPos(start_x, start_y);
+    printf("                                ");
+
+    for (int i = 37; i <= 51; i++)
+        game_board[21][i] = 0;
 }
 
 void PrintStage2Map()
@@ -272,7 +433,7 @@ void PrintStage2Map()
         game_board[23][40 + i] = 1;
 }
 
-void RemoveStage2Map() 
+void RemoveStage2Map()
 {
     int start_x, start_y;
     start_x = GBOARD_ORIGIN_X + 21;
@@ -429,7 +590,7 @@ void PrintStage3Map()
         game_board[23][35 + i] = 1;
 }
 
-void RemoveStage3Map() 
+void RemoveStage3Map()
 {
     int start_x, start_y;
     start_x = GBOARD_ORIGIN_X + 31;
@@ -634,16 +795,152 @@ void PrintStage4Map() {
         game_board[26][25 + i] = 1;
 }
 
-void RemoveStage4Map() {
+void RemoveStage4Map()
+{
+    int start_x, start_y;
+    start_x = GBOARD_ORIGIN_X + 51;
+    start_y = GBOARD_ORIGIN_Y + 6;
 
-}
+    SetCurrentCursorPos(start_x, start_y);
+    printf("      ");
+    for (int i = 0; i < 3; i++)
+        game_board[6][25 + i] = 0;
 
-void PrintStage5Map() {
+    SetCurrentCursorPos(start_x, ++start_y);
+    printf("      ");
+    for (int i = 0; i < 3; i++)
+        game_board[7][25 + i] = 0;
 
-}
+    SetCurrentCursorPos(start_x, ++start_y);
+    printf("      ");
+    for (int i = 0; i < 3; i++)
+        game_board[8][25 + i] = 0;
 
-void RemoveStage5Map() {
+    start_x = GBOARD_ORIGIN_X + 37;
+    start_y = GBOARD_ORIGIN_Y + 10;
 
+    SetCurrentCursorPos(start_x, start_y);
+    printf("      ");
+    for (int i = 0; i < 3; i++)
+        game_board[10][18 + i] = 0;
+
+    SetCurrentCursorPos(start_x, ++start_y);
+    printf("      ");
+    for (int i = 0; i < 3; i++)
+        game_board[11][18 + i] = 0;
+
+    SetCurrentCursorPos(start_x, ++start_y);
+    printf("      ");
+    for (int i = 0; i < 3; i++)
+        game_board[12][18 + i] = 0;
+
+    start_x = GBOARD_ORIGIN_X + 65;
+    start_y = GBOARD_ORIGIN_Y + 10;
+
+    SetCurrentCursorPos(start_x, start_y);
+    printf("      ");
+    for (int i = 0; i < 3; i++)
+        game_board[10][32 + i] = 0;
+
+    SetCurrentCursorPos(start_x, ++start_y);
+    printf("      ");
+    for (int i = 0; i < 3; i++)
+        game_board[11][32 + i] = 0;
+
+    SetCurrentCursorPos(start_x, ++start_y);
+    printf("      ");
+    for (int i = 0; i < 3; i++)
+        game_board[12][32 + i] = 0;
+
+    start_x = GBOARD_ORIGIN_X + 23;
+    start_y = GBOARD_ORIGIN_Y + 14;
+
+    SetCurrentCursorPos(start_x, start_y);
+    printf("      ");
+    for (int i = 0; i < 3; i++)
+        game_board[14][11 + i] = 0;
+
+    SetCurrentCursorPos(start_x, ++start_y);
+    printf("      ");
+    for (int i = 0; i < 3; i++)
+        game_board[15][11 + i] = 0;
+
+    SetCurrentCursorPos(start_x, ++start_y);
+    printf("      ");
+    for (int i = 0; i < 3; i++)
+        game_board[16][11 + i] = 0;
+
+    start_x = GBOARD_ORIGIN_X + 79;
+    start_y = GBOARD_ORIGIN_Y + 14;
+
+    SetCurrentCursorPos(start_x, start_y);
+    printf("      ");
+    for (int i = 0; i < 3; i++)
+        game_board[14][39 + i] = 0;
+
+    SetCurrentCursorPos(start_x, ++start_y);
+    printf("      ");
+    for (int i = 0; i < 3; i++)
+        game_board[15][39 + i] = 0;
+
+    SetCurrentCursorPos(start_x, ++start_y);
+    printf("      ");
+    for (int i = 0; i < 3; i++)
+        game_board[16][39 + i] = 0;
+
+    start_x = GBOARD_ORIGIN_X + 37;
+    start_y = GBOARD_ORIGIN_Y + 19;
+
+    SetCurrentCursorPos(start_x, start_y);
+    printf("      ");
+    for (int i = 0; i < 3; i++)
+        game_board[19][18 + i] = 0;
+
+    SetCurrentCursorPos(start_x, ++start_y);
+    printf("      ");
+    for (int i = 0; i < 3; i++)
+        game_board[19][18 + i] = 0;
+
+    SetCurrentCursorPos(start_x, ++start_y);
+    printf("      ");
+    for (int i = 0; i < 3; i++)
+        game_board[20][18 + i] = 0;
+
+    start_x = GBOARD_ORIGIN_X + 65;
+    start_y = GBOARD_ORIGIN_Y + 19;
+
+    SetCurrentCursorPos(start_x, start_y);
+    printf("      ");
+    for (int i = 0; i < 3; i++)
+        game_board[21][32 + i] = 0;
+
+    SetCurrentCursorPos(start_x, ++start_y);
+    printf("      ");
+    for (int i = 0; i < 3; i++)
+        game_board[20][32 + i] = 0;
+
+    SetCurrentCursorPos(start_x, ++start_y);
+    printf("      ");
+    for (int i = 0; i < 3; i++)
+        game_board[21][32 + i] = 0;
+
+    start_x = GBOARD_ORIGIN_X + 51;
+    start_y = GBOARD_ORIGIN_Y + 24;
+
+    SetCurrentCursorPos(start_x, start_y);
+    printf("      ");
+    for (int i = 0; i < 3; i++)
+        game_board[24][25 + i] = 0;
+
+    SetCurrentCursorPos(start_x, ++start_y);
+    printf("      ");
+    for (int i = 0; i < 3; i++)
+        game_board[25][25 + i] = 0;
+
+    SetCurrentCursorPos(start_x, ++start_y);
+    printf("      ");
+    for (int i = 0; i < 3; i++)
+        game_board[26][25 + i] = 0;
 }
 
 void resetGame()
@@ -683,7 +980,7 @@ void resetGame()
 void StageDraw() {
     int x = 40, y = 8;
     int num_x = x + 45, num_y = y;
-    
+
     SetCurrentCursorPos(x, y++);
     printf(" ####   #####     ##        #####    ######    ");
     SetCurrentCursorPos(x, y++);
@@ -776,7 +1073,7 @@ void StageErase() {
         SetCurrentCursorPos(num_x, num_y++);
         printf("      ");
         SetCurrentCursorPos(num_x, num_y++);
-        printf("      ");        
+        printf("      ");
         SetCurrentCursorPos(num_x, num_y++);
         printf("      ");
         SetCurrentCursorPos(num_x, num_y++);

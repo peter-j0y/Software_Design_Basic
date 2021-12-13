@@ -6,7 +6,7 @@ void PlayGame()
     system("mode con cols=130 lines=40"); //콘솔창 크기 조절
     life = 3;
     score = 0;
-    stage = 5;
+    stage = 1;
 
     shoot_start = clock();
     gun_start = clock();
