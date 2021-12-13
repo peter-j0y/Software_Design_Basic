@@ -29,9 +29,17 @@ void PrintBossZombie(COORD pos)
         {
             SetCurrentCursorPos(pos.X + (x * 2), pos.Y + y);
             if (y == 1 && x == 1)
+            {
+                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 4);
                 printf("¢Â");
+                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+            }
             else
+            {
+                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 6);
                 printf("¡Ø");
+                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+            }
             game_board[board_array_y + y][board_array_x + x] = ZOMBIE;
         }
     }

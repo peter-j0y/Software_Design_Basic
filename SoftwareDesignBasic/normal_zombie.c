@@ -14,7 +14,9 @@ void PrintNormalZombie(int zombie_x, int zombie_y)
 		for (int x = 0; x < 2; x++)
 		{
 			SetCurrentCursorPos(zombie_x + (x * 2), zombie_y + y);
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 4);
 			printf("¡ß");
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
 			game_board[board_array_y + y][board_array_x + x] = ZOMBIE;
 		}
 	}

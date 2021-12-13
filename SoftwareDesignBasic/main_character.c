@@ -61,11 +61,14 @@ void ShowBlock(char main_character[2][2])                // 블록을 출력하�
             SetCurrentCursorPos(current_position.X + (x * 2), current_position.Y + y);
             if (main_character[y][x] == 2)                          // 메인 캐릭터에 적용    
             {
+                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 9);
                 printf("■");
+                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
                 game_board[board_array_y + y][board_array_x + x] = PLAYER;
             }
             if (main_character[y][x] == 7)                          // 메인 캐릭터에 적용    
             {
+                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 10);
                 if (main_character_id == 0)
                     printf("▲");
                 if (main_character_id == 1)
@@ -74,6 +77,7 @@ void ShowBlock(char main_character[2][2])                // 블록을 출력하�
                     printf("▼");
                 if (main_character_id == 3)
                     printf("▶");
+                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
                 game_board[board_array_y + y][board_array_x + x] = PLAYER;
             }
         }
