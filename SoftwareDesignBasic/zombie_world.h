@@ -197,6 +197,14 @@ void SetStage();
 void resetGame();
 void StageDraw();
 void StageErase();
+void PrintStage2Map();
+void RemoveStage2Map();
+void PrintStage3Map();
+void RemoveStage3Map();
+void PrintStage4Map();
+void RemoveStage4Map();
+void PrintStage5Map();
+void RemoveStage5Map();
 
 typedef struct stage_info {
     int number_of_boss_zombie;
