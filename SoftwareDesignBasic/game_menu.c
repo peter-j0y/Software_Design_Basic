@@ -53,34 +53,65 @@ void Menual()
 {
     system("cls");
     SetCurrentCursorPos(44, 2);
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 10);
     printf("*********게임소개********");
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
     SetCurrentCursorPos(5, 4);
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 12);
     printf("나는 바이러스 연구소장 이민석...");
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
     SetCurrentCursorPos(72, 5);
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 6);
     printf("※※※");
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
     SetCurrentCursorPos(60, 6);
     printf("보스좀비 :");
     SetCurrentCursorPos(72, 6);
-    printf("※◈※");
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 6);
+    printf("※");
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 4);
+    printf("◈");
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 6);
+    printf("※");
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
     SetCurrentCursorPos(80, 6);
     printf("일반좀비 :");
     SetCurrentCursorPos(92, 6);
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 4);
     printf("◆◆");
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
     SetCurrentCursorPos(98, 6);
     printf("아이템 :");
     SetCurrentCursorPos(106, 6);
-    printf("♥ ▼ X2 VC");
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 4);
+    printf("♥ ");
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 10);
+    printf("▼ ");
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 14);
+    printf("X2 ");
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+    printf("VC");
 
     SetCurrentCursorPos(92, 7);
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 4);
     printf("◆◆");
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
     SetCurrentCursorPos(72, 7);
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 6);
     printf("※※※");
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
     SetCurrentCursorPos(5, 6);
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 10);
     printf("누군가에 의해 좀비 바이러스가 유출됐다...!");
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
     SetCurrentCursorPos(5, 8);
-    printf("백신을 찾아 이곳을 탈출하고 세상을 구해야해!!!");
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 9);
+    printf("어서 이곳을 탈출하고 세상을 구해야해!!!");
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
     SetCurrentCursorPos(44, 10);
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 10);
     printf("**********조작법**********");
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
     SetCurrentCursorPos(32, 12);
     printf("△");
     SetCurrentCursorPos(30, 13);
@@ -104,7 +135,9 @@ void Menual()
     SetCurrentCursorPos(36, 25);
     printf("백신 보관실에서 백신을 찾아 건물을 탈출하세요!");
     SetCurrentCursorPos(46, 28);
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 14);
     printf("Press Any Key To Start!!");
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
 
     while (1)
     {
@@ -287,9 +320,51 @@ void EndGame()
     }
 }
 
+void GameClear() {
+    int x = 30, y = 10;
+
+    system("cls");
+
+    Sleep(100);
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 14);
+    SetCurrentCursorPos(x, y++);
+    printf("        ■■■■■       ■■      ■■      ■■    ■■■■■   ");
+    Sleep(100);
+    SetCurrentCursorPos(x, y++);
+    Sleep(100);
+    printf("       ■               ■  ■     ■ ■    ■ ■    ■           ");
+    SetCurrentCursorPos(x, y++);
+    Sleep(100);
+    printf("      ■      ■■■   ■■■■    ■  ■  ■  ■    ■■■■     ");
+    SetCurrentCursorPos(x, y++);
+    Sleep(100);
+    printf("       ■       ■    ■      ■   ■    ■    ■    ■           ");
+    SetCurrentCursorPos(x, y++);
+    Sleep(100);
+    printf("        ■■■■■   ■        ■  ■          ■    ■■■■■   ");
+    y++;
+    y++;
+    SetCurrentCursorPos(x, y++);
+    Sleep(100);
+    printf("     ■■■■    ■           ■■■■■       ■■       ■■■■    ");
+    SetCurrentCursorPos(x, y++);
+    Sleep(100);
+    printf("   ■            ■           ■              ■  ■      ■      ■  ");
+    SetCurrentCursorPos(x, y++);
+    Sleep(100);
+    printf("   ■            ■           ■■■■       ■■■■     ■■■■    ");
+    SetCurrentCursorPos(x, y++);
+    Sleep(100);
+    printf("   ■            ■           ■            ■      ■    ■    ■    ");
+    SetCurrentCursorPos(x, y++);
+    Sleep(100);
+    printf("     ■■■■    ■■■■■   ■■■■■   ■        ■   ■      ■  ");
+    Sleep(2000);
+    exit(0);
+}
+
 void TitleDraw() {
     int x = 20, y = 3;
-    system("color 2");
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
     SetCurrentCursorPos(x, y++);
     printf("■■■■■    ■■■■     ■■      ■■   ■■■■■   ■■■■■   ■■■■■ ");
@@ -348,25 +423,35 @@ void GameOverDraw() {
     int x = 8, y = 7;
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 10);
     SetCurrentCursorPos(x, y++);
+    Sleep(100);
     printf("  ■■■■■       ■■      ■■      ■■    ■■■■■         ■■■■     ■        ■   ■■■■■   ■■■■       ");
     SetCurrentCursorPos(x, y++);
+    Sleep(100);
     printf(" ■               ■  ■     ■ ■    ■ ■    ■               ■        ■    ■      ■    ■           ■      ■     ");
     SetCurrentCursorPos(x, y++);
+    Sleep(100);
     printf("■      ■■■   ■■■■    ■  ■  ■  ■    ■■■■         ■        ■     ■    ■     ■■■■     ■■■■       ");
     SetCurrentCursorPos(x, y++);
+    Sleep(100);
     printf(" ■       ■    ■      ■   ■    ■    ■    ■               ■        ■      ■  ■      ■           ■   ■       ");
     SetCurrentCursorPos(x, y++);
+    Sleep(100);
     printf("  ■■■■■   ■        ■  ■          ■    ■■■■■         ■■■■          ■        ■■■■■   ■     ■     ");
     SetCurrentCursorPos(x, y++);
+    Sleep(100);
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 4);
     printf("  ■■                   ■                    ■■                 ■■■                    ■■  ■■          ■      ");
     SetCurrentCursorPos(x, y++);
+    Sleep(100);
     printf("  ■■                   ■                    ■                   ■  ■                    ■      ■          ■     ");
     SetCurrentCursorPos(x, y++);
+    Sleep(100);
     printf("  ■                     ■                    ■                       ■                            ■          ■     ");
     SetCurrentCursorPos(x, y++);
+    Sleep(100);
     printf("  ■                                                                    ■                            ■              ");
     SetCurrentCursorPos(x, y++);
+    Sleep(100);
     printf("  ■                                                 ");
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
 }

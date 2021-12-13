@@ -34,12 +34,21 @@ void RandomItem() {                                         // 아이템의 생성 위�
 
 void ShowItem() {       // 아이템 보여주기
 	SetCurrentCursorPos(item_pos.X, item_pos.Y);
-	if (item_type == 0)
-		printf("♥");
-	if (item_type == 1)
+	if (item_type == 0) {
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 4);
+		printf("♥ ");
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+	}
+	if (item_type == 1) {
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 10);
 		printf("▼");
-	if (item_type == 2)
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+	}
+	if (item_type == 2) {
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 14);
 		printf("X2");
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+	}
 	game_board[board_array_y][board_array_x] = ITEM;
 }
 
@@ -101,7 +110,7 @@ void DoubleScoreItem() { // 점수 2배
 void ItemTimer() {
 	item_end = clock();
 	double time = (double)(item_end - item_start) / CLOCKS_PER_SEC;
-	if (item_flag == 1 && time > 1) {
+	if (item_flag == 1 && time > 10) {
 		RandomItem();
 		ShowItem();
 		item_flag = 0;

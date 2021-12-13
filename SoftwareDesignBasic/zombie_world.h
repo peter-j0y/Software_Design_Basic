@@ -12,6 +12,7 @@ void ChooseMenu();
 void EndGame();
 void TitleDraw();
 void GameOverDraw();
+void GameClear();
 
 //////////////////////////////////////bosszombie.h에 있던거/////////////////////////////////////
 typedef struct Boss_Zombie_Info {

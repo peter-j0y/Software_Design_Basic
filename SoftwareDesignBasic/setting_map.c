@@ -171,6 +171,9 @@ void SetStage()
         }
         else {
             stage++;
+            if (stage==6) {
+                GameClear();
+            }
             DeleteBlock(main_character[main_character_id]);
             main_character_position.X = INITIAL_MAIN_CHARACTER_POS_X;
             main_character_position.Y = INITIAL_MAIN_CHARACTER_POS_Y;
