@@ -40,10 +40,10 @@ void PlayGame()
         ItemTimer();
 
         MakeBossZombie();
+        MoveBossZombie();
         MakeNormalZombie();
         MoveNormalZombie();
         MoveEnergyWave();
-        MoveBossZombie();
         MoveBazukaBullet();
         MoveBazukaBullet();
         //DeleteEnergyWave();

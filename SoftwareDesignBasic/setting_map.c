@@ -128,6 +128,12 @@ void SetStage()
         ShowBlock(main_character[main_character_id]);
         StageSetting();
         WeaponSetting();
+
+        EnergyWave_Info* energy_wave = energy_wave_list_head;
+        DeleteEnergyWave();
+        while (energy_wave) {
+            energy_wave = RemoveEnergyWave(energy_wave);
+        }
         stage_start_flag = 1;
     }
 
