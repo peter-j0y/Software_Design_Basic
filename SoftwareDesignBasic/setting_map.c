@@ -809,12 +809,12 @@ void PrintStage4Map() {
     SetCurrentCursorPos(start_x, ++start_y);
     printf("бс  бс");
     for (int i = 0; i < 3; i++)
-        game_board[19][18 + i] = 1;
+        game_board[20][18 + i] = 1;
 
     SetCurrentCursorPos(start_x, ++start_y);
     printf("бсбсбс");
     for (int i = 0; i < 3; i++)
-        game_board[20][18 + i] = 1;
+        game_board[21][18 + i] = 1;
 
     start_x = GBOARD_ORIGIN_X + 65;
     start_y = GBOARD_ORIGIN_Y + 19;
@@ -822,7 +822,7 @@ void PrintStage4Map() {
     SetCurrentCursorPos(start_x, start_y);
     printf("бсбсбс");
     for (int i = 0; i < 3; i++)
-        game_board[21][32 + i] = 1;
+        game_board[19][32 + i] = 1;
 
     SetCurrentCursorPos(start_x, ++start_y);
     printf("бс  бс");
