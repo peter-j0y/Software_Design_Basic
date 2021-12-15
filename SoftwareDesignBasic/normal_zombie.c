@@ -234,6 +234,10 @@ int NormalZombieDetectCollision(int position_x, int position_y, int flag) // ¿©±
 			{
 				return 1;
 			}
+			if (game_board[board_array_y + y][board_array_x + x] == VACCINE)
+			{
+				return 1;
+			}
 		}
 	}
 

@@ -18,18 +18,6 @@
     <ClCompile Include="main.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="main_sj.c">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="main_hw.c">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="main_ms.c">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="main_sm.c">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="boss_zombie.c">
       <Filter>소스 파일</Filter>
     </ClCompile>

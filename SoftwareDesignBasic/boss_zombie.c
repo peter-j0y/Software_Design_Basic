@@ -342,6 +342,10 @@ int BossZombieDetectCollision(int x, int y, int flag)               //¿©±â¼­ fla
             {
                 return 1;
             }
+            else if (game_board[board_array_y + y][board_array_x + x] == VACCINE)
+            {
+                return 1;
+            }
         }
     }
     return 0;

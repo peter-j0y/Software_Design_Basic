@@ -58,16 +58,16 @@ void VaccineSetting()
 {
     if (get_vaccine == 0)
     {
-        SetCurrentCursorPos(USABLE_WEAPON_X + 31, USABLE_WEAPON_Y);
+        SetCurrentCursorPos(USABLE_WEAPON_X + 35, USABLE_WEAPON_Y);
         printf("                                    ");
-        SetCurrentCursorPos(USABLE_WEAPON_X + 31, USABLE_WEAPON_Y);
+        SetCurrentCursorPos(USABLE_WEAPON_X + 35, USABLE_WEAPON_Y);
         printf("A동 백신 보관실에서 백신을 찾으세요!");
     }
     else
     {
-        SetCurrentCursorPos(USABLE_WEAPON_X + 31, USABLE_WEAPON_Y);
+        SetCurrentCursorPos(USABLE_WEAPON_X + 35, USABLE_WEAPON_Y);
         printf("                                    ");
-        SetCurrentCursorPos(USABLE_WEAPON_X + 31, USABLE_WEAPON_Y);
+        SetCurrentCursorPos(USABLE_WEAPON_X + 35, USABLE_WEAPON_Y);
         printf("백신 획득! 건물을 탈출하세요!");
     }
 }
@@ -96,12 +96,13 @@ void WeaponSetting() {
             printf("%s    ", weapon_name[i - 1]);
     }
     SetCurrentCursorPos(USABLE_WEAPON_X, USABLE_WEAPON_Y);
+    printf("                                  ");
+    SetCurrentCursorPos(USABLE_WEAPON_X, USABLE_WEAPON_Y);
     for (int i = 1; i <= 5; i++) {
         if (i != weapon && i <= stage) {
-            printf("%s  ", weapon_name[i - 1]);
+                printf("%s  ", weapon_name[i - 1]);
         }
     }
-    printf("           ");
 }
 
 void StageSetting() {
@@ -155,6 +156,7 @@ void SetStage()
             if (get_vaccine == 1)
             {
                 stage++;
+                DeleteItem();
                 DeleteBlock(main_character[main_character_id]);
                 main_character_position.X = INITIAL_MAIN_CHARACTER_POS_X;
                 main_character_position.Y = INITIAL_MAIN_CHARACTER_POS_Y;
@@ -171,6 +173,7 @@ void SetStage()
         }
         else {
             stage++;
+            DeleteItem();
             if (stage==6) {
                 GameClear();
             }

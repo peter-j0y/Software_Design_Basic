@@ -143,12 +143,8 @@
     <ClCompile Include="boss_zombie.c" />
     <ClCompile Include="cursor_function.c" />
     <ClCompile Include="item.c" />
-    <ClCompile Include="main.c" />
     <ClCompile Include="main_character.c" />
-    <ClCompile Include="main_hw.c" />
-    <ClCompile Include="main_ms.c" />
-    <ClCompile Include="main_sj.c" />
-    <ClCompile Include="main_sm.c" />
+    <ClCompile Include="main.c" />
     <ClCompile Include="normal_zombie.c" />
     <ClCompile Include="game_menu.c" />
     <ClCompile Include="setting_map.c" />
