@@ -7,7 +7,8 @@
 >사용언어 : C언어(Visual Studio), Window.h 라이브러리를 이용
 
 ## 프로젝트 설치 및 실행 방법
->릴리즈 버전이 완성되면 추가할 예정
+>https://github.com/Seungmin-develop/Software_Design_Basic/blob/main/Release.zip <br>
+>위 링크를 통해 들어가 오른쪽의 Download 버튼을 누른 뒤 .exe 파일을 실행하면 됩니다.
 
 ## 프로젝트 사용법 및 기능 설명
 ![image](https://user-images.githubusercontent.com/39687846/146561633-82d999ca-8db5-4eb4-a82e-034283107611.png) <br>
